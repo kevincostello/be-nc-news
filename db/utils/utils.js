@@ -3,9 +3,10 @@ exports.formatDates = list => {
   else {
     const listOut = list.map(article => {
       // loop through each article in the array
-      const listDate = new Date(article.created_at); // format unix date to be a Javascript date object
-      article.created_at = listDate; // replace created_at property with new Javascript date object
-      return article; // return the updated object
+      const newArticle = { ...article };
+      const listDate = new Date(newArticle.created_at); // format unix date to be a Javascript date object
+      newArticle.created_at = listDate; // replace created_at property with new Javascript date object
+      return newArticle; // return the updated object
     });
     return listOut; // return the updated array
   }
