@@ -177,6 +177,55 @@ describe("formatDates", () => {
   });
 });
 
-describe("makeRefObj", () => {});
+describe.only("makeRefObj", () => {
+  it("returns an empty object when passed an empty array", () => {
+    expect(makeRefObj([])).to.deep.equal({});
+  });
+  it("returns a reference object with the one key value pair when passed an array of one object", () => {
+    const articleObject = [
+      {
+        article_id: 1,
+        title: "Peanuts",
+        topic: "Comedy",
+        body: "This is a comic strip about a boy and his dog and friends",
+        votes: 34,
+        author: "Charles Schultz",
+        created_at: 1509866563519
+      }
+    ];
+    const outputObject = {
+      Peanuts: 1
+    };
+    expect(makeRefObj(articleObject)).to.deep.equal(outputObject);
+  });
+
+  it("returns a reference object with multiple key value pairs when passed an array of multiple objects", () => {
+    const articleArrayOfObjects = [
+      {
+        article_id: 1,
+        title: "Peanuts",
+        topic: "Comedy",
+        body: "This is a comic strip about a boy and his dog and friends",
+        votes: 34,
+        author: "Charles Schultz",
+        created_at: 1509866563519
+      },
+      {
+        article_id: 2,
+        title: "Beano",
+        topic: "Comedy",
+        body: "This is a comic about various characters who get up to no good",
+        votes: 16,
+        author: "DC Thomson",
+        created_at: 1509866563512
+      }
+    ];
+    const outputObject = {
+      Peanuts: 1,
+      Beano: 2
+    };
+    expect(makeRefObj(articleArrayOfObjects)).to.deep.equal(outputObject);
+  });
+});
 
 describe("formatComments", () => {});
