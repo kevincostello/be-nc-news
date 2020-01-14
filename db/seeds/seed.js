@@ -25,8 +25,6 @@ exports.seed = function(knex) {
     .then(() => topicsInsertions)
     .then(() => {
       const formattedArticles = formatDates(articleData);
-      // const articlesWithUsername = makeRefObj(formattedArticles);
-      console.log("formatted Articles", formattedArticles);
       const articlesInsertions = knex("articles")
         .insert(formattedArticles)
         .into("articles")

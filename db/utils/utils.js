@@ -3,15 +3,12 @@ exports.formatDates = list => {
     return [];
   } else {
     const listOut = list.map(article => {
-      // console.log("The article is:", article);
       // loop through each article in the array
       const newArticle = { ...article };
       const listDate = new Date(newArticle.created_at); // format unix date to be a Javascript date object
       newArticle.created_at = listDate; // replace created_at property with new Javascript date object
-      // console.log("the new articles is:", newArticle);
       return newArticle; // return the updated object
     });
-    // console.log("This is the output array:", listOut);
     return listOut; // return the updated array
   }
 };
@@ -34,4 +31,20 @@ exports.makeRefObj = list => {
   }
 };
 
-exports.formatComments = (comments, articleRef) => {};
+exports.formatComments = (comments, articleRef) => {
+  if (comments.length === 0) {
+    return [];
+  } else {
+    console.log(comments);
+    comments[0].author = comments[0].created_by;
+    delete comments[0].created_by;
+    console.log(comments);
+    return comments;
+  }
+
+  // Its created_by property renamed to an author key
+  // Its belongs_to property renamed to an article_id key
+  // The value of the new article_id key must be the id corresponding to the original title value provided
+  // Its created_at value converted into a javascript date object
+  // The rest of the comment's properties must be maintained
+};

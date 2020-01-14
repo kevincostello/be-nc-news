@@ -177,7 +177,7 @@ describe("formatDates", () => {
   });
 });
 
-describe.only("makeRefObj", () => {
+describe("makeRefObj", () => {
   it("returns an empty object when passed an empty array", () => {
     expect(makeRefObj([])).to.deep.equal({});
   });
@@ -228,4 +228,15 @@ describe.only("makeRefObj", () => {
   });
 });
 
-describe("formatComments", () => {});
+describe.only("formatComments", () => {
+  it("when given an empty array return a new empty array", () => {
+    expect(formatComments([])).to.deep.equal([]);
+  });
+  it("returns an array of one object when passed one object with the created_by property renamed to author", () => {
+    const inputArrayOfComments = [{ created_by: "Stan Lee" }];
+    const outputArrayOfComments = [{ author: "Stan Lee" }];
+    expect(formatComments(inputArrayOfComments)).to.deep.equal(
+      outputArrayOfComments
+    );
+  });
+});
