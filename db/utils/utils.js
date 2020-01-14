@@ -34,6 +34,42 @@ exports.formatComments = (comments, articleRef) => {
   if (comments.length === 0) {
     return [];
   } else {
+    // const refObj = {};
+    const outArrayOfComments = comments.map(comment => {
+      // Its created_by property renamed to an author key
+      comment.author = comment.created_by;
+
+      if (articleRef) {
+        // Its belongs_to property renamed to an article_id key
+        // The value of the new article_id key must be the id corresponding to the original title value provided
+        comment.article_id = articleRef[comment.belongs_to];
+        delete comment.belongs_to;
+      }
+
+      delete comment.created_by;
+      // console.log("comment", comment);
+      return comment;
+    });
+
+    // Its created_at value converted into a javascript date object
+    if (outArrayOfComments[0].hasOwnProperty("created_at")) {
+      const formattedDates = this.formatDates(outArrayOfComments);
+      delete formattedDates.created_by;
+      // return formattedDates;
+
+      // console.log("out array of comments", outArrayOfComments);
+      return formattedDates;
+    }
+    return outArrayOfComments;
+  }
+
+  // The rest of the comment's properties must be maintained
+};
+
+formatCommentsOld = (comments, articleRef) => {
+  if (comments.length === 0) {
+    return [];
+  } else {
     // Its created_by property renamed to an author key
     comments[0].author = comments[0].created_by;
 
@@ -43,6 +79,7 @@ exports.formatComments = (comments, articleRef) => {
       comments[0].article_id = articleRef[comments[0].belongs_to];
       delete comments[0].belongs_to;
     }
+    // Its created_at value converted into a javascript date object
     if (comments[0].created_at) {
       const formattedDates = this.formatDates(comments);
       delete formattedDates[0].created_by;
@@ -52,6 +89,5 @@ exports.formatComments = (comments, articleRef) => {
     return comments;
   }
 
-  // Its created_at value converted into a javascript date object
   // The rest of the comment's properties must be maintained
 };
