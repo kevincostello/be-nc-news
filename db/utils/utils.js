@@ -35,16 +35,19 @@ exports.formatComments = (comments, articleRef) => {
   if (comments.length === 0) {
     return [];
   } else {
-    console.log(comments);
+    // Its created_by property renamed to an author key
     comments[0].author = comments[0].created_by;
+
+    if (articleRef) {
+      // Its belongs_to property renamed to an article_id key
+      // The value of the new article_id key must be the id corresponding to the original title value provided
+      comments[0].article_id = articleRef[comments[0].belongs_to];
+      delete comments[0].belongs_to;
+    }
     delete comments[0].created_by;
-    console.log(comments);
     return comments;
   }
 
-  // Its created_by property renamed to an author key
-  // Its belongs_to property renamed to an article_id key
-  // The value of the new article_id key must be the id corresponding to the original title value provided
   // Its created_at value converted into a javascript date object
   // The rest of the comment's properties must be maintained
 };

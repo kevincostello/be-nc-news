@@ -232,11 +232,52 @@ describe.only("formatComments", () => {
   it("when given an empty array return a new empty array", () => {
     expect(formatComments([])).to.deep.equal([]);
   });
+
   it("returns an array of one object when passed one object with the created_by property renamed to author", () => {
     const inputArrayOfComments = [{ created_by: "Stan Lee" }];
     const outputArrayOfComments = [{ author: "Stan Lee" }];
     expect(formatComments(inputArrayOfComments)).to.deep.equal(
       outputArrayOfComments
     );
+  });
+
+  it("returns an array of one object when passed one object with the belongs_to property renamed to article_id", () => {
+    const inputArrayOfComments = [
+      { created_by: "Stan Lee", belongs_to: "Spiderman" }
+    ];
+    const outputArrayOfComments = [{ author: "Stan Lee", article_id: 1 }];
+    const articleObject = [
+      {
+        article_id: 1,
+        title: "Spiderman",
+        topic: "Sci-Fi",
+        body: "This is a comic strip about a boy with spider-like powers",
+        votes: 987,
+        author: "Stan Lee",
+        created_at: 1509866562412
+      }
+    ];
+    const refObj = makeRefObj(articleObject);
+    expect(formatComments(inputArrayOfComments, refObj)).to.deep.equal(
+      outputArrayOfComments
+    );
+  });
+
+  it("returns an array of one object when passed one object with the created_at value converted to a javascript date object", () => {
+    const inputArrayOfComments = [
+      { created_by: "Stan Lee", belongs_to: "Spiderman" }
+    ];
+    const outputArrayOfComments = [{ author: "Stan Lee", article_id: 1 }];
+    const articleObject = [
+      {
+        article_id: 1,
+        title: "Spiderman",
+        topic: "Sci-Fi",
+        body: "This is a comic strip about a boy with spider-like powers",
+        votes: 987,
+        author: "Stan Lee",
+        created_at: 1509866562412
+      }
+    ];
   });
 });
