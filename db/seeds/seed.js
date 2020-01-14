@@ -30,6 +30,16 @@ exports.seed = function(knex) {
         .into("articles")
         .returning("*");
       return articlesInsertions;
+    })
+    .then(fromArticles => {
+      const refObj = makeRefObj(fromArticles);
+      const formattedComments = formatComments(commentData, refObj);
+      console.log("formatted comments:", formattedComments);
+      const commentsInsertions = knex("comments")
+        .insert(formattedComments)
+        .into("comments")
+        .returning("*");
+      return commentsInsertions;
     });
   // .then(() => {
   //   return knex("users")

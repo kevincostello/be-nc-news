@@ -12,7 +12,7 @@ exports.up = function(knex) {
       .inTable("articles");
     commentsTable.integer("votes").defaultTo(0);
     commentsTable.timestamp("created_at");
-    commentsTable.string("body");
+    commentsTable.text("body");
   });
 };
 
