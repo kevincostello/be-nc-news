@@ -47,16 +47,14 @@ const formatComments = (comments, articleRef) => {
       }
 
       delete comment.created_by;
+      if (comment.hasOwnProperty("created_at")) {
+        comment.created_at = new Date(comment.created_at);
+      }
+
       return comment;
     });
 
     // Its created_at value converted into a javascript date object
-    if (outArrayOfComments[0].hasOwnProperty("created_at")) {
-      const formattedDates = formatDates(outArrayOfComments);
-      delete formattedDates.created_by;
-
-      return formattedDates;
-    }
     return outArrayOfComments;
   }
 

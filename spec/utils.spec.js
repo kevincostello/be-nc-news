@@ -410,4 +410,176 @@ describe.only("formatComments", () => {
       outputArrayOfComments
     );
   });
+
+  it("checks that the input array is unmutated", () => {
+    const inputArrayOfComments = [
+      {
+        body: "Spiderman is an orphan blah blah blah.....",
+        votes: 45,
+        created_by: "Stan Lee",
+        belongs_to: "Spiderman",
+        created_at: 1468087638924
+      },
+      {
+        body: "Spiderman is one of a number of superheroes in the.....",
+        votes: 22,
+        created_by: "Bruce Wayne",
+        belongs_to: "Spiderman",
+        created_at: 1468087638234
+      },
+      {
+        body: "The Incredible Hulk is very scary",
+        votes: 540,
+        created_by: "Dr Bruce Bannon",
+        belongs_to: "The Incredible Hulk",
+        created_at: 1468087638266
+      }
+    ];
+    const outputArrayOfComments = [
+      {
+        body: "Spiderman is an orphan blah blah blah.....",
+        votes: 45,
+        author: "Stan Lee",
+        article_id: 1
+      },
+      {
+        body: "Spiderman is one of a number of superheroes in the.....",
+        votes: 22,
+        author: "Bruce Wayne",
+        article_id: 1
+      },
+      {
+        body: "The Incredible Hulk is very scary",
+        votes: 540,
+        author: "Dr Bruce Bannon",
+        article_id: 2
+      }
+    ];
+
+    outputArrayOfComments[0].created_at = new Date(1468087638924);
+    outputArrayOfComments[1].created_at = new Date(1468087638234);
+    outputArrayOfComments[2].created_at = new Date(1468087638266);
+
+    const articleObject = [
+      {
+        article_id: 1,
+        title: "Spiderman",
+        topic: "Sci-Fi",
+        body: "This is a comic strip about a boy with spider-like powers",
+        votes: 987,
+        author: "Stan Lee",
+        created_at: 1509866562412
+      },
+      {
+        article_id: 2,
+        title: "The Incredible Hulk",
+        topic: "Sci-Fi",
+        body:
+          "This is a comic strip about a man who is transformed into the Incredible Hulk whenever he gets angry",
+        votes: 987,
+        author: "Stan Lee",
+        created_at: 1509866557230
+      }
+    ];
+
+    const refObj = makeRefObj(articleObject);
+
+    const arrayCopy = [...inputArrayOfComments];
+    formatComments(inputArrayOfComments, refObj);
+
+    expect(inputArrayOfComments).to.deep.equal(arrayCopy);
+  });
+
+  it("checks comment object in array has a different reference to original comment object", () => {
+    const inputArrayOfComments = [
+      {
+        body: "Spiderman is an orphan blah blah blah.....",
+        votes: 45,
+        created_by: "Stan Lee",
+        belongs_to: "Spiderman",
+        created_at: 1468087638924
+      },
+      {
+        body: "Spiderman is one of a number of superheroes in the.....",
+        votes: 22,
+        created_by: "Bruce Wayne",
+        belongs_to: "Spiderman",
+        created_at: 1468087638234
+      },
+      {
+        body: "The Incredible Hulk is very scary",
+        votes: 540,
+        created_by: "Dr Bruce Bannon",
+        belongs_to: "The Incredible Hulk",
+        created_at: 1468087638266
+      }
+    ];
+
+    const copyArray = [...inputArrayOfComments];
+
+    expect(formatDates(inputArrayOfComments)[0]).to.not.equal(
+      inputArrayOfComments[0]
+    );
+  });
+
+  it("checks that each object in the array passed in is unmutated", () => {
+    const inputArrayOfComments = [
+      {
+        body: "Spiderman is an orphan blah blah blah.....",
+        votes: 45,
+        created_by: "Stan Lee",
+        belongs_to: "Spiderman",
+        created_at: 1468087638924
+      },
+      {
+        body: "Spiderman is one of a number of superheroes in the.....",
+        votes: 22,
+        created_by: "Bruce Wayne",
+        belongs_to: "Spiderman",
+        created_at: 1468087638234
+      },
+      {
+        body: "The Incredible Hulk is very scary",
+        votes: 540,
+        created_by: "Dr Bruce Bannon",
+        belongs_to: "The Incredible Hulk",
+        created_at: 1468087638266
+      }
+    ];
+
+    const articleObject = [
+      {
+        article_id: 1,
+        title: "Spiderman",
+        topic: "Sci-Fi",
+        body: "This is a comic strip about a boy with spider-like powers",
+        votes: 987,
+        author: "Stan Lee",
+        created_at: 1509866562412
+      },
+      {
+        article_id: 2,
+        title: "The Incredible Hulk",
+        topic: "Sci-Fi",
+        body:
+          "This is a comic strip about a man who is transformed into the Incredible Hulk whenever he gets angry",
+        votes: 987,
+        author: "Stan Lee",
+        created_at: 1509866557230
+      }
+    ];
+
+    const refObj = makeRefObj(articleObject);
+
+    // this check the comment in the array was not affected by the function and still looks the same
+
+    formatComments(inputArrayOfComments, refObj);
+    expect(inputArrayOfComments[0]).to.eql({
+      body: "Spiderman is an orphan blah blah blah.....",
+      votes: 45,
+      created_by: "Stan Lee",
+      belongs_to: "Spiderman",
+      created_at: 1468087638924
+    });
+  });
 });
