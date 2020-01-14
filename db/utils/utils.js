@@ -1,4 +1,4 @@
-exports.formatDates = list => {
+const formatDates = list => {
   if (list.length === 0) {
     return [];
   } else {
@@ -13,7 +13,7 @@ exports.formatDates = list => {
   }
 };
 
-exports.makeRefObj = list => {
+const makeRefObj = list => {
   if (list.length === 0) {
     return {};
   } else {
@@ -30,7 +30,7 @@ exports.makeRefObj = list => {
   }
 };
 
-exports.formatComments = (comments, articleRef) => {
+const formatComments = (comments, articleRef) => {
   if (comments.length === 0) {
     return [];
   } else {
@@ -47,17 +47,14 @@ exports.formatComments = (comments, articleRef) => {
       }
 
       delete comment.created_by;
-      // console.log("comment", comment);
       return comment;
     });
 
     // Its created_at value converted into a javascript date object
     if (outArrayOfComments[0].hasOwnProperty("created_at")) {
-      const formattedDates = this.formatDates(outArrayOfComments);
+      const formattedDates = formatDates(outArrayOfComments);
       delete formattedDates.created_by;
-      // return formattedDates;
 
-      // console.log("out array of comments", outArrayOfComments);
       return formattedDates;
     }
     return outArrayOfComments;
@@ -66,28 +63,4 @@ exports.formatComments = (comments, articleRef) => {
   // The rest of the comment's properties must be maintained
 };
 
-formatCommentsOld = (comments, articleRef) => {
-  if (comments.length === 0) {
-    return [];
-  } else {
-    // Its created_by property renamed to an author key
-    comments[0].author = comments[0].created_by;
-
-    if (articleRef) {
-      // Its belongs_to property renamed to an article_id key
-      // The value of the new article_id key must be the id corresponding to the original title value provided
-      comments[0].article_id = articleRef[comments[0].belongs_to];
-      delete comments[0].belongs_to;
-    }
-    // Its created_at value converted into a javascript date object
-    if (comments[0].created_at) {
-      const formattedDates = this.formatDates(comments);
-      delete formattedDates[0].created_by;
-      return formattedDates;
-    }
-    delete comments[0].created_by;
-    return comments;
-  }
-
-  // The rest of the comment's properties must be maintained
-};
+module.exports = { formatDates, makeRefObj, formatComments };
