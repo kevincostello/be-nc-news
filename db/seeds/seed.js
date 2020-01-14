@@ -34,7 +34,6 @@ exports.seed = function(knex) {
     .then(fromArticles => {
       const refObj = makeRefObj(fromArticles);
       const formattedComments = formatComments(commentData, refObj);
-      console.log("formatted comments:", formattedComments);
       const commentsInsertions = knex("comments")
         .insert(formattedComments)
         .into("comments")
