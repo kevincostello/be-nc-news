@@ -21,7 +21,6 @@ exports.makeRefObj = list => {
 
     // loop through array of input objects
     const newList = list.forEach(article => {
-      console.log("This is the article", article);
       const refObjKey = article.title; // set the key of the reference object to be the article title
       const refObjValue = article.article_id; // set the value of the reference object to be the article id
       refObj[refObjKey] = refObjValue; // set the reference key to be the reference value created above
@@ -43,6 +42,11 @@ exports.formatComments = (comments, articleRef) => {
       // The value of the new article_id key must be the id corresponding to the original title value provided
       comments[0].article_id = articleRef[comments[0].belongs_to];
       delete comments[0].belongs_to;
+    }
+    if (comments[0].created_at) {
+      const formattedDates = this.formatDates(comments);
+      delete formattedDates[0].created_by;
+      return formattedDates;
     }
     delete comments[0].created_by;
     return comments;

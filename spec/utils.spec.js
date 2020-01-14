@@ -265,9 +265,15 @@ describe.only("formatComments", () => {
 
   it("returns an array of one object when passed one object with the created_at value converted to a javascript date object", () => {
     const inputArrayOfComments = [
-      { created_by: "Stan Lee", belongs_to: "Spiderman" }
+      {
+        created_by: "Stan Lee",
+        belongs_to: "Spiderman",
+        created_at: 1468087638924
+      }
     ];
     const outputArrayOfComments = [{ author: "Stan Lee", article_id: 1 }];
+    outputArrayOfComments[0].created_at = new Date(1468087638924);
+
     const articleObject = [
       {
         article_id: 1,
@@ -279,5 +285,14 @@ describe.only("formatComments", () => {
         created_at: 1509866562412
       }
     ];
+
+    const refObj = makeRefObj(articleObject);
+    // const formattedComments = formatComments(inputArrayOfComments, refObj);
+    // const formattedCommentsAndDate = formatDates(formattedComments);
+    // expect(formattedCommentsAndDate).to.deep.equal(outputArrayOfComments);
+
+    expect(formatComments(inputArrayOfComments, refObj)).to.deep.equal(
+      outputArrayOfComments
+    );
   });
 });
