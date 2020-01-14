@@ -36,22 +36,23 @@ const formatComments = (comments, articleRef) => {
   } else {
     // const refObj = {};
     const outArrayOfComments = comments.map(comment => {
+      const newComment = { ...comment };
       // Its created_by property renamed to an author key
-      comment.author = comment.created_by;
+      newComment.author = newComment.created_by;
 
       if (articleRef) {
         // Its belongs_to property renamed to an article_id key
         // The value of the new article_id key must be the id corresponding to the original title value provided
-        comment.article_id = articleRef[comment.belongs_to];
-        delete comment.belongs_to;
+        newComment.article_id = articleRef[newComment.belongs_to];
+        delete newComment.belongs_to;
       }
 
-      delete comment.created_by;
-      if (comment.hasOwnProperty("created_at")) {
-        comment.created_at = new Date(comment.created_at);
+      delete newComment.created_by;
+      if (newComment.hasOwnProperty("created_at")) {
+        newComment.created_at = new Date(newComment.created_at);
       }
 
-      return comment;
+      return newComment;
     });
 
     // Its created_at value converted into a javascript date object
