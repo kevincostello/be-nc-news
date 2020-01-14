@@ -1,3 +1,5 @@
+console.log(process.env.NODE_ENV);
+
 exports.up = function(knex) {
   console.log("creating topics table", process.env.NODE_ENV);
   return knex.schema.createTable("topics", topicsTable => {
