@@ -5,4 +5,6 @@ console.log("usersRouter");
 
 usersRouter.route("/:username").get(sendUsers);
 
+usersRouter.route("/").get(sendUsers);
+
 module.exports = usersRouter;

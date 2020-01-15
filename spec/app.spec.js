@@ -32,7 +32,7 @@ describe("/api", () => {
     });
   });
 
-  describe.only("/users", () => {
+  describe("/users", () => {
     it("GETS a status code of 200 when a valid username is passed as a parameter in the path", () => {
       return request(app)
         .get("/api/users/rogersop")
@@ -52,7 +52,16 @@ describe("/api", () => {
     it("GETS a status code of 404 when passed an invalid username", () => {
       return request(app)
         .get("/api/users/gobbledygook")
-        .expect(404);
+        .expect(404)
+        .then(res => {
+          expect(res.body.msg).to.equal("The username does not exist");
+        });
+    });
+
+    it("GETS a status code of 400 when passed the path of /api/users", () => {
+      return request(app)
+        .get("/api/users")
+        .expect(400);
     });
   });
 });
