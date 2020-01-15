@@ -12,13 +12,12 @@ describe("/api", () => {
   // beforeEach(() => db.seed.run());
   after(() => db.destroy());
   describe("/topics", () => {
-    describe("GET", () => {
-      it("status:200 responds with an array of <resource_name> objects", () => {
+    describe("/", () => {
+      it("GET responds with status code of 200", () => {
         console.log("in here");
         return request(app)
           .get("/api/topics")
-          .expect(200)
-          .then(console.log("in then"));
+          .expect(200);
       });
     });
   });
