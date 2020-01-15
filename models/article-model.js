@@ -10,7 +10,6 @@ exports.selectArticles = article => {
         query.where("article_id", article.article_id);
       }
     })
-
     .then(result => {
       if (result.length === 0) {
         return Promise.reject({

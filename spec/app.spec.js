@@ -59,11 +59,32 @@ describe("/api", () => {
     });
   });
 
-  describe.only("/articles", () => {
+  describe("/articles", () => {
     it("GETS a status code of 200 when passed a valid article id", () => {
       return request(app)
         .get("/api/articles/1")
-        .expect(200);
+        .expect(200)
+        .then(res => {
+          console.log(res.body);
+          expect(res.body).to.be.an("object");
+          expect(res.body.articles).to.be.an("array");
+          expect(res.body.articles[0]).to.have.keys([
+            "article_id",
+            "title",
+            "body",
+            "votes",
+            "topic",
+            "author",
+            "created_at"
+          ]);
+        });
+    });
+
+    it("GETS a status code of 400 when passed an invalid article id", () => {
+      return request(app)
+        .get("/api/articles/snnn")
+        .expect(400)
+        .then(res => expect(res.body.msg).to.equal("Invalid article ID"));
     });
   });
 });

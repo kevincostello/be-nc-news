@@ -11,8 +11,11 @@ app.use("/*", (req, res, next) => {
 });
 
 app.use(function(err, req, res, next) {
-  console.log("error is", err);
-  res.status(404).send(err);
+  if (err.code === "22P02") {
+    res.status(400).send({ msg: "Invalid article ID" });
+  }
+  // console.log("error is", err);
+  else res.status(404).send(err);
 });
 
 module.exports = app;
