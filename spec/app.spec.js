@@ -21,7 +21,7 @@ describe("/api", () => {
           expect(res.body.topics[0]).to.have.keys(["slug", "description"]);
         });
     });
-    it.only("GET responds with status code of 404 when the path has a misspelling", () => {
+    it("GET responds with status code of 404 when the path has a misspelling", () => {
       return request(app)
         .get("/api/topiccs")
         .expect(404)
