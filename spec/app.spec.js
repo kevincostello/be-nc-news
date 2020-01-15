@@ -9,15 +9,18 @@ const db = require("../db/connection");
 // console.log("db:", db);
 
 describe("/api", () => {
-  // beforeEach(() => db.seed.run());
+  beforeEach(() => db.seed.run());
   after(() => db.destroy());
   describe("/topics", () => {
     describe("/", () => {
-      it("GET responds with status code of 200", () => {
+      it("GET responds with status code of 200 and returns array of topics", () => {
         console.log("in here");
         return request(app)
           .get("/api/topics")
-          .expect(200);
+          .expect(200)
+          .then(res => {
+            expect(res.body.topic).to.be.an("array");
+          });
       });
     });
   });
