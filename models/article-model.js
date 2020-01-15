@@ -1,19 +1,17 @@
 const db = require("../db/connection");
 
-exports.selectUsers = user => {
-  console.log("im in the models", user);
+exports.selectArticles = article => {
+  console.log("im in the models", article);
   return db
     .select("*")
-    .from("users")
+    .from("articles")
     .modify(query => {
-      // console.log("This is the query", user);
-      if (user) {
-        query.where("username", user.username);
+      if (article) {
+        query.where("article_id", article.article_id);
       }
     })
 
     .then(result => {
-      // console.log(user);
       if (result.length === 0) {
         return Promise.reject({
           status: 404,

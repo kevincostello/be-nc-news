@@ -57,11 +57,13 @@ describe("/api", () => {
           expect(res.body.msg).to.equal("The username does not exist");
         });
     });
+  });
 
-    it("GETS a status code of 400 when passed the path of /api/users", () => {
+  describe.only("/articles", () => {
+    it("GETS a status code of 200 when passed a valid article id", () => {
       return request(app)
-        .get("/api/users")
-        .expect(400);
+        .get("/api/articles/1")
+        .expect(200);
     });
   });
 });
