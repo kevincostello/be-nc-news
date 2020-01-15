@@ -6,6 +6,8 @@ const chaiSorted = require("chai-sorted");
 const { expect } = chai;
 const db = require("../db/connection");
 
+// console.log("db:", db);
+
 describe("/api", () => {
   // beforeEach(() => db.seed.run());
   after(() => db.destroy());
@@ -15,7 +17,8 @@ describe("/api", () => {
         console.log("in here");
         return request(app)
           .get("/api/topics")
-          .expect(200);
+          .expect(200)
+          .then(console.log("in then"));
       });
     });
   });
