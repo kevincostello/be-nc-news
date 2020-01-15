@@ -59,7 +59,7 @@ describe("/api", () => {
     });
   });
 
-  describe("/articles", () => {
+  describe.only("/articles", () => {
     it("GETS a status code of 200 when passed a valid article id", () => {
       return request(app)
         .get("/api/articles/1")
@@ -85,6 +85,15 @@ describe("/api", () => {
         .get("/api/articles/snnn")
         .expect(400)
         .then(res => expect(res.body.msg).to.equal("Invalid article ID"));
+    });
+
+    it("GETS a status code of 404 when passed a valid article id which is not in the database", () => {
+      return request(app)
+        .get("/api/articles/355555")
+        .expect(404)
+        .then(res =>
+          expect(res.body.msg).to.equal("The article id is not in the database")
+        );
     });
   });
 });
