@@ -1,5 +1,3 @@
-process.env.NODE_ENV = "development";
-
 const {
   topicData,
   articleData,

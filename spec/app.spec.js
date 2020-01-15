@@ -17,6 +17,7 @@ describe("/api", () => {
         .get("/api/topics")
         .expect(200)
         .then(res => {
+          expect(res.body).to.be.an("object");
           expect(res.body.topics).to.be.an("array");
           expect(res.body.topics[0]).to.have.keys(["slug", "description"]);
         });
@@ -28,6 +29,30 @@ describe("/api", () => {
         .then(res => {
           expect(res.body.msg).to.equal("Path is misspelt");
         });
+    });
+  });
+
+  describe.only("/users", () => {
+    it("GETS a status code of 200 when a valid username is passed as a parameter in the path", () => {
+      return request(app)
+        .get("/api/users/rogersop")
+        .expect(200)
+        .then(res => {
+          console.log(res.body);
+          expect(res.body).to.be.an("object");
+          expect(res.body.users).to.be.an("array");
+          expect(res.body.users[0]).to.have.keys([
+            "username",
+            "avatar_url",
+            "name"
+          ]);
+        });
+    });
+
+    it("GETS a status code of 404 when passed an invalid username", () => {
+      return request(app)
+        .get("/api/users/gobbledygook")
+        .expect(404);
     });
   });
 });

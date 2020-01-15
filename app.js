@@ -9,13 +9,8 @@ app.use("/*", (req, res, next) => {
   res.status(404).send({ status: 404, msg: "Path is misspelt" });
 });
 
-// app.all("/*", (req, res, next) => {
-//   console.log("req", Object.keys(req), "res", res);
-//   return res.status(404);
-// });
-
 app.use(function(err, req, res, next) {
-  console.log(err, "In app error");
+  res.status(404).send(err);
 });
 
 module.exports = app;
