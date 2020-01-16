@@ -75,7 +75,8 @@ describe("/api", () => {
             "votes",
             "topic",
             "author",
-            "created_at"
+            "created_at",
+            "count"
           ]);
         });
     });
@@ -96,12 +97,21 @@ describe("/api", () => {
         );
     });
 
-    it.only("GETS a status code of 200 and creates the comment count correctly when passed a valid article id", () => {
+    it("GETS a status code of 200 and creates the comment count correctly when passed a valid article id", () => {
       return request(app)
         .get("/api/articles/1")
         .expect(200)
         .then(res => {
           expect(Number(res.body.articles[0].count)).to.equal(13);
+        });
+    });
+
+    it("GETS a status code of 200 and creates the comment count of zero when passed a valid article id which is not in the comments table", () => {
+      return request(app)
+        .get("/api/articles/3")
+        .expect(200)
+        .then(res => {
+          expect(Number(res.body.articles[0].count)).to.equal(0);
         });
     });
   });
