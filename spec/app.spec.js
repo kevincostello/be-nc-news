@@ -96,11 +96,13 @@ describe("/api", () => {
         );
     });
 
-    it("GETS a status code of 200 and creates the comment count correctly when passed a valid article id", () => {
+    it.only("GETS a status code of 200 and creates the comment count correctly when passed a valid article id", () => {
       return request(app)
         .get("/api/articles/1")
         .expect(200)
-        .then(res => expect(res.body.commentCount).to.equal(13));
+        .then(res => {
+          expect(Number(res.body.articles[0].count)).to.equal(13);
+        });
     });
   });
 });
