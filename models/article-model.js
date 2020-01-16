@@ -20,3 +20,13 @@ exports.selectArticles = article => {
       }
     });
 };
+
+exports.patchArticles = article => {
+  console.log("im in the models", article.article_id, article.new_votes);
+  return db
+    .select("articles.*")
+    .from("articles")
+    .then(result => {
+      // console.log(result);
+    });
+};

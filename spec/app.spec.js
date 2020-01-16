@@ -59,7 +59,7 @@ describe("/api", () => {
     });
   });
 
-  describe.only("/articles", () => {
+  describe("/articles", () => {
     it("GETS a status code of 200 when passed a valid article id", () => {
       return request(app)
         .get("/api/articles/1")
@@ -112,6 +112,15 @@ describe("/api", () => {
         .expect(200)
         .then(res => {
           expect(Number(res.body.articles[0].comment_count)).to.equal(0);
+        });
+    });
+
+    it.only("PATCHES with a status code of 200 when passed an object containing the vote count change", () => {
+      return request(app)
+        .patch("/api/articles/1/10")
+        .expect(200)
+        .then(res => {
+          expect(res.body).to.be.an("object");
         });
     });
   });
