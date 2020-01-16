@@ -52,3 +52,12 @@ exports.postArticleWithComment = (body, params) => {
       return res;
     });
 };
+
+exports.selectCommentsByArticleId = () => {
+  console.log("im in the models - get");
+  // articles and comments tables will need to be joined by article_id
+  // need to select comment_id, votes, created_at, author and body from comments table
+  // need to accept queries containing:
+  // sort_by -> any valid column (default to created_at)
+  // order -> asc or desc (default to desc)
+};

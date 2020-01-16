@@ -22,11 +22,11 @@
 -- SELECT article_id, votes FROM articles;
 
   -- WHERE comments.article_id = 1
-  INSERT INTO comments (author, article_id, votes, created_at, body)
-  VALUES ('butter_bridge', 1, DEFAULT, CURRENT_TIMESTAMP, 'This is a comment')
-  ;
+--   INSERT INTO comments (author, article_id, votes, created_at, body)
+--   VALUES ('butter_bridge', 1, DEFAULT, CURRENT_TIMESTAMP, 'This is a comment')
+--   ;
 
-SELECT * FROM comments;
+-- SELECT * FROM comments;
 
 
 

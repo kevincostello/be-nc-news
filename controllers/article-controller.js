@@ -1,7 +1,8 @@
 const {
   selectArticles,
   patchArticles,
-  postArticleWithComment
+  postArticleWithComment,
+  selectCommentsByArticleId
 } = require("../models/article-model.js");
 
 const sendArticles = (req, res, next) => {
@@ -39,8 +40,14 @@ const sendArticlesWithComment = (req, res, next) => {
     });
 };
 
+const sendCommentsByArticleId = (req, res, next) => {
+  console.log("In controller get comments by article id");
+  selectCommentsByArticleId();
+};
+
 module.exports = {
   sendArticles,
   sendArticlesToBePatched,
-  sendArticlesWithComment
+  sendArticlesWithComment,
+  sendCommentsByArticleId
 };

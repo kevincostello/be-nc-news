@@ -160,5 +160,11 @@ describe("/api", () => {
           );
         });
     });
+
+    it.only("GETS a status code of 200 and returns an array of comments for a given article id when valid queries are passed in the request", () => {
+      return request(app)
+        .get("/api/articles/1/comments?sort_by=author")
+        .expect(200);
+    });
   });
 });
