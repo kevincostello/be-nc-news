@@ -29,5 +29,6 @@ exports.patchArticles = article => {
     .update("votes", article.inc_votes)
     .then(result => {
       console.log("patching result:", result);
+      return result;
     });
 };

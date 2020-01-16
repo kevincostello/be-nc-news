@@ -59,7 +59,7 @@ describe("/api", () => {
     });
   });
 
-  describe("/articles", () => {
+  describe.only("/articles", () => {
     it("GETS a status code of 200 when passed a valid article id", () => {
       return request(app)
         .get("/api/articles/1")
@@ -115,13 +115,27 @@ describe("/api", () => {
         });
     });
 
-    it.only("PATCHES with a status code of 200 when passed an object containing the vote count change", () => {
+    it("PATCHES with a status code of 200 when passed an object containing the vote count change", () => {
       return request(app)
         .patch("/api/articles")
         .send({ article_id: 1, inc_votes: 10 })
         .expect(200)
         .then(res => {
           expect(res.body).to.be.an("object");
+          expect(res.body).to.have.keys("articles");
+          expect(res.body.articles).to.equal(1);
+        });
+    });
+
+    it("PATCHES with as status code of 400 when passed an object with an invalid value for inc_votes", () => {
+      return request(app)
+        .patch("/api/articles")
+        .send({ article_id: 1, inc_votes: "gobbledygook" })
+        .expect(400)
+        .then(res => {
+          expect(res.body.msg).to.equal(
+            "An invalid value for inc_votes was entered"
+          );
         });
     });
 
