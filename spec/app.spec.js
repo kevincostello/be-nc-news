@@ -76,7 +76,7 @@ describe("/api", () => {
             "topic",
             "author",
             "created_at",
-            "count"
+            "comment_count"
           ]);
         });
     });
@@ -102,7 +102,7 @@ describe("/api", () => {
         .get("/api/articles/1")
         .expect(200)
         .then(res => {
-          expect(Number(res.body.articles[0].count)).to.equal(13);
+          expect(Number(res.body.articles[0].comment_count)).to.equal(13);
         });
     });
 
@@ -111,7 +111,7 @@ describe("/api", () => {
         .get("/api/articles/3")
         .expect(200)
         .then(res => {
-          expect(Number(res.body.articles[0].count)).to.equal(0);
+          expect(Number(res.body.articles[0].comment_count)).to.equal(0);
         });
     });
   });
