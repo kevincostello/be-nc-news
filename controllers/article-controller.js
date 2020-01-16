@@ -1,4 +1,8 @@
-const { selectArticles, patchArticles } = require("../models/article-model.js");
+const {
+  selectArticles,
+  patchArticles,
+  postArticleWithComment
+} = require("../models/article-model.js");
 
 const sendArticles = (req, res, next) => {
   console.log("In controller");
@@ -13,7 +17,7 @@ const sendArticles = (req, res, next) => {
 
 const sendArticlesToBePatched = (req, res, next) => {
   console.log("In controller");
-  patchArticles(req.body)
+  patchArticles(req.body, req.params)
     .then(articles => {
       res.status(200).send({ articles });
     })
@@ -22,4 +26,13 @@ const sendArticlesToBePatched = (req, res, next) => {
     });
 };
 
-module.exports = { sendArticles, sendArticlesToBePatched };
+const sendArticlesWithComment = (req, res, next) => {
+  console.log("In controller comment", Object.keys(req), req.body, req.params);
+  postArticleWithComment(req.body, req.params);
+};
+
+module.exports = {
+  sendArticles,
+  sendArticlesToBePatched,
+  sendArticlesWithComment
+};

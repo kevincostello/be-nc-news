@@ -21,14 +21,21 @@ exports.selectArticles = article => {
     });
 };
 
-exports.patchArticles = article => {
+exports.patchArticles = (body, params) => {
   console.log("im in the models");
   return db
     .from("articles")
-    .where("articles.article_id", article.article_id)
-    .update("votes", article.inc_votes)
+    .where("articles.article_id", params.article_id)
+    .increment("votes", body.inc_votes)
     .then(result => {
       console.log("patching result:", result);
       return result;
     });
+};
+
+exports.postArticleWithComment = (body, params) => {
+  console.log("im in the models", body, params);
+  // need to create a comment id
+  // need to create votes with default value
+  // need to create created at value
 };

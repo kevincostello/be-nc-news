@@ -65,7 +65,6 @@ describe("/api", () => {
         .get("/api/articles/1")
         .expect(200)
         .then(res => {
-          console.log(res.body);
           expect(res.body).to.be.an("object");
           expect(res.body.articles).to.be.an("array");
           expect(res.body.articles[0]).to.contain.keys([
@@ -115,10 +114,10 @@ describe("/api", () => {
         });
     });
 
-    it("PATCHES with a status code of 200 when passed an object containing the vote count change", () => {
+    it.only("PATCHES with a status code of 200 when passed an object containing the vote count change", () => {
       return request(app)
-        .patch("/api/articles")
-        .send({ article_id: 1, inc_votes: 10 })
+        .patch("/api/articles/1")
+        .send({ inc_votes: 9999 })
         .expect(200)
         .then(res => {
           expect(res.body).to.be.an("object");
@@ -127,10 +126,10 @@ describe("/api", () => {
         });
     });
 
-    it("PATCHES with as status code of 400 when passed an object with an invalid value for inc_votes", () => {
+    it.only("PATCHES with as status code of 400 when passed an object with an invalid value for inc_votes", () => {
       return request(app)
-        .patch("/api/articles")
-        .send({ article_id: 1, inc_votes: "gobbledygook" })
+        .patch("/api/articles/1")
+        .send({ inc_votes: "gobbledygook" })
         .expect(400)
         .then(res => {
           expect(res.body.msg).to.equal(
@@ -139,8 +138,11 @@ describe("/api", () => {
         });
     });
 
-    it("POSTS a comment with status code of 200 when passed an object containing the comment", () => {
-      return request(app).post("/api/articles/1/Thisisacomment");
+    it("POSTS a comment with status code of 201 when passed an object containing the comment", () => {
+      return request(app)
+        .post("/api/articles/1/comments")
+        .send({ username: "butter_bridge", body: "This is a comment" })
+        .expect(201);
     });
   });
 });
