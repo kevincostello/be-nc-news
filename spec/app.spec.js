@@ -114,19 +114,18 @@ describe("/api", () => {
         });
     });
 
-    it.only("PATCHES with a status code of 200 when passed an object containing the vote count change", () => {
+    it("PATCHES with a status code of 200 when passed an object containing the vote count change", () => {
       return request(app)
         .patch("/api/articles/1")
         .send({ inc_votes: 9999 })
         .expect(200)
         .then(res => {
           expect(res.body).to.be.an("object");
-          expect(res.body).to.have.keys("articles");
-          expect(res.body.articles).to.equal(1);
+          expect(res.body.articles[0].votes).to.equal(10099);
         });
     });
 
-    it.only("PATCHES with as status code of 400 when passed an object with an invalid value for inc_votes", () => {
+    it("PATCHES with as status code of 400 when passed an object with an invalid value for inc_votes", () => {
       return request(app)
         .patch("/api/articles/1")
         .send({ inc_votes: "gobbledygook" })
@@ -138,7 +137,7 @@ describe("/api", () => {
         });
     });
 
-    it("POSTS a comment with status code of 201 when passed an object containing the comment", () => {
+    it.only("POSTS a comment with status code of 201 when passed an object containing the comment", () => {
       return request(app)
         .post("/api/articles/1/comments")
         .send({ username: "butter_bridge", body: "This is a comment" })

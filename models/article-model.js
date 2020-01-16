@@ -26,11 +26,13 @@ exports.patchArticles = (body, params) => {
   return db
     .from("articles")
     .where("articles.article_id", params.article_id)
-    .increment("votes", body.inc_votes)
+    .increment("votes", body.inc_votes || 0)
+    .returning("*")
     .then(result => {
-      console.log("patching result:", result);
+      console.log("patching result is completed");
       return result;
     });
+  // need to use selectArticles model to return the updated article, how can I do this?
 };
 
 exports.postArticleWithComment = (body, params) => {
