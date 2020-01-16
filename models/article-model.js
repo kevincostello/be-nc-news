@@ -22,11 +22,11 @@ exports.selectArticles = article => {
 };
 
 exports.patchArticles = article => {
-  console.log("im in the models", article);
+  console.log("im in the models");
   return db
     .from("articles")
     .where("articles.article_id", article.article_id)
-    .update("votes", article.new_votes)
+    .update("votes", article.inc_votes)
     .then(result => {
       console.log("patching result:", result);
     });

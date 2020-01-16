@@ -12,8 +12,8 @@ const sendArticles = (req, res, next) => {
 };
 
 const sendArticlesToBePatched = (req, res, next) => {
-  console.log("In controller", req.params);
-  patchArticles(req.params)
+  console.log("In controller");
+  patchArticles(req.body)
     .then(articles => {
       res.status(200).send({ articles });
     })

@@ -117,7 +117,8 @@ describe("/api", () => {
 
     it.only("PATCHES with a status code of 200 when passed an object containing the vote count change", () => {
       return request(app)
-        .patch("/api/articles/1/10")
+        .patch("/api/articles")
+        .send({ article_id: 1, inc_votes: 10 })
         .expect(200)
         .then(res => {
           expect(res.body).to.be.an("object");
