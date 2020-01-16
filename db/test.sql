@@ -10,3 +10,8 @@ SELECT articles.article_id, count(comment_id) FROM articles JOIN comments ON art
 SELECT distinct article_id FROM comments;
 
 SELECT article_id FROM articles;
+
+UPDATE articles 
+SET votes = 999999 + 10 
+WHERE article_id = 1;
+

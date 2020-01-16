@@ -123,5 +123,9 @@ describe("/api", () => {
           expect(res.body).to.be.an("object");
         });
     });
+
+    it("POSTS a comment with status code of 200 when passed an object containing the comment", () => {
+      return request(app).post("/api/articles/1/Thisisacomment");
+    });
   });
 });
