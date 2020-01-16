@@ -95,5 +95,12 @@ describe("/api", () => {
           expect(res.body.msg).to.equal("The article id is not in the database")
         );
     });
+
+    it("GETS a status code of 200 and creates the comment count correctly when passed a valid article id", () => {
+      return request(app)
+        .get("/api/articles/1")
+        .expect(200)
+        .then(res => expect(res.body.commentCount).to.equal(13));
+    });
   });
 });
