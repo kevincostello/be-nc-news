@@ -148,5 +148,17 @@ describe("/api", () => {
           );
         });
     });
+
+    it("POSTS a status code of 404 when the passed article_id is not on the database", () => {
+      return request(app)
+        .post("/api/articles/100/comments")
+        .send({ username: "butter_bridge", body: "This is a comment" })
+        .expect(404)
+        .then(res => {
+          expect(res.body.msg).to.equal(
+            "The article id is not in the database"
+          );
+        });
+    });
   });
 });
