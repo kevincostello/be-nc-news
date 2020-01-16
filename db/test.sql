@@ -15,11 +15,18 @@
 
 -- SELECT article_id FROM articles;
 
-UPDATE articles 
-SET votes = votes + 10 
-WHERE article_id = 1;
+-- UPDATE articles 
+-- SET votes = votes + 10 
+-- WHERE article_id = 1;
 
-SELECT article_id, votes FROM articles;
+-- SELECT article_id, votes FROM articles;
+
+  -- WHERE comments.article_id = 1
+  INSERT INTO comments (author, article_id, votes, created_at, body)
+  VALUES ('butter_bridge', 1, DEFAULT, CURRENT_TIMESTAMP, 'This is a comment')
+  ;
+
+SELECT * FROM comments;
 
 
 
