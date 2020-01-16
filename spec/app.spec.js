@@ -68,7 +68,7 @@ describe("/api", () => {
           console.log(res.body);
           expect(res.body).to.be.an("object");
           expect(res.body.articles).to.be.an("array");
-          expect(res.body.articles[0]).to.have.keys([
+          expect(res.body.articles[0]).to.contain.keys([
             "article_id",
             "title",
             "body",

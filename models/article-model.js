@@ -2,35 +2,24 @@ const db = require("../db/connection");
 
 exports.selectArticles = article => {
   console.log("im in the models", article);
-  return (
-    db
-      .select(
-        "author",
-        "title",
-        "articles.article_id",
-        "body",
-        "topic",
-        "created_at",
-        "votes"
-        // ,count("comments.comment_id")
-      )
-      .from("articles")
-      .where("articles.article_id", article.article_id)
-      // .join("comments", "articles.article.id", "=", "comments.article_id")
-      // .groupBy("articles.article_id")
-      .then(result => {
-        if (result.length === 0) {
-          console.log(result, "<<<<<<<< This is the empty array error");
-          return Promise.reject({
-            status: 404,
-            msg: "The article id is not in the database"
-          });
-        } else {
-          console.log("Result of join is:", result);
-          return result;
-        }
-      })
-  );
+  return db
+    .select("articles.*")
+    .from("articles")
+    .count("comments.comment_id")
+    .join("comments", "articles.article_id", "=", "comments.article_id")
+    .where("articles.article_id", article.article_id)
+    .groupBy("articles.article_id")
+    .then(result => {
+      if (result.length === 0) {
+        console.log(result, "<<<<<<<< This is the empty array error");
+        return Promise.reject({
+          status: 404,
+          msg: "The article id is not in the database"
+        });
+      } else {
+        return result;
+      }
+    });
 };
 
 // .modify(query => {
