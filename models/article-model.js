@@ -36,11 +36,8 @@ exports.patchArticles = (body, params) => {
 };
 
 exports.postArticleWithComment = (body, params) => {
-  console.log("im in the models - post", body, params);
-  // need to insert data into comments table
-  // need to create a comment id
-  // need to create votes with default value
-  // need to create created at value - psql date function or JS Date.now()
+  console.log("im in the models - post");
+  // votes and created_at will be given default values so they do not need to be inserted
   const toInsert = {
     author: body.username,
     article_id: params.article_id,
@@ -51,7 +48,7 @@ exports.postArticleWithComment = (body, params) => {
     .into("comments")
     .returning("*")
     .then(res => {
-      console.log("Am I in the post then?", res);
+      console.log("Am I in the post then?");
       return res;
     });
 };

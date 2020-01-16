@@ -27,10 +27,12 @@ const sendArticlesToBePatched = (req, res, next) => {
 };
 
 const sendArticlesWithComment = (req, res, next) => {
-  console.log("In controller comment", Object.keys(req), req.body, req.params);
+  console.log("In controller comment");
   postArticleWithComment(req.body, req.params)
     .then(newComment => {
-      res.status(201).send({ newComment });
+      res
+        .status(201)
+        .send({ newComment, msg: "Your comment was posted on the article" });
     })
     .catch(err => {
       next(err);

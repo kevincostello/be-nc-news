@@ -137,11 +137,16 @@ describe("/api", () => {
         });
     });
 
-    it.only("POSTS a comment with status code of 201 when passed an object containing the comment", () => {
+    it("POSTS a comment with status code of 201 when passed an object containing the comment", () => {
       return request(app)
         .post("/api/articles/1/comments")
         .send({ username: "butter_bridge", body: "This is a comment" })
-        .expect(201);
+        .expect(201)
+        .then(res => {
+          expect(res.body.msg).to.equal(
+            "Your comment was posted on the article"
+          );
+        });
     });
   });
 });
