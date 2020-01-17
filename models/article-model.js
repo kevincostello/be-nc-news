@@ -112,6 +112,7 @@ exports.selectAllArticles = () => {
     .count("comments.comment_id as comment_count")
     .leftJoin("comments", "articles.article_id", "=", "comments.article_id")
     .groupBy("articles.article_id")
+    .orderBy("articles.created_at", "desc")
     .then(result => {
       // if (result.length === 0) {
       //   return Promise.reject({
@@ -119,6 +120,12 @@ exports.selectAllArticles = () => {
       //     msg: "The article id is not in the database"
       //   });
       // } else {
+
+      // convert comment_count to be a number not a string
+      const numericCountArray = result.map(article => {
+        article.comment_count = Number(article.comment_count);
+        return article;
+      });
       return result;
       // }
     });

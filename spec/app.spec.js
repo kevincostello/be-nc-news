@@ -273,7 +273,7 @@ describe("/api", () => {
       });
     });
 
-    it.only("GETS a status code of 200 when passed a valid path to /api/articles", () => {
+    it("GETS a status code of 200 when passed a valid path to /api/articles", () => {
       return request(app)
         .get("/api/articles")
         .expect(200)
@@ -290,7 +290,33 @@ describe("/api", () => {
             "comment_count"
           ]);
           expect(Number(dbResponse.body[2].comment_count)).to.equal(0);
-          expect(Number(dbResponse.body[7].comment_count)).to.equal(13);
+          expect(Number(dbResponse.body[0].comment_count)).to.equal(13);
+        });
+    });
+
+    it("GETS a status code of 404 when passed an invalid path to /api/articles", () => {
+      return request(app)
+        .get("/api/articless")
+        .expect(404)
+        .then(res => {
+          expect(res.body.msg).to.equal("Path is misspelt");
+        });
+    });
+
+    it("GETS a status code of 200 when passed a valid path and sorts by the default column and default order by", () => {
+      return request(app)
+        .get("/api/articles")
+        .expect(200)
+        .then(dbResponse => {
+          expect(dbResponse.body).to.be.sortedBy("created_at", {
+            descending: true
+          });
+          expect(dbResponse.body.length).to.equal(12);
+          expect(
+            dbResponse.body[dbResponse.body.length - 1].article_id
+          ).to.equal(12);
+          expect(dbResponse.body[0].article_id).to.equal(1);
+          expect(dbResponse.body[8].comment_count).to.equal(2);
         });
     });
   });
