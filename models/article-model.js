@@ -54,7 +54,6 @@ exports.postArticleWithComment = (body, params) => {
 };
 
 exports.selectCommentsByArticleId = (params, query) => {
-  console.log("im in the models - get");
   // articles and comments tables will need to be joined by article_id
   // need to select comment_id, votes, created_at, author and body from comments table
   // need to accept queries containing:
@@ -74,10 +73,16 @@ exports.selectCommentsByArticleId = (params, query) => {
     .where("articles.article_id", params.article_id)
     .orderBy(query.sort_by || "comments.created_at", query.order_by || "desc")
     .then(result => {
+      console.log("in models - GET - result");
       if (result.length === 0) {
         return Promise.reject({
           status: 404,
           msg: "The article id is not in the database"
+        });
+      } else if (query.order_by !== undefined && query.order_by !== "asc") {
+        return Promise.reject({
+          status: 400,
+          msg: "Invalid order_by value"
         });
       } else {
         return result;

@@ -138,7 +138,7 @@ describe("/api", () => {
         });
     });
 
-    describe.only("/:article_id/comments", () => {
+    describe("/:article_id/comments", () => {
       it("POSTS a comment with status code of 201 when passed an object containing the comment", () => {
         return request(app)
           .post("/api/articles/1/comments")
@@ -254,12 +254,21 @@ describe("/api", () => {
           });
       });
 
-      it.only("GETS a status code of 400 with message of invalid column for sort_by when passed an invalid column for sort_by ", () => {
+      it("GETS a status code of 400 with message of invalid column for sort_by when passed an invalid column for sort_by ", () => {
         return request(app)
           .get("/api/articles/1/comments?sort_by=authorrs")
           .expect(400)
           .then(dbResponse => {
             expect(dbResponse.body.msg).to.equal("Invalid column for sort_by");
+          });
+      });
+
+      it("GETS a status code of 400 with message of invalid order_by value when passed an invalid order_by value ", () => {
+        return request(app)
+          .get("/api/articles/1/comments?order_by=gobbledygook")
+          .expect(400)
+          .then(dbResponse => {
+            expect(dbResponse.body.msg).to.equal("Invalid order_by value");
           });
       });
     });
