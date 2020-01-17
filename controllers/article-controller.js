@@ -54,7 +54,7 @@ const sendCommentsByArticleId = (req, res, next) => {
 
 const sendAllArticles = (req, res, next) => {
   console.log("In sendAllArticles");
-  selectAllArticles()
+  selectAllArticles(req.query)
     .then(allArticles => {
       res.status(200).send(allArticles);
     })

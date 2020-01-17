@@ -90,8 +90,8 @@ exports.selectCommentsByArticleId = (params, query) => {
     });
 };
 
-exports.selectAllArticles = () => {
-  console.log("In selectAllArticles");
+exports.selectAllArticles = query => {
+  console.log("In selectAllArticles", query);
   // need to return an array of article objects containing:
   // author, title, article_id, topic, created_at, votes and comment_count -> need to join articles and comments
   // Also accepts the following queries:
@@ -112,7 +112,7 @@ exports.selectAllArticles = () => {
     .count("comments.comment_id as comment_count")
     .leftJoin("comments", "articles.article_id", "=", "comments.article_id")
     .groupBy("articles.article_id")
-    .orderBy("articles.created_at", "desc")
+    .orderBy(query.sort_by || "articles.created_at", "desc")
     .then(result => {
       // if (result.length === 0) {
       //   return Promise.reject({
