@@ -332,7 +332,7 @@ describe("/api", () => {
         });
     });
 
-    it.only("GETS a status code of 200 and returns an array of sorted articles by the title fwhen valid queries are passed in the request with a valid column as the sort by column and order by value is asc", () => {
+    it("GETS a status code of 200 and returns an array of sorted articles by the title fwhen valid queries are passed in the request with a valid column as the sort by column and order by value is asc", () => {
       return request(app)
         .get("/api/articles/?sort_by=title&order_by=asc")
         .expect(200)
@@ -341,6 +341,52 @@ describe("/api", () => {
             descending: false
           });
           expect(dbResponse.body[0].article_id).to.equal(6);
+        });
+    });
+
+    it("GETS a status code of 200 and returns an array of sorted articles by the title filtered by author when passedwhen valid queries are passed in the request with a valid column as the sort by column and order by value is asc and a valid value for author", () => {
+      return request(app)
+        .get("/api/articles/?sort_by=title&order_by=asc&author=butter_bridge")
+        .expect(200)
+        .then(dbResponse => {
+          expect(dbResponse.body).to.be.sortedBy("title", {
+            descending: false
+          });
+          expect(dbResponse.body[0].author).to.equal("butter_bridge");
+          expect(dbResponse.body.length).to.equal(3);
+          expect(dbResponse.body[1].comment_count).to.equal(0);
+        });
+    });
+
+    it("GETS a status code of 200 and returns an array of sorted articles by the title filtered by topic when passed valid queries are passed in the request with a valid column as the sort by column and order by value is asc and a valid value for topic", () => {
+      return request(app)
+        .get(
+          "/api/articles/?sort_by=title&order_by=asc&topic=mitch&author=butter_bridge"
+        )
+        .expect(200)
+        .then(dbResponse => {
+          expect(dbResponse.body).to.be.sortedBy("title", {
+            descending: false
+          });
+          expect(dbResponse.body[0].topic).to.equal("mitch");
+          expect(dbResponse.body.length).to.equal(3);
+          expect(dbResponse.body[0].comment_count).to.equal(13);
+        });
+    });
+
+    it("GETS a status code of 200 and returns an array of sorted articles by the title filtered by topic but not filterd by author when passed valid queries are passed in the request with a valid column as the sort by column and order by value is asc and a valid value for topic", () => {
+      return request(app)
+        .get("/api/articles/?sort_by=title&order_by=asc&topic=mitch")
+        .expect(200)
+        .then(dbResponse => {
+          expect(dbResponse.body).to.be.sortedBy("title", {
+            descending: false
+          });
+          expect(dbResponse.body[0].topic).to.equal("mitch");
+          expect(dbResponse.body.length).to.equal(11);
+          expect(
+            dbResponse.body[dbResponse.body.length - 2].comment_count
+          ).to.equal(2);
         });
     });
   });

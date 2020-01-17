@@ -99,34 +99,46 @@ exports.selectAllArticles = query => {
   // order (defaults to desc)
   // author - filters by value
   // topic - filters by topic
-  return db
-    .select(
-      "articles.article_id",
-      "articles.author",
-      "articles.title",
-      "articles.topic",
-      "articles.created_at",
-      "articles.votes"
-    )
-    .from("articles")
-    .count("comments.comment_id as comment_count")
-    .leftJoin("comments", "articles.article_id", "=", "comments.article_id")
-    .groupBy("articles.article_id")
-    .orderBy(query.sort_by || "articles.created_at", query.order_by || "desc")
-    .then(result => {
-      // if (result.length === 0) {
-      //   return Promise.reject({
-      //     status: 404,
-      //     msg: "The article id is not in the database"
-      //   });
-      // } else {
+  return (
+    db
+      .select(
+        "articles.article_id",
+        "articles.author",
+        "articles.title",
+        "articles.topic",
+        "articles.created_at",
+        "articles.votes"
+      )
+      .from("articles")
+      .count("comments.comment_id as comment_count")
+      .leftJoin("comments", "articles.article_id", "=", "comments.article_id")
+      .groupBy("articles.article_id")
+      .orderBy(query.sort_by || "articles.created_at", query.order_by || "desc")
+      .modify(sqlQuery => {
+        // console.log("This is the query", user);
+        if (query.author) {
+          sqlQuery.where("articles.author", query.author);
+        } else if (query.topic) {
+          sqlQuery.where("articles.topic", query.topic);
+        }
+      })
+      // .where("articles.author", query.author)
+      .then(result => {
+        console.log("result in GET is:", result);
+        // if (result.length === 0) {
+        //   return Promise.reject({
+        //     status: 404,
+        //     msg: "The article id is not in the database"
+        //   });
+        // } else {
 
-      // convert comment_count to be a number not a string
-      const numericCountArray = result.map(article => {
-        article.comment_count = Number(article.comment_count);
-        return article;
-      });
-      return result;
-      // }
-    });
+        // convert comment_count to be a number not a string
+        const numericCountArray = result.map(article => {
+          article.comment_count = Number(article.comment_count);
+          return article;
+        });
+        return result;
+        // }
+      })
+  );
 };
