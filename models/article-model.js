@@ -53,11 +53,33 @@ exports.postArticleWithComment = (body, params) => {
     });
 };
 
-exports.selectCommentsByArticleId = () => {
+exports.selectCommentsByArticleId = (params, query) => {
   console.log("im in the models - get");
   // articles and comments tables will need to be joined by article_id
   // need to select comment_id, votes, created_at, author and body from comments table
   // need to accept queries containing:
   // sort_by -> any valid column (default to created_at)
   // order -> asc or desc (default to desc)
+  return db
+    .select(
+      "articles.article_id",
+      "comments.comment_id",
+      "comments.votes",
+      "comments.created_at",
+      "comments.author",
+      "comments.body"
+    )
+    .from("articles")
+    .leftJoin("comments", "articles.article_id", "=", "comments.article_id")
+    .where("articles.article_id", params.article_id)
+    .then(result => {
+      if (result.length === 0) {
+        return Promise.reject({
+          status: 404,
+          msg: "The article id is not in the database"
+        });
+      } else {
+        return result;
+      }
+    });
 };

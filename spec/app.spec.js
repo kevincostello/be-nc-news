@@ -164,7 +164,20 @@ describe("/api", () => {
     it.only("GETS a status code of 200 and returns an array of comments for a given article id when valid queries are passed in the request", () => {
       return request(app)
         .get("/api/articles/1/comments?sort_by=author")
-        .expect(200);
+        .expect(200)
+        .then(dbResponse => {
+          expect(dbResponse.body).to.be.an("array");
+          expect(dbResponse.body[0]).to.be.an("object");
+          expect(dbResponse.body.length).to.equal(13);
+          expect(dbResponse.body[0]).to.have.keys([
+            "article_id",
+            "comment_id",
+            "body",
+            "votes",
+            "author",
+            "created_at"
+          ]);
+        });
     });
   });
 });

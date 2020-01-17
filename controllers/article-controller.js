@@ -42,7 +42,13 @@ const sendArticlesWithComment = (req, res, next) => {
 
 const sendCommentsByArticleId = (req, res, next) => {
   console.log("In controller get comments by article id");
-  selectCommentsByArticleId();
+  selectCommentsByArticleId(req.params, req.query)
+    .then(allComments => {
+      res.status(200).send(allComments);
+    })
+    .catch(err => {
+      next(err);
+    });
 };
 
 module.exports = {
