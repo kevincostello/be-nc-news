@@ -112,7 +112,7 @@ exports.selectAllArticles = query => {
     .count("comments.comment_id as comment_count")
     .leftJoin("comments", "articles.article_id", "=", "comments.article_id")
     .groupBy("articles.article_id")
-    .orderBy(query.sort_by || "articles.created_at", "desc")
+    .orderBy(query.sort_by || "articles.created_at", query.order_by || "desc")
     .then(result => {
       // if (result.length === 0) {
       //   return Promise.reject({

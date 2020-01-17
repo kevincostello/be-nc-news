@@ -44,7 +44,7 @@
 SELECT articles.article_id, articles.title ,count(comments.comment_id)
 FROM articles LEFT JOIN comments ON articles.article_id = comments.article_id
 GROUP BY articles.article_id
-ORDER BY articles.title DESC
+ORDER BY articles.title ASC
 
 ;
 
