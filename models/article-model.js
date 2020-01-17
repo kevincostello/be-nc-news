@@ -116,6 +116,7 @@ exports.selectAllArticles = query => {
       .orderBy(query.sort_by || "articles.created_at", query.order_by || "desc")
       .modify(sqlQuery => {
         // console.log("This is the query", user);
+        // need to filter for both query.author and query.topic if passed both in query
         if (query.author) {
           sqlQuery.where("articles.author", query.author);
         } else if (query.topic) {
