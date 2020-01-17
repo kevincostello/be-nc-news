@@ -126,21 +126,24 @@ exports.selectAllArticles = query => {
       })
       // .where("articles.author", query.author)
       .then(result => {
-        console.log("result in GET is:", result);
-        // if (result.length === 0) {
-        //   return Promise.reject({
-        //     status: 404,
-        //     msg: "The article id is not in the database"
-        //   });
-        // } else {
-
-        // convert comment_count to be a number not a string
-        const numericCountArray = result.map(article => {
-          article.comment_count = Number(article.comment_count);
-          return article;
-        });
-        return result;
-        // }
+        if (result.length === 0) {
+          return Promise.reject({
+            status: 404,
+            msg: "Invalid query passed"
+          });
+        } else if (query.order_by !== undefined && query.order_by !== "asc") {
+          return Promise.reject({
+            status: 400,
+            msg: "Invalid order_by value"
+          });
+        } else {
+          // convert comment_count to be a number not a string
+          const numericCountArray = result.map(article => {
+            article.comment_count = Number(article.comment_count);
+            return article;
+          });
+          return result;
+        }
       })
   );
 };

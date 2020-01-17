@@ -403,5 +403,50 @@ describe("/api", () => {
           expect(dbResponse.body[2].comment_count).to.equal(2);
         });
     });
+
+    it("GETS a status code of 404 when passed an author name not in the database", () => {
+      return request(app)
+        .get("/api/articles/?author=rogersopp")
+        .expect(404)
+        .then(res => {
+          expect(res.body.msg).to.equal("Invalid query passed");
+        });
+    });
+
+    it("GETS a status code of 404 when passed a title not in the database", () => {
+      return request(app)
+        .get("/api/articles/?topic=gobbledygook")
+        .expect(404)
+        .then(res => {
+          expect(res.body.msg).to.equal("Invalid query passed");
+        });
+    });
+
+    it("GETS a status code of 404 when passed an author and a title not in the database", () => {
+      return request(app)
+        .get("/api/articles/?author=noauthor&topic=gobbledygook")
+        .expect(404)
+        .then(res => {
+          expect(res.body.msg).to.equal("Invalid query passed");
+        });
+    });
+
+    it("GETS a status code of 400 when passed sort_by column not on the database", () => {
+      return request(app)
+        .get("/api/articles/?sort_by=gobbledygook")
+        .expect(400)
+        .then(res => {
+          expect(res.body.msg).to.equal("Invalid column for sort_by");
+        });
+    });
+
+    it("GETS a status code of 400 when passed invalid order by value", () => {
+      return request(app)
+        .get("/api/articles/?order_by=gobbledygook")
+        .expect(400)
+        .then(res => {
+          expect(res.body.msg).to.equal("Invalid order_by value");
+        });
+    });
   });
 });

@@ -23,7 +23,7 @@ app.use(function(err, req, res, next) {
   } else if (err.code === "42703") {
     res.status(400).send({ msg: "Invalid column for sort_by" });
   } else {
-    console.log("in default 4 parameter error handler", err);
+    console.log("in default 4 parameter error handler");
     res.status(err.status).send(err);
   }
 });
