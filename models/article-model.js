@@ -72,7 +72,7 @@ exports.selectCommentsByArticleId = (params, query) => {
     .from("articles")
     .leftJoin("comments", "articles.article_id", "=", "comments.article_id")
     .where("articles.article_id", params.article_id)
-    .orderBy(query.sort_by, "comments.created_at", "desc")
+    .orderBy(query.sort_by || "comments.created_at", "desc")
     .then(result => {
       if (result.length === 0) {
         return Promise.reject({

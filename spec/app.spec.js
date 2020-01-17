@@ -138,94 +138,96 @@ describe("/api", () => {
         });
     });
 
-    it("POSTS a comment with status code of 201 when passed an object containing the comment", () => {
-      return request(app)
-        .post("/api/articles/1/comments")
-        .send({ username: "butter_bridge", body: "This is a comment" })
-        .expect(201)
-        .then(res => {
-          expect(res.body.msg).to.equal(
-            "Your comment was posted on the article"
-          );
-        });
-    });
-
-    it("POSTS a status code of 404 when the passed article_id is not on the database", () => {
-      return request(app)
-        .post("/api/articles/100/comments")
-        .send({ username: "butter_bridge", body: "This is a comment" })
-        .expect(404)
-        .then(res => {
-          expect(res.body.msg).to.equal(
-            "The article id is not in the database"
-          );
-        });
-    });
-
-    it("GETS a status code of 200 and returns an array of comments for a given article id when valid queries are passed in the request", () => {
-      return request(app)
-        .get("/api/articles/1/comments?sort_by=author")
-        .expect(200)
-        .then(dbResponse => {
-          expect(dbResponse.body).to.be.an("array");
-          expect(dbResponse.body[0]).to.be.an("object");
-          expect(dbResponse.body.length).to.equal(13);
-          expect(dbResponse.body[0]).to.have.keys([
-            "article_id",
-            "comment_id",
-            "body",
-            "votes",
-            "author",
-            "created_at"
-          ]);
-        });
-    });
-
-    it("GETS a status code of 200 and returns an array of sorted comments by the created_at for a given article id when valid queries are passed in the request with created_at as the sort by column and desc as the order by value", () => {
-      return request(app)
-        .get("/api/articles/1/comments")
-        .expect(200)
-        .then(dbResponse => {
-          expect(dbResponse.body).to.be.an("array");
-          expect(dbResponse.body[0]).to.be.an("object");
-          expect(dbResponse.body.length).to.equal(13);
-          expect(dbResponse.body[0]).to.have.keys([
-            "article_id",
-            "comment_id",
-            "body",
-            "votes",
-            "author",
-            "created_at"
-          ]);
-          expect(dbResponse.body).to.be.sortedBy("created_at", {
-            descending: true
+    describe.only("/:article_id/comments", () => {
+      it("POSTS a comment with status code of 201 when passed an object containing the comment", () => {
+        return request(app)
+          .post("/api/articles/1/comments")
+          .send({ username: "butter_bridge", body: "This is a comment" })
+          .expect(201)
+          .then(res => {
+            expect(res.body.msg).to.equal(
+              "Your comment was posted on the article"
+            );
           });
-        });
-    });
+      });
 
-    it.only("GETS a status code of 200 and returns an array of sorted comments by the created_at for a given article id when valid queries are passed in the request with a valid column as the sort by column and default order by value", () => {
-      return request(app)
-        .get("/api/articles/1/comments?sort_by=author")
-        .expect(200)
-        .then(dbResponse => {
-          expect(dbResponse.body).to.be.an("array");
-          expect(dbResponse.body[0]).to.be.an("object");
-          expect(dbResponse.body.length).to.equal(13);
-          expect(dbResponse.body[0]).to.have.keys([
-            "article_id",
-            "comment_id",
-            "body",
-            "votes",
-            "author",
-            "created_at"
-          ]);
-          expect(dbResponse.body).to.be.sortedBy("author", {
-            descending: false
+      it("POSTS a status code of 404 when the passed article_id is not on the database", () => {
+        return request(app)
+          .post("/api/articles/100/comments")
+          .send({ username: "butter_bridge", body: "This is a comment" })
+          .expect(404)
+          .then(res => {
+            expect(res.body.msg).to.equal(
+              "The article id is not in the database"
+            );
           });
-          expect(dbResponse.body[dbResponse.body.length - 1].author).to.equal(
-            "icellusedkars"
-          );
-        });
+      });
+
+      it("GETS a status code of 200 and returns an array of comments for a given article id when valid queries are passed in the request", () => {
+        return request(app)
+          .get("/api/articles/1/comments?sort_by=author")
+          .expect(200)
+          .then(dbResponse => {
+            expect(dbResponse.body).to.be.an("array");
+            expect(dbResponse.body[0]).to.be.an("object");
+            expect(dbResponse.body.length).to.equal(13);
+            expect(dbResponse.body[0]).to.have.keys([
+              "article_id",
+              "comment_id",
+              "body",
+              "votes",
+              "author",
+              "created_at"
+            ]);
+          });
+      });
+
+      it("GETS a status code of 200 and returns an array of sorted comments by the created_at for a given article id when valid queries are passed in the request with created_at as the sort by column and desc as the order by value", () => {
+        return request(app)
+          .get("/api/articles/1/comments")
+          .expect(200)
+          .then(dbResponse => {
+            expect(dbResponse.body).to.be.an("array");
+            expect(dbResponse.body[0]).to.be.an("object");
+            expect(dbResponse.body.length).to.equal(13);
+            expect(dbResponse.body[0]).to.have.keys([
+              "article_id",
+              "comment_id",
+              "body",
+              "votes",
+              "author",
+              "created_at"
+            ]);
+            expect(dbResponse.body).to.be.sortedBy("created_at", {
+              descending: true
+            });
+          });
+      });
+
+      it("GETS a status code of 200 and returns an array of sorted comments by the created_at for a given article id when valid queries are passed in the request with a valid column as the sort by column and default order by value", () => {
+        return request(app)
+          .get("/api/articles/1/comments?sort_by=author")
+          .expect(200)
+          .then(dbResponse => {
+            expect(dbResponse.body).to.be.an("array");
+            expect(dbResponse.body[0]).to.be.an("object");
+            expect(dbResponse.body.length).to.equal(13);
+            expect(dbResponse.body[0]).to.have.keys([
+              "article_id",
+              "comment_id",
+              "body",
+              "votes",
+              "author",
+              "created_at"
+            ]);
+            expect(dbResponse.body).to.be.sortedBy("author", {
+              descending: true
+            });
+            expect(dbResponse.body[dbResponse.body.length - 1].author).to.equal(
+              "butter_bridge"
+            );
+          });
+      });
     });
   });
 });
