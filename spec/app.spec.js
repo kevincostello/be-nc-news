@@ -228,6 +228,31 @@ describe("/api", () => {
             );
           });
       });
+
+      it.only("GETS a status code of 200 and returns an array of sorted comments by the created_at for a given article id when valid queries are passed in the request with a valid column as the sort by column and order by value is asc", () => {
+        return request(app)
+          .get("/api/articles/1/comments?sort_by=author&order_by=asc")
+          .expect(200)
+          .then(dbResponse => {
+            expect(dbResponse.body).to.be.an("array");
+            expect(dbResponse.body[0]).to.be.an("object");
+            expect(dbResponse.body.length).to.equal(13);
+            expect(dbResponse.body[0]).to.have.keys([
+              "article_id",
+              "comment_id",
+              "body",
+              "votes",
+              "author",
+              "created_at"
+            ]);
+            expect(dbResponse.body).to.be.sortedBy("author", {
+              descending: false
+            });
+            expect(dbResponse.body[dbResponse.body.length - 1].author).to.equal(
+              "icellusedkars"
+            );
+          });
+      });
     });
   });
 });
