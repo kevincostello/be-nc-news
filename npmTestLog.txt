@@ -1,0 +1,417 @@
+
+> be-nc-news@1.0.0 test /Users/kevincostello/Northcoders/Backend/be-nc-news
+> mocha spec/app.spec.js
+
+topicsRouter
+usersRouter
+articlesRouter
+
+
+  /api
+    /topics
+test
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller
+im in the models
+      ✓ GET responds with status code of 200 and returns array of topics
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+in 3 parameter 404 error log
+      ✓ GET responds with status code of 404 when the path has a misspelling
+    /users
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+{ username: 'rogersop' }
+In controller
+im in the models { username: 'rogersop' }
+{
+  users: [
+    {
+      username: 'rogersop',
+      avatar_url: 'https://avatars2.githubusercontent.com/u/24394918?s=400&v=4',
+      name: 'paul'
+    }
+  ]
+}
+      ✓ GETS a status code of 200 when a valid username is passed as a parameter in the path
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+{ username: 'gobbledygook' }
+In controller
+im in the models { username: 'gobbledygook' }
+{ status: 404, msg: 'The username does not exist' }
+In 4 parameter error handler
+in default 4 parameter error handler
+      ✓ GETS a status code of 404 when passed an invalid username
+    /articles
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller
+im in the models
+      ✓ GETS a status code of 200 when passed a valid article id
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller
+im in the models
+In 4 parameter error handler
+      ✓ GETS a status code of 400 when passed an invalid article id
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller
+im in the models
+In 4 parameter error handler
+in default 4 parameter error handler
+      ✓ GETS a status code of 404 when passed a valid article id which is not in the database
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller
+im in the models
+      ✓ GETS a status code of 200 and creates the comment count correctly when passed a valid article id
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller
+im in the models
+      ✓ GETS a status code of 200 and creates the comment count of zero when passed a valid article id which is not in the comments table
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller
+im in the models
+patching result is completed
+      ✓ PATCHES with a status code of 200 when passed an object containing the vote count change
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller
+im in the models
+In 4 parameter error handler
+      ✓ PATCHES with as status code of 400 when passed an object with an invalid value for inc_votes
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In sendAllArticles
+In selectAllArticles {}
+      ✓ GETS a status code of 200 when passed a valid path to /api/articles
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+in 3 parameter 404 error log
+      ✓ GETS a status code of 404 when passed an invalid path to /api/articles
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In sendAllArticles
+In selectAllArticles {}
+      ✓ GETS a status code of 200 when passed a valid path and sorts by the default column and default order by
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In sendAllArticles
+In selectAllArticles { sort_by: 'title' }
+      ✓ GETS a status code of 200 and returns an array of sorted articles by the created_at for a given article id when valid queries are passed in the request with a valid column as the sort by column and default order by value
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In sendAllArticles
+In selectAllArticles { sort_by: 'title', order_by: 'asc' }
+      ✓ GETS a status code of 200 and returns an array of sorted articles by the title fwhen valid queries are passed in the request with a valid column as the sort by column and order by value is asc
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In sendAllArticles
+In selectAllArticles { sort_by: 'title', order_by: 'asc', author: 'butter_bridge' }
+      ✓ GETS a status code of 200 and returns an array of sorted articles by the title filtered by author when passedwhen valid queries are passed in the request with a valid column as the sort by column and order by value is asc and a valid value for author
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In sendAllArticles
+In selectAllArticles {
+  sort_by: 'title',
+  order_by: 'asc',
+  topic: 'mitch',
+  author: 'butter_bridge'
+}
+      ✓ GETS a status code of 200 and returns an array of sorted articles by the title filtered by topic when passed valid queries are passed in the request with a valid column as the sort by column and order by value is asc and a valid value for topic
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In sendAllArticles
+In selectAllArticles { sort_by: 'title', order_by: 'asc', topic: 'mitch' }
+      ✓ GETS a status code of 200 and returns an array of sorted articles by the title filtered by topic but not filterd by author when passed valid queries are passed in the request with a valid column as the sort by column and order by value is asc and a valid value for topic
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In sendAllArticles
+In selectAllArticles { sort_by: 'title', order_by: 'asc', author: 'rogersop' }
+      ✓ GETS a status code of 200 and returns an array of sorted articles by the title filtered by topic but not filterd by topic when passed valid queries are passed in the request with a valid column as the sort by column and order by value is asc and a valid value for author
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In sendAllArticles
+In selectAllArticles { author: 'rogersopp' }
+In 4 parameter error handler
+in default 4 parameter error handler
+      ✓ GETS a status code of 404 when passed an author name not in the database
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In sendAllArticles
+In selectAllArticles { topic: 'gobbledygook' }
+In 4 parameter error handler
+in default 4 parameter error handler
+      ✓ GETS a status code of 404 when passed a title not in the database
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In sendAllArticles
+In selectAllArticles { author: 'noauthor', topic: 'gobbledygook' }
+In 4 parameter error handler
+in default 4 parameter error handler
+      ✓ GETS a status code of 404 when passed an author and a title not in the database
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In sendAllArticles
+In selectAllArticles { sort_by: 'gobbledygook' }
+In 4 parameter error handler
+      ✓ GETS a status code of 400 when passed sort_by column not on the database
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In sendAllArticles
+In selectAllArticles { order_by: 'gobbledygook' }
+In 4 parameter error handler
+in default 4 parameter error handler
+      ✓ GETS a status code of 400 when passed invalid order by value
+      /:article_id/comments
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller comment
+im in the models - post
+Am I in the post then?
+        ✓ POSTS a comment with status code of 201 when passed an object containing the comment
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller comment
+im in the models - post
+In 4 parameter error handler
+        ✓ POSTS a status code of 404 when the passed article_id is not on the database
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller get comments by article id
+in models - GET - result
+        ✓ GETS a status code of 200 and returns an array of comments for a given article id when valid queries are passed in the request
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller get comments by article id
+in models - GET - result
+        ✓ GETS a status code of 200 and returns an array of sorted comments by the created_at for a given article id when valid queries are passed in the request with created_at as the sort by column and desc as the order by value
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller get comments by article id
+in models - GET - result
+        ✓ GETS a status code of 200 and returns an array of sorted comments by the created_at for a given article id when valid queries are passed in the request with a valid column as the sort by column and default order by value
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller get comments by article id
+in models - GET - result
+        ✓ GETS a status code of 200 and returns an array of sorted comments by the created_at for a given article id when valid queries are passed in the request with a valid column as the sort by column and order by value is asc
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller get comments by article id
+In 4 parameter error handler
+        ✓ GETS a status code of 400 with message of invalid column for sort_by when passed an invalid column for sort_by 
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller get comments by article id
+in models - GET - result
+In 4 parameter error handler
+in default 4 parameter error handler
+        ✓ GETS a status code of 400 with message of invalid order_by value when passed an invalid order_by value 
+
+
+  33 passing (5s)
+

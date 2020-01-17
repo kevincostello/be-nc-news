@@ -49,13 +49,21 @@
 
 -- ;
 
-SELECT articles.article_id, articles.title ,articles. topic, articles.author, count(comments.comment_id)
-FROM articles LEFT JOIN comments ON articles.article_id = comments.article_id
-WHERE articles.author = 'rogersop'
-GROUP BY articles.article_id
-ORDER BY articles.title ASC
+-- SELECT articles.article_id, articles.title ,articles. topic, articles.author, count(comments.comment_id)
+-- FROM articles LEFT JOIN comments ON articles.article_id = comments.article_id
+-- WHERE articles.author = 'rogersop'
+-- GROUP BY articles.article_id
+-- ORDER BY articles.title ASC
+
+-- ;
+
+SELECT users.username, count(articles.article_id) 
+FROM users LEFT JOIN articles ON users.username = articles.author
+GROUP BY users.username
 
 ;
+
+-- SELECT * FROM users;
 
 
 

@@ -126,7 +126,15 @@ exports.selectAllArticles = query => {
       })
       // .where("articles.author", query.author)
       .then(result => {
+        console.log("results are:", result);
         if (result.length === 0) {
+          // need to check when array is empty because a valid author is passed versus an invalid author - need to do another query to the database to check if the author exists on the database and send a 204 in this situation
+
+          // SELECT users.username, count(articles.article_id)
+          // FROM users LEFT JOIN articles ON users.username = articles.author
+          // GROUP BY users.username
+          // ;
+
           return Promise.reject({
             status: 404,
             msg: "Invalid query passed"

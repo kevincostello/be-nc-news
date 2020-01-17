@@ -6,7 +6,6 @@ app.use(express.json());
 app.use("/api", apiRouter);
 app.use("/*", (req, res, next) => {
   console.log("in 3 parameter 404 error log");
-  // res.status(404).send({ status: 404, msg: "Path is misspelt" });
   res.status(404).send({ status: 404, msg: "Path is misspelt" });
 });
 

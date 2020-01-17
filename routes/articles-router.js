@@ -7,18 +7,25 @@ const {
   sendAllArticles
 } = require("../controllers/article-controller");
 
+const { send405Error } = require("../errors/index.js");
+
 console.log("articlesRouter");
 
 articlesRouter
   .route("/:article_id")
   .get(sendArticles)
-  .patch(sendArticlesToBePatched);
+  .patch(sendArticlesToBePatched)
+  .all(send405Error);
 
 articlesRouter
   .route("/:article_id/comments")
   .post(sendArticlesWithComment)
-  .get(sendCommentsByArticleId);
+  .get(sendCommentsByArticleId)
+  .all(send405Error);
 
-articlesRouter.route("/").get(sendAllArticles);
+articlesRouter
+  .route("/")
+  .get(sendAllArticles)
+  .all(send405Error);
 
 module.exports = articlesRouter;

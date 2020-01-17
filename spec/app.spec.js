@@ -31,6 +31,15 @@ describe("/api", () => {
           expect(res.body.msg).to.equal("Path is misspelt");
         });
     });
+
+    it("Returns PATCH /api/topics with an error code of 405 Method Not Allowed", () => {
+      return request(app)
+        .patch("/api/topics")
+        .expect(405)
+        .then(res => {
+          expect(res.body.msg).to.equal("method not allowed");
+        });
+    });
   });
 
   describe("/users", () => {
@@ -135,6 +144,15 @@ describe("/api", () => {
           expect(res.body.msg).to.equal(
             "An invalid value for inc_votes was entered"
           );
+        });
+    });
+
+    it.only("Returns PATCH /api/articles/1 with an error code of 405 Method Not Allowed", () => {
+      return request(app)
+        .post("/api/articles/1")
+        .expect(405)
+        .then(res => {
+          expect(res.body.msg).to.equal("method not allowed");
         });
     });
 
@@ -269,6 +287,15 @@ describe("/api", () => {
           .expect(400)
           .then(dbResponse => {
             expect(dbResponse.body.msg).to.equal("Invalid order_by value");
+          });
+      });
+
+      it.only("Returns PATCH /api/articles with an error code of 405 Method Not Allowed", () => {
+        return request(app)
+          .patch("/api/articles/1/comments")
+          .expect(405)
+          .then(res => {
+            expect(res.body.msg).to.equal("method not allowed");
           });
       });
     });
@@ -446,6 +473,21 @@ describe("/api", () => {
         .expect(400)
         .then(res => {
           expect(res.body.msg).to.equal("Invalid order_by value");
+        });
+    });
+
+    it("GET a status code of 204 No Content, when passed a valid author who has no articles", () => {
+      return request(app)
+        .get("/api/articles/?author=lurker")
+        .expect(204);
+    });
+
+    it.only("Returns PATCH /api/articles with an error code of 405 Method Not Allowed", () => {
+      return request(app)
+        .patch("/api/articles")
+        .expect(405)
+        .then(res => {
+          expect(res.body.msg).to.equal("method not allowed");
         });
     });
   });
