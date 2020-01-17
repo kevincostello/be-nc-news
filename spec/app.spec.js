@@ -229,7 +229,7 @@ describe("/api", () => {
           });
       });
 
-      it.only("GETS a status code of 200 and returns an array of sorted comments by the created_at for a given article id when valid queries are passed in the request with a valid column as the sort by column and order by value is asc", () => {
+      it("GETS a status code of 200 and returns an array of sorted comments by the created_at for a given article id when valid queries are passed in the request with a valid column as the sort by column and order by value is asc", () => {
         return request(app)
           .get("/api/articles/1/comments?sort_by=author&order_by=asc")
           .expect(200)
@@ -251,6 +251,15 @@ describe("/api", () => {
             expect(dbResponse.body[dbResponse.body.length - 1].author).to.equal(
               "icellusedkars"
             );
+          });
+      });
+
+      it.only("GETS a status code of 400 with message of invalid column for sort_by when passed an invalid column for sort_by ", () => {
+        return request(app)
+          .get("/api/articles/1/comments?sort_by=authorrs")
+          .expect(400)
+          .then(dbResponse => {
+            expect(dbResponse.body.msg).to.equal("Invalid column for sort_by");
           });
       });
     });

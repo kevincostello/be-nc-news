@@ -20,6 +20,8 @@ app.use(function(err, req, res, next) {
     } else res.status(400).send({ msg: "Invalid article ID" });
   } else if (err.code === "23503") {
     res.status(404).send({ msg: "The article id is not in the database" });
+  } else if (err.code === "42703") {
+    res.status(400).send({ msg: "Invalid column for sort_by" });
   } else res.status(404).send(err);
 });
 
