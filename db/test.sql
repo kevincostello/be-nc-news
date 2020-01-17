@@ -51,7 +51,7 @@
 
 SELECT articles.article_id, articles.title ,articles. topic, articles.author, count(comments.comment_id)
 FROM articles LEFT JOIN comments ON articles.article_id = comments.article_id
-WHERE articles.topic = 'mitch'
+WHERE articles.author = 'rogersop'
 GROUP BY articles.article_id
 ORDER BY articles.title ASC
 

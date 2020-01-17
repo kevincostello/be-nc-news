@@ -119,7 +119,8 @@ exports.selectAllArticles = query => {
         // need to filter for both query.author and query.topic if passed both in query
         if (query.author) {
           sqlQuery.where("articles.author", query.author);
-        } else if (query.topic) {
+        }
+        if (query.topic) {
           sqlQuery.where("articles.topic", query.topic);
         }
       })

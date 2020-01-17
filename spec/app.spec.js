@@ -389,5 +389,19 @@ describe("/api", () => {
           ).to.equal(2);
         });
     });
+
+    it("GETS a status code of 200 and returns an array of sorted articles by the title filtered by topic but not filterd by topic when passed valid queries are passed in the request with a valid column as the sort by column and order by value is asc and a valid value for author", () => {
+      return request(app)
+        .get("/api/articles/?sort_by=title&order_by=asc&author=rogersop")
+        .expect(200)
+        .then(dbResponse => {
+          expect(dbResponse.body).to.be.sortedBy("title", {
+            descending: false
+          });
+          expect(dbResponse.body[2].topic).to.equal("cats");
+          expect(dbResponse.body.length).to.equal(3);
+          expect(dbResponse.body[2].comment_count).to.equal(2);
+        });
+    });
   });
 });
