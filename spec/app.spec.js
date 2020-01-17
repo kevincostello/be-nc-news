@@ -272,5 +272,26 @@ describe("/api", () => {
           });
       });
     });
+
+    it.only("GETS a status code of 200 when passed a valid path to /api/articles", () => {
+      return request(app)
+        .get("/api/articles")
+        .expect(200)
+        .then(dbResponse => {
+          expect(dbResponse.body).to.be.an("array");
+          expect(dbResponse.body[0]).to.be.an("object");
+          expect(dbResponse.body[0]).to.have.keys([
+            "author",
+            "title",
+            "article_id",
+            "topic",
+            "created_at",
+            "votes",
+            "comment_count"
+          ]);
+          expect(Number(dbResponse.body[2].comment_count)).to.equal(0);
+          expect(Number(dbResponse.body[7].comment_count)).to.equal(13);
+        });
+    });
   });
 });

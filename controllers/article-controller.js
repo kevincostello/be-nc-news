@@ -2,7 +2,8 @@ const {
   selectArticles,
   patchArticles,
   postArticleWithComment,
-  selectCommentsByArticleId
+  selectCommentsByArticleId,
+  selectAllArticles
 } = require("../models/article-model.js");
 
 const sendArticles = (req, res, next) => {
@@ -51,9 +52,21 @@ const sendCommentsByArticleId = (req, res, next) => {
     });
 };
 
+const sendAllArticles = (req, res, next) => {
+  console.log("In sendAllArticles");
+  selectAllArticles()
+    .then(allArticles => {
+      res.status(200).send(allArticles);
+    })
+    .catch(err => {
+      next(err);
+    });
+};
+
 module.exports = {
   sendArticles,
   sendArticlesToBePatched,
   sendArticlesWithComment,
-  sendCommentsByArticleId
+  sendCommentsByArticleId,
+  sendAllArticles
 };

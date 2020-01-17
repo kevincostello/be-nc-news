@@ -89,3 +89,37 @@ exports.selectCommentsByArticleId = (params, query) => {
       }
     });
 };
+
+exports.selectAllArticles = () => {
+  console.log("In selectAllArticles");
+  // need to return an array of article objects containing:
+  // author, title, article_id, topic, created_at, votes and comment_count -> need to join articles and comments
+  // Also accepts the following queries:
+  // sort_by (defaults to created_at)
+  // order (defaults to desc)
+  // author - filters by value
+  // topic - filters by topic
+  return db
+    .select(
+      "articles.article_id",
+      "articles.author",
+      "articles.title",
+      "articles.topic",
+      "articles.created_at",
+      "articles.votes"
+    )
+    .from("articles")
+    .count("comments.comment_id as comment_count")
+    .leftJoin("comments", "articles.article_id", "=", "comments.article_id")
+    .groupBy("articles.article_id")
+    .then(result => {
+      // if (result.length === 0) {
+      //   return Promise.reject({
+      //     status: 404,
+      //     msg: "The article id is not in the database"
+      //   });
+      // } else {
+      return result;
+      // }
+    });
+};
