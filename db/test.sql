@@ -26,14 +26,15 @@
 --   VALUES ('butter_bridge', 1, DEFAULT, CURRENT_TIMESTAMP, 'This is a comment')
 --   ;
 
--- SELECT * FROM comments;
+SELECT * FROM comments;
 
--- SELECT articles.article_id, count(comments.comment_id)
--- FROM articles INNER JOIN comments ON articles.article_id = comments.article_id
--- WHERE articles.article_id = 1
--- GROUP BY articles.article_id
+SELECT articles.article_id, count(comments.comment_id)
+FROM articles INNER JOIN comments ON articles.article_id = comments.article_id
+WHERE articles.article_id = 1
+GROUP BY articles.article_id
+ORDER BY articles.created_at DESC
 
--- ;
+;
 
 -- SELECT articles.article_id, count(comments.comment_id)
 -- FROM articles LEFT JOIN comments ON articles.article_id = comments.article_id
@@ -57,16 +58,16 @@
 
 -- ;
 
-SELECT users.username, count(articles.article_id) 
-FROM users LEFT JOIN articles ON users.username = articles.author
-GROUP BY users.username
+-- SELECT users.username, count(articles.article_id) 
+-- FROM users LEFT JOIN articles ON users.username = articles.author
+-- GROUP BY users.username
 
-;
+-- ;
 
-SELECT comments.*
-  FROM comments
-  WHERE comment_id = 1
-  ;
+-- SELECT comments.*
+--   FROM comments
+--   WHERE comment_id = 1
+--   ;
 
 -- SELECT * FROM users;
 

@@ -162,7 +162,7 @@ describe("/api", () => {
         });
     });
 
-    describe("/:article_id/comments", () => {
+    describe.only("/:article_id/comments", () => {
       it("POSTS a comment with status code of 201 when passed an object containing the comment", () => {
         return request(app)
           .post("/api/articles/1/comments")
@@ -245,6 +245,31 @@ describe("/api", () => {
               "created_at"
             ]);
             expect(res.body).to.be.sortedBy("author", {
+              descending: true
+            });
+            expect(res.body[res.body.length - 1].author).to.equal(
+              "butter_bridge"
+            );
+          });
+      });
+
+      it("GETS a status code of 200 and returns an array of sorted comments by the created_at for a given article id when valid queries are passed in the request with a valid column as the sort by column and order by value is asc", () => {
+        return request(app)
+          .get("/api/articles/1/comments?order_by=desc")
+          .expect(200)
+          .then(res => {
+            expect(res.body).to.be.an("array");
+            expect(res.body[0]).to.be.an("object");
+            expect(res.body.length).to.equal(13);
+            expect(res.body[0]).to.have.keys([
+              "article_id",
+              "comment_id",
+              "body",
+              "votes",
+              "author",
+              "created_at"
+            ]);
+            expect(res.body).to.be.sortedBy("created_at", {
               descending: true
             });
             expect(res.body[res.body.length - 1].author).to.equal(

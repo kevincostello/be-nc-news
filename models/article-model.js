@@ -79,7 +79,11 @@ exports.selectCommentsByArticleId = (params, query) => {
           status: 404,
           msg: "The article id is not in the database"
         });
-      } else if (query.order_by !== undefined && query.order_by !== "asc") {
+      } else if (
+        query.order_by !== undefined &&
+        query.order_by !== "asc" &&
+        query.order_by !== "desc"
+      ) {
         return Promise.reject({
           status: 400,
           msg: "Invalid order_by value"
