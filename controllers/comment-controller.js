@@ -2,10 +2,12 @@ const { patchComment } = require("../models/comment-model");
 
 const sendCommentToBePatched = (req, res, next) => {
   console.log("In controller", req.params);
-  patchComment(req.params)
+  patchComment(req.params, req.body)
     .then(comment => {
-      console.log("Results from query in controller", comment);
-      res.status(200).send();
+      res.status(200).send({
+        comment,
+        msg: "The comment was updated with the passed values"
+      });
     })
     .catch(err => {
       next(err);

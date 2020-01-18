@@ -497,7 +497,14 @@ describe("/api", () => {
       it.only("PATCHES with status of 200 when passed a valid votes object", () => {
         return request(app)
           .patch("/api/comments/1")
-          .expect(200);
+          .send({ inc_votes: 99 })
+          .expect(200)
+          .then(res => {
+            expect(res.body.comment[0].votes).to.equal(115);
+            expect(res.body.msg).to.equal(
+              "The comment was updated with the passed values"
+            );
+          });
       });
     });
   });
