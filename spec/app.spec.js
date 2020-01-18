@@ -5,6 +5,7 @@ const chai = require("chai");
 const chaiSorted = require("chai-sorted");
 const { expect } = chai;
 const db = require("../db/connection");
+const { selectCommentsByArticleId } = require("../models/article-model");
 
 chai.use(require("sams-chai-sorted"));
 // console.log("db:", db);
@@ -156,7 +157,7 @@ describe("/api", () => {
         });
     });
 
-    describe("/:article_id/comments", () => {
+    describe.only("/:article_id/comments", () => {
       it("POSTS a comment with status code of 201 when passed an object containing the comment", () => {
         return request(app)
           .post("/api/articles/1/comments")
@@ -494,7 +495,7 @@ describe("/api", () => {
 
   describe("/comments", () => {
     describe("/:comment_id", () => {
-      it.only("PATCHES with status of 200 when passed a valid votes object", () => {
+      it("PATCHES with status of 200 when passed a valid votes object", () => {
         return request(app)
           .patch("/api/comments/1")
           .send({ inc_votes: 99 })
@@ -504,6 +505,40 @@ describe("/api", () => {
             expect(res.body.msg).to.equal(
               "The comment was updated with the passed values"
             );
+            // const testDate = new Date(1511354163389);
+            // const stringDate = testDate.toJSON();
+
+            const commentChanged = res.body.comment[0];
+
+            // res.body.comment[0].created_at = Date.parse(
+            //   res.body.comment[0].created_at
+            // );
+            // console.log("res.body.comment[0]", res.body.comment[0]);
+
+            // expect(res.body.comment).to.deep.equal([
+            //   {
+            //     comment_id: 1,
+            //     body:
+            //       "Oh, I've got compassion running out of my nose, pal! I'm the Sultan of Sentiment!",
+            //     article_id: 9,
+            //     author: "butter_bridge",
+            //     votes: 115,
+            //     created_at: 1511354163389
+            //   }
+            // ]);
+            const allComments = selectCommentsByArticleId(
+              { article_id: 9 },
+              { sort_by: "comments.comment_id", order_by: "asc" }
+            );
+
+            Promise.all([allComments, res.body.comment]).then(
+              ([commentsAll, res2]) => {
+                console.log("The response is:", res2[0], commentsAll[0]);
+                expect(res2[0]).to.deep.equal(commentsAll[0]);
+              }
+            );
+
+            // return allComments;
           });
       });
     });

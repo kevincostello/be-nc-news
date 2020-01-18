@@ -54,6 +54,7 @@ exports.postArticleWithComment = (body, params) => {
 };
 
 exports.selectCommentsByArticleId = (params, query) => {
+  console.log("In selectCommentsByArticleId", params.article_id, query.sort_by);
   // articles and comments tables will need to be joined by article_id
   // need to select comment_id, votes, created_at, author and body from comments table
   // need to accept queries containing:
@@ -61,16 +62,15 @@ exports.selectCommentsByArticleId = (params, query) => {
   // order -> asc or desc (default to desc)
   return db
     .select(
-      "articles.article_id",
+      "comments.article_id",
       "comments.comment_id",
       "comments.votes",
       "comments.created_at",
       "comments.author",
       "comments.body"
     )
-    .from("articles")
-    .leftJoin("comments", "articles.article_id", "=", "comments.article_id")
-    .where("articles.article_id", params.article_id)
+    .from("comments")
+    .where("comments.article_id", params.article_id)
     .orderBy(query.sort_by || "comments.created_at", query.order_by || "desc")
     .then(result => {
       console.log("in models - GET - result");
