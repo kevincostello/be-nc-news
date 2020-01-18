@@ -116,7 +116,7 @@ describe("/api", () => {
         .expect(200)
         .then(res => {
           console.log(res.body);
-          expect(Number(res.body.article.comment_count)).to.equal(13);
+          expect(res.body.article.comment_count).to.equal(13);
         });
     });
 
@@ -126,7 +126,7 @@ describe("/api", () => {
         .expect(200)
         .then(res => {
           console.log(res.body);
-          expect(Number(res.body.article.comment_count)).to.equal(0);
+          expect(res.body.article.comment_count).to.equal(0);
         });
     });
 
@@ -162,7 +162,7 @@ describe("/api", () => {
         });
     });
 
-    describe.only("/:article_id/comments", () => {
+    describe("/:article_id/comments", () => {
       it("POSTS a comment with status code of 201 when passed an object containing the comment", () => {
         return request(app)
           .post("/api/articles/1/comments")
@@ -329,16 +329,17 @@ describe("/api", () => {
             expect(res.body.msg).to.equal("method not allowed");
           });
       });
-    });
+    }); // end of /api/articles/:article_id/comments describe block
 
     it("GETS a status code of 200 when passed a valid path to /api/articles", () => {
       return request(app)
         .get("/api/articles")
         .expect(200)
         .then(res => {
-          expect(res.body).to.be.an("array");
-          expect(res.body[0]).to.be.an("object");
-          expect(res.body[0]).to.have.keys([
+          console.log(res.body);
+          expect(res.body.articles).to.be.an("array");
+          expect(res.body.articles[0]).to.be.an("object");
+          expect(res.body.articles[0]).to.have.keys([
             "author",
             "title",
             "article_id",
@@ -347,8 +348,8 @@ describe("/api", () => {
             "votes",
             "comment_count"
           ]);
-          expect(Number(res.body[2].comment_count)).to.equal(0);
-          expect(Number(res.body[0].comment_count)).to.equal(13);
+          expect(res.body.articles[0].comment_count).to.equal(13);
+          expect(res.body.articles[4].comment_count).to.equal(2);
         });
     });
 
@@ -369,10 +370,12 @@ describe("/api", () => {
           expect(res.body).to.be.sortedBy("created_at", {
             descending: true
           });
-          expect(res.body.length).to.equal(12);
-          expect(res.body[res.body.length - 1].article_id).to.equal(12);
-          expect(res.body[0].article_id).to.equal(1);
-          expect(res.body[8].comment_count).to.equal(2);
+          expect(res.body.articles.length).to.equal(12);
+          expect(res.body.articles[res.body.length - 1].article_id).to.equal(
+            12
+          );
+          expect(res.body.articles[0].article_id).to.equal(1);
+          expect(res.body.articles[8].comment_count).to.equal(2);
         });
     });
 
@@ -381,10 +384,22 @@ describe("/api", () => {
         .get("/api/articles?sort_by=title")
         .expect(200)
         .then(res => {
-          expect(res.body).to.be.sortedBy("title", {
+          expect(res.body.articles).to.be.sortedBy("title", {
             descending: true
           });
           expect(res.body[0].article_id).to.equal(7);
+        });
+    });
+
+    it("GETS a status code of 200 and returns an array of sorted articles by the created_at for a given article id when valid queries are passed in the request with order by value of asc", () => {
+      return request(app)
+        .get("/api/articles?order_by=asc")
+        .expect(200)
+        .then(res => {
+          expect(res.body.articles).to.be.sortedBy("created_at", {
+            descending: false
+          });
+          expect(res.body.articles[0].article_id).to.equal(12);
         });
     });
 
@@ -393,10 +408,10 @@ describe("/api", () => {
         .get("/api/articles/?sort_by=title&order_by=asc")
         .expect(200)
         .then(res => {
-          expect(res.body).to.be.sortedBy("title", {
+          expect(res.body.articles).to.be.sortedBy("title", {
             descending: false
           });
-          expect(res.body[0].article_id).to.equal(6);
+          expect(res.body.articles[0].article_id).to.equal(6);
         });
     });
 
@@ -405,12 +420,12 @@ describe("/api", () => {
         .get("/api/articles/?sort_by=title&order_by=asc&author=butter_bridge")
         .expect(200)
         .then(res => {
-          expect(res.body).to.be.sortedBy("title", {
+          expect(res.body.articles).to.be.sortedBy("title", {
             descending: false
           });
-          expect(res.body[0].author).to.equal("butter_bridge");
-          expect(res.body.length).to.equal(3);
-          expect(res.body[1].comment_count).to.equal(0);
+          expect(res.body.articles[0].author).to.equal("butter_bridge");
+          expect(res.body.articles.length).to.equal(3);
+          expect(res.body.articles[1].comment_count).to.equal(0);
         });
     });
 
@@ -421,12 +436,12 @@ describe("/api", () => {
         )
         .expect(200)
         .then(res => {
-          expect(res.body).to.be.sortedBy("title", {
+          expect(res.body.articles).to.be.sortedBy("title", {
             descending: false
           });
-          expect(res.body[0].topic).to.equal("mitch");
-          expect(res.body.length).to.equal(3);
-          expect(res.body[0].comment_count).to.equal(13);
+          expect(res.body.articles[0].topic).to.equal("mitch");
+          expect(res.body.articles.length).to.equal(3);
+          expect(res.body.articles[0].comment_count).to.equal(13);
         });
     });
 
@@ -435,12 +450,14 @@ describe("/api", () => {
         .get("/api/articles/?sort_by=title&order_by=asc&topic=mitch")
         .expect(200)
         .then(res => {
-          expect(res.body).to.be.sortedBy("title", {
+          expect(res.body.articles).to.be.sortedBy("title", {
             descending: false
           });
-          expect(res.body[0].topic).to.equal("mitch");
-          expect(res.body.length).to.equal(11);
-          expect(res.body[res.body.length - 2].comment_count).to.equal(2);
+          expect(res.body.articles[0].topic).to.equal("mitch");
+          expect(res.body.articles.length).to.equal(11);
+          expect(res.body.articles[res.body.length - 2].comment_count).to.equal(
+            2
+          );
         });
     });
 
@@ -449,12 +466,12 @@ describe("/api", () => {
         .get("/api/articles/?sort_by=title&order_by=asc&author=rogersop")
         .expect(200)
         .then(res => {
-          expect(res.body).to.be.sortedBy("title", {
+          expect(res.body.articles).to.be.sortedBy("title", {
             descending: false
           });
-          expect(res.body[2].topic).to.equal("cats");
-          expect(res.body.length).to.equal(3);
-          expect(res.body[2].comment_count).to.equal(2);
+          expect(res.body.articles[2].topic).to.equal("cats");
+          expect(res.body.articles.length).to.equal(3);
+          expect(res.body.articles[2].comment_count).to.equal(2);
         });
     });
 

@@ -1,0 +1,786 @@
+
+> be-nc-news@1.0.0 test /Users/kevincostello/Northcoders/Backend/be-nc-news
+> mocha spec/app.spec.js
+
+topicsRouter
+usersRouter
+articlesRouter
+commentsRouter
+
+
+  /api
+    /topics
+test
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller
+im in the models
+{
+  topics: [
+    { slug: 'mitch', description: 'The man, the Mitch, the legend' },
+    { slug: 'cats', description: 'Not dogs' },
+    { slug: 'paper', description: 'what books are made of' }
+  ]
+}
+      ✓ GET responds with status code of 200 and returns array of topics (45ms)
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+in 3 parameter 404 error log
+      ✓ GET responds with status code of 404 when the path has a misspelling
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+      ✓ Returns PATCH /api/topics with an error code of 405 Method Not Allowed
+    /users
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+{ username: 'rogersop' }
+In controller
+im in the models
+{
+  user: {
+    username: 'rogersop',
+    avatar_url: 'https://avatars2.githubusercontent.com/u/24394918?s=400&v=4',
+    name: 'paul'
+  }
+}
+      ✓ GETS a status code of 200 when a valid username is passed as a parameter in the path
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+{ username: 'gobbledygook' }
+In controller
+im in the models
+{ status: 404, msg: 'The username does not exist' }
+In 4 parameter error handler { status: 404, msg: 'The username does not exist' }
+in default 4 parameter error handler
+      ✓ GETS a status code of 404 when passed an invalid username
+    /articles
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller
+im in the models
+{
+  article: {
+    article_id: 1,
+    title: 'Living in the shadow of a great man',
+    body: 'I find this existence challenging',
+    votes: 100,
+    topic: 'mitch',
+    author: 'butter_bridge',
+    created_at: '2018-11-15T12:21:54.171Z',
+    comment_count: '13'
+  }
+}
+      ✓ GETS a status code of 200 when passed a valid article id
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller
+im in the models
+In 4 parameter error handler error: invalid input syntax for type integer: "snnn"
+    at Connection.parseE (/Users/kevincostello/Northcoders/Backend/be-nc-news/node_modules/pg/lib/connection.js:604:13)
+    at Connection.parseMessage (/Users/kevincostello/Northcoders/Backend/be-nc-news/node_modules/pg/lib/connection.js:403:19)
+    at Socket.<anonymous> (/Users/kevincostello/Northcoders/Backend/be-nc-news/node_modules/pg/lib/connection.js:123:22)
+    at Socket.emit (events.js:210:5)
+    at addChunk (_stream_readable.js:308:12)
+    at readableAddChunk (_stream_readable.js:289:11)
+    at Socket.Readable.push (_stream_readable.js:223:10)
+    at TCP.onStreamRead (internal/stream_base_commons.js:182:23) {
+  name: 'error',
+  length: 105,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: undefined,
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '259',
+  routine: 'pg_strtoint32'
+}
+      ✓ GETS a status code of 400 when passed an invalid article id
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller
+im in the models
+In 4 parameter error handler { status: 404, msg: 'The article id is not in the database' }
+in default 4 parameter error handler
+      ✓ GETS a status code of 404 when passed a valid article id which is not in the database
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller
+im in the models
+{
+  article: {
+    article_id: 1,
+    title: 'Living in the shadow of a great man',
+    body: 'I find this existence challenging',
+    votes: 100,
+    topic: 'mitch',
+    author: 'butter_bridge',
+    created_at: '2018-11-15T12:21:54.171Z',
+    comment_count: '13'
+  }
+}
+      ✓ GETS a status code of 200 and creates the comment count correctly when passed a valid article id
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller
+im in the models
+{
+  article: {
+    article_id: 3,
+    title: 'Eight pug gifs that remind me of mitch',
+    body: 'some gifs',
+    votes: 0,
+    topic: 'mitch',
+    author: 'icellusedkars',
+    created_at: '2010-11-17T12:21:54.171Z',
+    comment_count: '0'
+  }
+}
+      ✓ GETS a status code of 200 and creates the comment count of zero when passed a valid article id which is not in the comments table
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller
+im in the models
+patching result is completed
+      ✓ PATCHES with a status code of 200 when passed an object containing the vote count change
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller
+im in the models
+In 4 parameter error handler error: invalid input syntax for type integer: "NaN"
+    at Connection.parseE (/Users/kevincostello/Northcoders/Backend/be-nc-news/node_modules/pg/lib/connection.js:604:13)
+    at Connection.parseMessage (/Users/kevincostello/Northcoders/Backend/be-nc-news/node_modules/pg/lib/connection.js:403:19)
+    at Socket.<anonymous> (/Users/kevincostello/Northcoders/Backend/be-nc-news/node_modules/pg/lib/connection.js:123:22)
+    at Socket.emit (events.js:210:5)
+    at addChunk (_stream_readable.js:308:12)
+    at readableAddChunk (_stream_readable.js:289:11)
+    at Socket.Readable.push (_stream_readable.js:223:10)
+    at TCP.onStreamRead (internal/stream_base_commons.js:182:23) {
+  name: 'error',
+  length: 104,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: undefined,
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '259',
+  routine: 'pg_strtoint32'
+}
+      ✓ PATCHES with as status code of 400 when passed an object with an invalid value for inc_votes
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+      ✓ Returns PATCH /api/articles/1 with an error code of 405 Method Not Allowed
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In sendAllArticles
+In selectAllArticles {}
+      1) GETS a status code of 200 when passed a valid path to /api/articles
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+in 3 parameter 404 error log
+      ✓ GETS a status code of 404 when passed an invalid path to /api/articles
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In sendAllArticles
+In selectAllArticles {}
+      2) GETS a status code of 200 when passed a valid path and sorts by the default column and default order by
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In sendAllArticles
+In selectAllArticles { sort_by: 'title' }
+      3) GETS a status code of 200 and returns an array of sorted articles by the created_at for a given article id when valid queries are passed in the request with a valid column as the sort by column and default order by value
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In sendAllArticles
+In selectAllArticles { order_by: 'asc' }
+      ✓ GETS a status code of 200 and returns an array of sorted articles by the created_at for a given article id when valid queries are passed in the request with order by value of asc
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In sendAllArticles
+In selectAllArticles { sort_by: 'title', order_by: 'asc' }
+      4) GETS a status code of 200 and returns an array of sorted articles by the title fwhen valid queries are passed in the request with a valid column as the sort by column and order by value is asc
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In sendAllArticles
+In selectAllArticles { sort_by: 'title', order_by: 'asc', author: 'butter_bridge' }
+      5) GETS a status code of 200 and returns an array of sorted articles by the title filtered by author when passedwhen valid queries are passed in the request with a valid column as the sort by column and order by value is asc and a valid value for author
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In sendAllArticles
+In selectAllArticles {
+  sort_by: 'title',
+  order_by: 'asc',
+  topic: 'mitch',
+  author: 'butter_bridge'
+}
+      6) GETS a status code of 200 and returns an array of sorted articles by the title filtered by topic when passed valid queries are passed in the request with a valid column as the sort by column and order by value is asc and a valid value for topic
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In sendAllArticles
+In selectAllArticles { sort_by: 'title', order_by: 'asc', topic: 'mitch' }
+      7) GETS a status code of 200 and returns an array of sorted articles by the title filtered by topic but not filterd by author when passed valid queries are passed in the request with a valid column as the sort by column and order by value is asc and a valid value for topic
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In sendAllArticles
+In selectAllArticles { sort_by: 'title', order_by: 'asc', author: 'rogersop' }
+      8) GETS a status code of 200 and returns an array of sorted articles by the title filtered by topic but not filterd by topic when passed valid queries are passed in the request with a valid column as the sort by column and order by value is asc and a valid value for author
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In sendAllArticles
+In selectAllArticles { author: 'rogersopp' }
+In 4 parameter error handler { status: 404, msg: 'Invalid query passed' }
+in default 4 parameter error handler
+      ✓ GETS a status code of 404 when passed an author name not in the database
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In sendAllArticles
+In selectAllArticles { topic: 'gobbledygook' }
+In 4 parameter error handler { status: 404, msg: 'Invalid query passed' }
+in default 4 parameter error handler
+      ✓ GETS a status code of 404 when passed a title not in the database
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In sendAllArticles
+In selectAllArticles { author: 'noauthor', topic: 'gobbledygook' }
+In 4 parameter error handler { status: 404, msg: 'Invalid query passed' }
+in default 4 parameter error handler
+      ✓ GETS a status code of 404 when passed an author and a title not in the database
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In sendAllArticles
+In selectAllArticles { sort_by: 'gobbledygook' }
+In 4 parameter error handler error: column "gobbledygook" does not exist
+    at Connection.parseE (/Users/kevincostello/Northcoders/Backend/be-nc-news/node_modules/pg/lib/connection.js:604:13)
+    at Connection.parseMessage (/Users/kevincostello/Northcoders/Backend/be-nc-news/node_modules/pg/lib/connection.js:403:19)
+    at Socket.<anonymous> (/Users/kevincostello/Northcoders/Backend/be-nc-news/node_modules/pg/lib/connection.js:123:22)
+    at Socket.emit (events.js:210:5)
+    at addChunk (_stream_readable.js:308:12)
+    at readableAddChunk (_stream_readable.js:289:11)
+    at Socket.Readable.push (_stream_readable.js:223:10)
+    at TCP.onStreamRead (internal/stream_base_commons.js:182:23) {
+  name: 'error',
+  length: 113,
+  severity: 'ERROR',
+  code: '42703',
+  detail: undefined,
+  hint: undefined,
+  position: '321',
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: undefined,
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'parse_relation.c',
+  line: '3359',
+  routine: 'errorMissingColumn'
+}
+      ✓ GETS a status code of 400 when passed sort_by column not on the database
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In sendAllArticles
+In selectAllArticles { order_by: 'gobbledygook' }
+In 4 parameter error handler { status: 400, msg: 'Invalid order_by value' }
+in default 4 parameter error handler
+      ✓ GETS a status code of 400 when passed invalid order by value
+      - GET a status code of 204 No Content, when passed a valid author who has no articles
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+      ✓ Returns PATCH /api/articles with an error code of 405 Method Not Allowed
+      /:article_id/comments
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller comment
+im in the models - post
+Am I in the post then?
+        ✓ POSTS a comment with status code of 201 when passed an object containing the comment
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller comment
+im in the models - post
+In 4 parameter error handler error: insert or update on table "comments" violates foreign key constraint "comments_article_id_foreign"
+    at Connection.parseE (/Users/kevincostello/Northcoders/Backend/be-nc-news/node_modules/pg/lib/connection.js:604:13)
+    at Connection.parseMessage (/Users/kevincostello/Northcoders/Backend/be-nc-news/node_modules/pg/lib/connection.js:403:19)
+    at Socket.<anonymous> (/Users/kevincostello/Northcoders/Backend/be-nc-news/node_modules/pg/lib/connection.js:123:22)
+    at Socket.emit (events.js:210:5)
+    at addChunk (_stream_readable.js:308:12)
+    at readableAddChunk (_stream_readable.js:289:11)
+    at Socket.Readable.push (_stream_readable.js:223:10)
+    at TCP.onStreamRead (internal/stream_base_commons.js:182:23) {
+  name: 'error',
+  length: 274,
+  severity: 'ERROR',
+  code: '23503',
+  detail: 'Key (article_id)=(100) is not present in table "articles".',
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: undefined,
+  schema: 'public',
+  table: 'comments',
+  column: undefined,
+  dataType: undefined,
+  constraint: 'comments_article_id_foreign',
+  file: 'ri_triggers.c',
+  line: '2474',
+  routine: 'ri_ReportViolation'
+}
+        ✓ POSTS a status code of 404 when the passed article_id is not on the database
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller get comments by article id
+In selectCommentsByArticleId 1 author
+in models - GET - result
+        ✓ GETS a status code of 200 and returns an array of comments for a given article id when valid queries are passed in the request
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller get comments by article id
+In selectCommentsByArticleId 1 undefined
+in models - GET - result
+        ✓ GETS a status code of 200 and returns an array of sorted comments by the created_at for a given article id when valid queries are passed in the request with created_at as the sort by column and desc as the order by value
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller get comments by article id
+In selectCommentsByArticleId 1 author
+in models - GET - result
+        ✓ GETS a status code of 200 and returns an array of sorted comments by the created_at for a given article id when valid queries are passed in the request with a valid column as the sort by column and default order by value
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller get comments by article id
+In selectCommentsByArticleId 1 undefined
+in models - GET - result
+        ✓ GETS a status code of 200 and returns an array of sorted comments by the created_at for a given article id when valid queries are passed in the request with a valid column as the sort by column and order by value is asc
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller get comments by article id
+In selectCommentsByArticleId 1 author
+in models - GET - result
+        ✓ GETS a status code of 200 and returns an array of sorted comments by the created_at for a given article id when valid queries are passed in the request with a valid column as the sort by column and order by value is asc
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller get comments by article id
+In selectCommentsByArticleId 1 authorrs
+In 4 parameter error handler error: column "authorrs" does not exist
+    at Connection.parseE (/Users/kevincostello/Northcoders/Backend/be-nc-news/node_modules/pg/lib/connection.js:604:13)
+    at Connection.parseMessage (/Users/kevincostello/Northcoders/Backend/be-nc-news/node_modules/pg/lib/connection.js:403:19)
+    at Socket.<anonymous> (/Users/kevincostello/Northcoders/Backend/be-nc-news/node_modules/pg/lib/connection.js:123:22)
+    at Socket.emit (events.js:210:5)
+    at addChunk (_stream_readable.js:308:12)
+    at readableAddChunk (_stream_readable.js:289:11)
+    at Socket.Readable.push (_stream_readable.js:223:10)
+    at TCP.onStreamRead (internal/stream_base_commons.js:182:23) {
+  name: 'error',
+  length: 171,
+  severity: 'ERROR',
+  code: '42703',
+  detail: undefined,
+  hint: 'Perhaps you meant to reference the column "comments.author".',
+  position: '202',
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: undefined,
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'parse_relation.c',
+  line: '3359',
+  routine: 'errorMissingColumn'
+}
+        ✓ GETS a status code of 400 with message of invalid column for sort_by when passed an invalid column for sort_by 
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller get comments by article id
+In selectCommentsByArticleId 1 undefined
+in models - GET - result
+In 4 parameter error handler { status: 400, msg: 'Invalid order_by value' }
+in default 4 parameter error handler
+        ✓ GETS a status code of 400 with message of invalid order_by value when passed an invalid order_by value 
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+        ✓ Returns PATCH /api/articles with an error code of 405 Method Not Allowed
+    /comments
+      /:comment_id
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller { comment_id: '1' }
+im in the models
+res.body.comment[0] {
+  comment_id: 1,
+  author: 'butter_bridge',
+  article_id: 9,
+  votes: 115,
+  created_at: 1511354163389,
+  body: "Oh, I've got compassion running out of my nose, pal! I'm the Sultan of Sentiment!"
+}
+        ✓ PATCHES with status of 200 when passed a valid votes object, checked against expected object in test
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller { comment_id: '1' }
+im in the models
+In selectCommentsByArticleId 9 comments.comment_id
+        ✓ PATCHES with status of 200 when passed a valid votes object, checks against the returned value from the comment table using Promise.all()
+in models - GET - result
+The response is: {
+  comment_id: 1,
+  author: 'butter_bridge',
+  article_id: 9,
+  votes: 115,
+  created_at: '2017-11-22T12:36:03.389Z',
+  body: "Oh, I've got compassion running out of my nose, pal! I'm the Sultan of Sentiment!"
+} object {
+  comment_id: 1,
+  author: 'butter_bridge',
+  article_id: 9,
+  votes: 115,
+  created_at: 2017-11-22T12:36:03.389Z,
+  body: "Oh, I've got compassion running out of my nose, pal! I'm the Sultan of Sentiment!"
+} object
+
+
+  33 passing (7s)
+  1 pending
+  8 failing
+
+  1) /api
+       /articles
+         GETS a status code of 200 when passed a valid path to /api/articles:
+     AssertionError: expected { Object (articles) } to be an array
+      at /Users/kevincostello/Northcoders/Backend/be-nc-news/spec/app.spec.js:339:34
+      at processTicksAndRejections (internal/process/task_queues.js:93:5)
+
+  2) /api
+       /articles
+         GETS a status code of 200 when passed a valid path and sorts by the default column and default order by:
+     TypeError: utils.flag(...).map is not a function
+      at Proxy.<anonymous> (node_modules/sams-chai-sorted/lib/chai-sorted.js:36:44)
+      at Proxy.methodWrapper (node_modules/chai/lib/chai/utils/addMethod.js:57:25)
+      at /Users/kevincostello/Northcoders/Backend/be-nc-news/spec/app.spec.js:369:34
+      at processTicksAndRejections (internal/process/task_queues.js:93:5)
+
+  3) /api
+       /articles
+         GETS a status code of 200 and returns an array of sorted articles by the created_at for a given article id when valid queries are passed in the request with a valid column as the sort by column and default order by value:
+     TypeError: utils.flag(...).map is not a function
+      at Proxy.<anonymous> (node_modules/sams-chai-sorted/lib/chai-sorted.js:36:44)
+      at Proxy.methodWrapper (node_modules/chai/lib/chai/utils/addMethod.js:57:25)
+      at /Users/kevincostello/Northcoders/Backend/be-nc-news/spec/app.spec.js:384:34
+      at processTicksAndRejections (internal/process/task_queues.js:93:5)
+
+  4) /api
+       /articles
+         GETS a status code of 200 and returns an array of sorted articles by the title fwhen valid queries are passed in the request with a valid column as the sort by column and order by value is asc:
+     TypeError: utils.flag(...).map is not a function
+      at Proxy.<anonymous> (node_modules/sams-chai-sorted/lib/chai-sorted.js:36:44)
+      at Proxy.methodWrapper (node_modules/chai/lib/chai/utils/addMethod.js:57:25)
+      at /Users/kevincostello/Northcoders/Backend/be-nc-news/spec/app.spec.js:408:34
+      at processTicksAndRejections (internal/process/task_queues.js:93:5)
+
+  5) /api
+       /articles
+         GETS a status code of 200 and returns an array of sorted articles by the title filtered by author when passedwhen valid queries are passed in the request with a valid column as the sort by column and order by value is asc and a valid value for author:
+     TypeError: utils.flag(...).map is not a function
+      at Proxy.<anonymous> (node_modules/sams-chai-sorted/lib/chai-sorted.js:36:44)
+      at Proxy.methodWrapper (node_modules/chai/lib/chai/utils/addMethod.js:57:25)
+      at /Users/kevincostello/Northcoders/Backend/be-nc-news/spec/app.spec.js:420:34
+      at processTicksAndRejections (internal/process/task_queues.js:93:5)
+
+  6) /api
+       /articles
+         GETS a status code of 200 and returns an array of sorted articles by the title filtered by topic when passed valid queries are passed in the request with a valid column as the sort by column and order by value is asc and a valid value for topic:
+     TypeError: utils.flag(...).map is not a function
+      at Proxy.<anonymous> (node_modules/sams-chai-sorted/lib/chai-sorted.js:36:44)
+      at Proxy.methodWrapper (node_modules/chai/lib/chai/utils/addMethod.js:57:25)
+      at /Users/kevincostello/Northcoders/Backend/be-nc-news/spec/app.spec.js:436:34
+      at runMicrotasks (<anonymous>)
+      at processTicksAndRejections (internal/process/task_queues.js:93:5)
+
+  7) /api
+       /articles
+         GETS a status code of 200 and returns an array of sorted articles by the title filtered by topic but not filterd by author when passed valid queries are passed in the request with a valid column as the sort by column and order by value is asc and a valid value for topic:
+     TypeError: utils.flag(...).map is not a function
+      at Proxy.<anonymous> (node_modules/sams-chai-sorted/lib/chai-sorted.js:36:44)
+      at Proxy.methodWrapper (node_modules/chai/lib/chai/utils/addMethod.js:57:25)
+      at /Users/kevincostello/Northcoders/Backend/be-nc-news/spec/app.spec.js:450:34
+      at runMicrotasks (<anonymous>)
+      at processTicksAndRejections (internal/process/task_queues.js:93:5)
+
+  8) /api
+       /articles
+         GETS a status code of 200 and returns an array of sorted articles by the title filtered by topic but not filterd by topic when passed valid queries are passed in the request with a valid column as the sort by column and order by value is asc and a valid value for author:
+     TypeError: utils.flag(...).map is not a function
+      at Proxy.<anonymous> (node_modules/sams-chai-sorted/lib/chai-sorted.js:36:44)
+      at Proxy.methodWrapper (node_modules/chai/lib/chai/utils/addMethod.js:57:25)
+      at /Users/kevincostello/Northcoders/Backend/be-nc-news/spec/app.spec.js:464:34
+      at runMicrotasks (<anonymous>)
+      at processTicksAndRejections (internal/process/task_queues.js:93:5)
+
+
+

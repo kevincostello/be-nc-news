@@ -16,7 +16,14 @@ exports.selectArticle = article => {
           msg: "The article id is not in the database"
         });
       } else {
-        return result[0];
+        // convert comment_count to be a number not a string
+        const numericCountArray = result.map(article => {
+          article.comment_count = Number(article.comment_count);
+          return article;
+        });
+        return numericCountArray[0];
+
+        // return result[0];
       }
     });
 };
@@ -130,7 +137,6 @@ exports.selectAllArticles = query => {
       })
       // .where("articles.author", query.author)
       .then(result => {
-        console.log("results are:", result);
         if (result.length === 0) {
           // need to check when array is empty because a valid author is passed versus an invalid author - need to do another query to the database to check if the author exists on the database and send a 204 in this situation
 
@@ -143,7 +149,11 @@ exports.selectAllArticles = query => {
             status: 404,
             msg: "Invalid query passed"
           });
-        } else if (query.order_by !== undefined && query.order_by !== "asc") {
+        } else if (
+          query.order_by !== undefined &&
+          query.order_by !== "asc" &&
+          query.order_by !== "desc"
+        ) {
           return Promise.reject({
             status: 400,
             msg: "Invalid order_by value"
@@ -154,7 +164,7 @@ exports.selectAllArticles = query => {
             article.comment_count = Number(article.comment_count);
             return article;
           });
-          return result;
+          return numericCountArray;
         }
       })
   );
