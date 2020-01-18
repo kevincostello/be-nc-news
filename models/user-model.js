@@ -5,12 +5,7 @@ exports.selectUser = user => {
   return db
     .select("*")
     .from("users")
-    .modify(query => {
-      // console.log("This is the query", user);
-      if (user) {
-        query.where("username", user.username);
-      }
-    })
+    .where("username", user.username)
     .then(result => {
       if (result.length === 0) {
         return Promise.reject({
