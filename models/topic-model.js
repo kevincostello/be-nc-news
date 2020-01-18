@@ -5,6 +5,8 @@ exports.selectTopics = () => {
   return db.select("*").from("topics");
 };
 
+// I need to write a couple of tests for this
+// I am using this to test the /api/articles endpoint
 exports.selectTopic = topic => {
   console.log("im in the models");
   return db

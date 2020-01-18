@@ -149,7 +149,7 @@ exports.selectAllArticles = query => {
         }
 
         if (query.topic !== undefined) {
-          const checkIfTopicExists = selectTopic(query.topic);
+          const checkIfTopicExists = selectTopic(query.topic); // I have written this to test the api/articles?topic=xxxx
           return checkIfTopicExists;
         }
       }
