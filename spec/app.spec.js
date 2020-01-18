@@ -19,8 +19,10 @@ describe("/api", () => {
         .get("/api/topics")
         .expect(200)
         .then(res => {
+          console.log(res.body);
           expect(res.body).to.be.an("object");
           expect(res.body.topics).to.be.an("array");
+          expect(res.body.topics[0]).to.be.an("object");
           expect(res.body.topics[0]).to.have.keys(["slug", "description"]);
         });
     });
@@ -51,8 +53,8 @@ describe("/api", () => {
         .then(res => {
           console.log(res.body);
           expect(res.body).to.be.an("object");
-          expect(res.body.users).to.be.an("array");
-          expect(res.body.users[0]).to.have.keys([
+          expect(res.body.user).to.be.an("object");
+          expect(res.body.user).to.have.keys([
             "username",
             "avatar_url",
             "name"
@@ -70,15 +72,16 @@ describe("/api", () => {
     });
   });
 
-  describe("/articles", () => {
+  describe.only("/articles", () => {
     it("GETS a status code of 200 when passed a valid article id", () => {
       return request(app)
         .get("/api/articles/1")
         .expect(200)
         .then(res => {
+          console.log(res.body);
           expect(res.body).to.be.an("object");
-          expect(res.body.articles).to.be.an("array");
-          expect(res.body.articles[0]).to.contain.keys([
+          expect(res.body.article).to.be.an("object");
+          expect(res.body.article).to.contain.keys([
             "article_id",
             "title",
             "body",
@@ -112,7 +115,8 @@ describe("/api", () => {
         .get("/api/articles/1")
         .expect(200)
         .then(res => {
-          expect(Number(res.body.articles[0].comment_count)).to.equal(13);
+          console.log(res.body);
+          expect(Number(res.body.article.comment_count)).to.equal(13);
         });
     });
 
@@ -121,7 +125,8 @@ describe("/api", () => {
         .get("/api/articles/3")
         .expect(200)
         .then(res => {
-          expect(Number(res.body.articles[0].comment_count)).to.equal(0);
+          console.log(res.body);
+          expect(Number(res.body.article.comment_count)).to.equal(0);
         });
     });
 
@@ -157,7 +162,7 @@ describe("/api", () => {
         });
     });
 
-    describe.only("/:article_id/comments", () => {
+    describe("/:article_id/comments", () => {
       it("POSTS a comment with status code of 201 when passed an object containing the comment", () => {
         return request(app)
           .post("/api/articles/1/comments")
@@ -495,7 +500,7 @@ describe("/api", () => {
 
   describe("/comments", () => {
     describe("/:comment_id", () => {
-      it("PATCHES with status of 200 when passed a valid votes object", () => {
+      it("PATCHES with status of 200 when passed a valid votes object, checked against expected object in test", () => {
         return request(app)
           .patch("/api/comments/1")
           .send({ inc_votes: 99 })
@@ -505,42 +510,66 @@ describe("/api", () => {
             expect(res.body.msg).to.equal(
               "The comment was updated with the passed values"
             );
-            // const testDate = new Date(1511354163389);
-            // const stringDate = testDate.toJSON();
+            const testDate = new Date(1511354163389);
+            const stringDate = testDate.toJSON();
 
             const commentChanged = res.body.comment[0];
 
-            // res.body.comment[0].created_at = Date.parse(
-            //   res.body.comment[0].created_at
-            // );
-            // console.log("res.body.comment[0]", res.body.comment[0]);
+            res.body.comment[0].created_at = Date.parse(
+              res.body.comment[0].created_at
+            );
+            console.log("res.body.comment[0]", res.body.comment[0]);
 
-            // expect(res.body.comment).to.deep.equal([
-            //   {
-            //     comment_id: 1,
-            //     body:
-            //       "Oh, I've got compassion running out of my nose, pal! I'm the Sultan of Sentiment!",
-            //     article_id: 9,
-            //     author: "butter_bridge",
-            //     votes: 115,
-            //     created_at: 1511354163389
-            //   }
-            // ]);
+            expect(res.body.comment).to.deep.equal([
+              {
+                comment_id: 1,
+                body:
+                  "Oh, I've got compassion running out of my nose, pal! I'm the Sultan of Sentiment!",
+                article_id: 9,
+                author: "butter_bridge",
+                votes: 115,
+                created_at: 1511354163389
+              }
+            ]);
+
+            // return allComments;
+          });
+      });
+
+      it("PATCHES with status of 200 when passed a valid votes object, checks against the returned value from the comment table using Promise.all()", () => {
+        return request(app)
+          .patch("/api/comments/1")
+          .send({ inc_votes: 99 })
+          .expect(200)
+          .then(res => {
+            expect(res.body.comment[0].votes).to.equal(115);
+            expect(res.body.msg).to.equal(
+              "The comment was updated with the passed values"
+            );
+
+            const commentChanged = res.body.comment[0];
+
             const allComments = selectCommentsByArticleId(
               { article_id: 9 },
               { sort_by: "comments.comment_id", order_by: "asc" }
             );
 
             Promise.all([allComments, res.body.comment]).then(
-              ([commentsAll, res2]) => {
-                console.log("The response is:", res2[0], commentsAll[0]);
-                expect(res2[0]).to.deep.equal(commentsAll[0]);
+              ([commentsAll, changedComment]) => {
+                console.log(
+                  "The response is:",
+                  changedComment[0],
+                  typeof changedComment[0],
+                  commentsAll[0],
+                  typeof commentsAll[0]
+                );
+                commentsAll[0].created_at = commentsAll[0].created_at.toJSON();
+
+                expect(changedComment[0]).to.deep.equal(commentsAll[0]);
               }
             );
-
-            // return allComments;
           });
-      });
+      }); // end of it blocks
     });
   });
 });

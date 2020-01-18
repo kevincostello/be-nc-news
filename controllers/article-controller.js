@@ -1,16 +1,16 @@
 const {
-  selectArticles,
+  selectArticle,
   patchArticles,
   postArticleWithComment,
   selectCommentsByArticleId,
   selectAllArticles
 } = require("../models/article-model.js");
 
-const sendArticles = (req, res, next) => {
+const sendArticle = (req, res, next) => {
   console.log("In controller");
-  selectArticles(req.params)
-    .then(articles => {
-      res.status(200).send({ articles });
+  selectArticle(req.params)
+    .then(article => {
+      res.status(200).send({ article });
     })
     .catch(err => {
       next(err);
@@ -64,7 +64,7 @@ const sendAllArticles = (req, res, next) => {
 };
 
 module.exports = {
-  sendArticles,
+  sendArticle,
   sendArticlesToBePatched,
   sendArticlesWithComment,
   sendCommentsByArticleId,

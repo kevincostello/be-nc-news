@@ -1,6 +1,6 @@
 const db = require("../db/connection");
 
-exports.selectArticles = article => {
+exports.selectArticle = article => {
   console.log("im in the models");
   return db
     .select("articles.*")
@@ -16,7 +16,7 @@ exports.selectArticles = article => {
           msg: "The article id is not in the database"
         });
       } else {
-        return result;
+        return result[0];
       }
     });
 };
@@ -62,11 +62,11 @@ exports.selectCommentsByArticleId = (params, query) => {
   // order -> asc or desc (default to desc)
   return db
     .select(
-      "comments.article_id",
       "comments.comment_id",
+      "comments.author",
+      "comments.article_id",
       "comments.votes",
       "comments.created_at",
-      "comments.author",
       "comments.body"
     )
     .from("comments")
