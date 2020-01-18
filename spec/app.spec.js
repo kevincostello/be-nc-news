@@ -147,7 +147,7 @@ describe("/api", () => {
         });
     });
 
-    it.only("Returns PATCH /api/articles/1 with an error code of 405 Method Not Allowed", () => {
+    it("Returns PATCH /api/articles/1 with an error code of 405 Method Not Allowed", () => {
       return request(app)
         .post("/api/articles/1")
         .expect(405)
@@ -290,7 +290,7 @@ describe("/api", () => {
           });
       });
 
-      it.only("Returns PATCH /api/articles with an error code of 405 Method Not Allowed", () => {
+      it("Returns PATCH /api/articles with an error code of 405 Method Not Allowed", () => {
         return request(app)
           .patch("/api/articles/1/comments")
           .expect(405)
@@ -476,19 +476,29 @@ describe("/api", () => {
         });
     });
 
-    it("GET a status code of 204 No Content, when passed a valid author who has no articles", () => {
+    it.skip("GET a status code of 204 No Content, when passed a valid author who has no articles", () => {
       return request(app)
         .get("/api/articles/?author=lurker")
         .expect(204);
     });
 
-    it.only("Returns PATCH /api/articles with an error code of 405 Method Not Allowed", () => {
+    it("Returns PATCH /api/articles with an error code of 405 Method Not Allowed", () => {
       return request(app)
         .patch("/api/articles")
         .expect(405)
         .then(res => {
           expect(res.body.msg).to.equal("method not allowed");
         });
+    });
+  });
+
+  describe("/comments", () => {
+    describe("/:comment_id", () => {
+      it.only("PATCHES with status of 200 when passed a valid votes object", () => {
+        return request(app)
+          .patch("/api/comments/1")
+          .expect(200);
+      });
     });
   });
 });

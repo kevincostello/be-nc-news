@@ -63,6 +63,11 @@ GROUP BY users.username
 
 ;
 
+SELECT comments.*
+  FROM comments
+  WHERE comment_id = 1
+  ;
+
 -- SELECT * FROM users;
 
 
