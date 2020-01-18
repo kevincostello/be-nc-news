@@ -1,7 +1,7 @@
 const db = require("../db/connection");
 
 exports.selectUser = user => {
-  console.log("im in the models");
+  console.log("im in the models - user:", user);
   return db
     .select("*")
     .from("users")

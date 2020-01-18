@@ -1,5 +1,7 @@
 const db = require("../db/connection");
 
+const { selectUser } = require("../models/user-model");
+
 exports.selectArticle = article => {
   console.log("im in the models");
   return db
@@ -28,7 +30,7 @@ exports.selectArticle = article => {
     });
 };
 
-exports.patchArticles = (body, params) => {
+exports.patchArticle = (body, params) => {
   console.log("im in the models");
   return db
     .from("articles")
@@ -37,7 +39,7 @@ exports.patchArticles = (body, params) => {
     .returning("*")
     .then(result => {
       console.log("patching result is completed");
-      return result;
+      return result[0];
     });
   // need to use selectArticles model to return the updated article, how can I do this?
 };
@@ -102,70 +104,73 @@ exports.selectCommentsByArticleId = (params, query) => {
 };
 
 exports.selectAllArticles = query => {
-  console.log("In selectAllArticles", query);
-  // need to return an array of article objects containing:
-  // author, title, article_id, topic, created_at, votes and comment_count -> need to join articles and comments
-  // Also accepts the following queries:
-  // sort_by (defaults to created_at)
-  // order (defaults to desc)
-  // author - filters by value
-  // topic - filters by topic
-  return (
-    db
-      .select(
-        "articles.article_id",
-        "articles.author",
-        "articles.title",
-        "articles.topic",
-        "articles.created_at",
-        "articles.votes"
-      )
-      .from("articles")
-      .count("comments.comment_id as comment_count")
-      .leftJoin("comments", "articles.article_id", "=", "comments.article_id")
-      .groupBy("articles.article_id")
-      .orderBy(query.sort_by || "articles.created_at", query.order_by || "desc")
-      .modify(sqlQuery => {
-        // console.log("This is the query", user);
-        // need to filter for both query.author and query.topic if passed both in query
-        if (query.author) {
-          sqlQuery.where("articles.author", query.author);
-        }
-        if (query.topic) {
-          sqlQuery.where("articles.topic", query.topic);
-        }
-      })
-      // .where("articles.author", query.author)
-      .then(result => {
-        if (result.length === 0) {
-          // need to check when array is empty because a valid author is passed versus an invalid author - need to do another query to the database to check if the author exists on the database and send a 204 in this situation
-
-          // SELECT users.username, count(articles.article_id)
-          // FROM users LEFT JOIN articles ON users.username = articles.author
-          // GROUP BY users.username
-          // ;
-
-          return Promise.reject({
-            status: 404,
-            msg: "Invalid query passed"
-          });
-        } else if (
-          query.order_by !== undefined &&
-          query.order_by !== "asc" &&
-          query.order_by !== "desc"
-        ) {
-          return Promise.reject({
-            status: 400,
-            msg: "Invalid order_by value"
-          });
-        } else {
-          // convert comment_count to be a number not a string
-          const numericCountArray = result.map(article => {
-            article.comment_count = Number(article.comment_count);
-            return article;
-          });
-          return numericCountArray;
-        }
-      })
-  );
+  console.log("In selectAllArticles");
+  return db
+    .select(
+      "articles.article_id",
+      "articles.author",
+      "articles.title",
+      "articles.topic",
+      "articles.created_at",
+      "articles.votes"
+    )
+    .from("articles")
+    .count("comments.comment_id as comment_count")
+    .leftJoin("comments", "articles.article_id", "=", "comments.article_id")
+    .groupBy("articles.article_id")
+    .orderBy(query.sort_by || "articles.created_at", query.order_by || "desc")
+    .modify(sqlQuery => {
+      // need to filter for both query.author and query.topic if passed both in query
+      if (query.author) {
+        sqlQuery.where("articles.author", query.author);
+      }
+      if (query.topic) {
+        sqlQuery.where("articles.topic", query.topic);
+      }
+    })
+    .then(result => {
+      if (result.length > 0) {
+        // convert comment_count to be a number not a string
+        const numericCountArray = result.map(article => {
+          article.comment_count = Number(article.comment_count);
+          return article;
+        });
+        return numericCountArray;
+      } else {
+        console.log(query, "The result is!!!!", result);
+        const checkIfAuthorExists = selectUser({
+          username: query.author
+        });
+        return checkIfAuthorExists;
+      }
+    })
+    .then(result2 => {
+      console.log("Are we in result2?", result2);
+      if (result2.length > 0) {
+        return result2;
+      } else {
+        return Promise.reject({
+          status: 204,
+          msg: "Invalid query passed"
+        });
+      }
+    });
 };
+
+//         else if (
+//   query.order_by !== undefined &&
+//   query.order_by !== "asc" &&
+//   query.order_by !== "desc"
+// ) {
+//   return Promise.reject({
+//     status: 400,
+//     msg: "Invalid order_by value"
+//   });
+// } else {
+//   // convert comment_count to be a number not a string
+//   const numericCountArray = result.map(article => {
+//     article.comment_count = Number(article.comment_count);
+//     return article;
+//   });
+//   return numericCountArray;
+// }

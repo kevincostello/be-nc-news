@@ -137,7 +137,8 @@ describe("/api", () => {
         .expect(200)
         .then(res => {
           expect(res.body).to.be.an("object");
-          expect(res.body.articles[0].votes).to.equal(10099);
+          expect(res.body.article).to.be.an("object");
+          expect(res.body.article.votes).to.equal(10099);
         });
     });
 
@@ -362,18 +363,18 @@ describe("/api", () => {
         });
     });
 
-    it("GETS a status code of 200 when passed a valid path and sorts by the default column and default order by", () => {
+    it.only("GETS a status code of 200 when passed a valid path and sorts by the default column and default order by", () => {
       return request(app)
         .get("/api/articles")
         .expect(200)
         .then(res => {
-          expect(res.body).to.be.sortedBy("created_at", {
+          expect(res.body.articles).to.be.sortedBy("created_at", {
             descending: true
           });
           expect(res.body.articles.length).to.equal(12);
-          expect(res.body.articles[res.body.length - 1].article_id).to.equal(
-            12
-          );
+          expect(
+            res.body.articles[res.body.articles.length - 1].article_id
+          ).to.equal(12);
           expect(res.body.articles[0].article_id).to.equal(1);
           expect(res.body.articles[8].comment_count).to.equal(2);
         });
@@ -387,7 +388,7 @@ describe("/api", () => {
           expect(res.body.articles).to.be.sortedBy("title", {
             descending: true
           });
-          expect(res.body[0].article_id).to.equal(7);
+          expect(res.body.articles[0].article_id).to.equal(7);
         });
     });
 
@@ -455,9 +456,9 @@ describe("/api", () => {
           });
           expect(res.body.articles[0].topic).to.equal("mitch");
           expect(res.body.articles.length).to.equal(11);
-          expect(res.body.articles[res.body.length - 2].comment_count).to.equal(
-            2
-          );
+          expect(
+            res.body.articles[res.body.articles.length - 2].comment_count
+          ).to.equal(2);
         });
     });
 
@@ -520,10 +521,16 @@ describe("/api", () => {
         });
     });
 
-    it.skip("GET a status code of 204 No Content, when passed a valid author who has no articles", () => {
+    it.only("GET a status code of 204 No Content, when passed a valid author who has no articles", () => {
       return request(app)
         .get("/api/articles/?author=lurker")
         .expect(204);
+    });
+
+    it.only("GET a status code of 204 No Content, when passed a valid author who has no articles", () => {
+      return request(app)
+        .get("/api/articles/?author=lurkerss")
+        .expect(404);
     });
 
     it("Returns PATCH /api/articles with an error code of 405 Method Not Allowed", () => {
