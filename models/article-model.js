@@ -1,6 +1,7 @@
 const db = require("../db/connection");
 
 const { selectUser } = require("../models/user-model");
+const { selectTopics, selectTopic } = require("../models/topic-model");
 
 exports.selectArticle = article => {
   console.log("im in the models");
@@ -104,7 +105,7 @@ exports.selectCommentsByArticleId = (params, query) => {
 };
 
 exports.selectAllArticles = query => {
-  console.log("In selectAllArticles");
+  console.log("In selectAllArticles", query);
   return db
     .select(
       "articles.article_id",
@@ -129,30 +130,49 @@ exports.selectAllArticles = query => {
       }
     })
     .then(result => {
-      if (result.length > 0) {
-        // convert comment_count to be a number not a string
+      // if (result.length === 0 && query.author !== undefined) {
+      if (
+        query.order_by !== undefined &&
+        query.order_by !== "asc" &&
+        query.order_by !== "desc"
+      ) {
+        return Promise.reject({
+          status: 400,
+          msg: "Invalid order_by value"
+        });
+      } else if (result.length === 0) {
+        if (query.author !== undefined) {
+          const checkIfAuthorExists = selectUser({
+            username: query.author
+          });
+          return checkIfAuthorExists;
+        }
+
+        if (query.topic !== undefined) {
+          const checkIfTopicExists = selectTopic(query.topic);
+          return checkIfTopicExists;
+        }
+      }
+      // else if (query.order_by !== undefined && query.order_by !== "asc") {
+      //   return Promise.reject({
+      //     status: 400,
+      //     msg: "Invalid order_by value"
+      //   });
+      // }
+      else {
         const numericCountArray = result.map(article => {
           article.comment_count = Number(article.comment_count);
           return article;
         });
         return numericCountArray;
-      } else {
-        console.log(query, "The result is!!!!", result);
-        const checkIfAuthorExists = selectUser({
-          username: query.author
-        });
-        return checkIfAuthorExists;
       }
     })
-    .then(result2 => {
-      console.log("Are we in result2?", result2);
-      if (result2.length > 0) {
-        return result2;
+    .then(authorResult => {
+      console.log("Are we in authorResult?", authorResult);
+      if (authorResult.length > 0) {
+        return authorResult;
       } else {
-        return Promise.reject({
-          status: 204,
-          msg: "Invalid query passed"
-        });
+        return [];
       }
     });
 };

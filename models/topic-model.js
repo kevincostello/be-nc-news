@@ -4,3 +4,21 @@ exports.selectTopics = () => {
   console.log("im in the models");
   return db.select("*").from("topics");
 };
+
+exports.selectTopic = topic => {
+  console.log("im in the models");
+  return db
+    .select("*")
+    .from("topics")
+    .where("slug", topic)
+    .then(result => {
+      if (result.length === 0) {
+        return Promise.reject({
+          status: 404,
+          msg: "The query value is not on the database"
+        });
+      } else {
+        return result;
+      }
+    });
+};

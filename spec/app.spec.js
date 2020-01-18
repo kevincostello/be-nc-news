@@ -363,7 +363,7 @@ describe("/api", () => {
         });
     });
 
-    it.only("GETS a status code of 200 when passed a valid path and sorts by the default column and default order by", () => {
+    it("GETS a status code of 200 when passed a valid path and sorts by the default column and default order by", () => {
       return request(app)
         .get("/api/articles")
         .expect(200)
@@ -476,12 +476,13 @@ describe("/api", () => {
         });
     });
 
+    // I need to recheck all of these
     it("GETS a status code of 404 when passed an author name not in the database", () => {
       return request(app)
         .get("/api/articles/?author=rogersopp")
         .expect(404)
         .then(res => {
-          expect(res.body.msg).to.equal("Invalid query passed");
+          expect(res.body.msg).to.equal("The username does not exist");
         });
     });
 
@@ -490,7 +491,9 @@ describe("/api", () => {
         .get("/api/articles/?topic=gobbledygook")
         .expect(404)
         .then(res => {
-          expect(res.body.msg).to.equal("Invalid query passed");
+          expect(res.body.msg).to.equal(
+            "The query value is not on the database"
+          );
         });
     });
 
@@ -499,7 +502,7 @@ describe("/api", () => {
         .get("/api/articles/?author=noauthor&topic=gobbledygook")
         .expect(404)
         .then(res => {
-          expect(res.body.msg).to.equal("Invalid query passed");
+          expect(res.body.msg).to.equal("The username does not exist");
         });
     });
 
@@ -521,17 +524,23 @@ describe("/api", () => {
         });
     });
 
-    it.only("GET a status code of 204 No Content, when passed a valid author who has no articles", () => {
+    it("GET a status code of 200 an empty array when passed a valid author who has no articles", () => {
       return request(app)
         .get("/api/articles/?author=lurker")
-        .expect(204);
+        .expect(200)
+        .then(res => {
+          expect(res.body).to.be.an("object");
+          expect(res.body.articles).to.be.an("array");
+          expect(res.body.articles.length).to.equal(0);
+        });
     });
 
-    it.only("GET a status code of 204 No Content, when passed a valid author who has no articles", () => {
+    it("GET a status code of 404 No Content, author name not in the database", () => {
       return request(app)
         .get("/api/articles/?author=lurkerss")
         .expect(404);
     });
+    // end of I need to recheck all of these
 
     it("Returns PATCH /api/articles with an error code of 405 Method Not Allowed", () => {
       return request(app)
