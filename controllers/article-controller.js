@@ -45,7 +45,8 @@ const sendCommentsByArticleId = (req, res, next) => {
   console.log("In controller get comments by article id");
   selectCommentsByArticleId(req.params, req.query)
     .then(comments => {
-      res.status(200).send(comments);
+      console.log("comments:", comments);
+      res.status(200).send({ comments });
     })
     .catch(err => {
       next(err);

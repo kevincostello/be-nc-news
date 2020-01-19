@@ -3,7 +3,7 @@ const db = require("../db/connection");
 const { selectUser } = require("../models/user-model");
 const { selectTopics, selectTopic } = require("../models/topic-model");
 
-exports.selectArticle = article => {
+const selectArticle = article => {
   console.log("im in the models");
   return db
     .select("articles.*")
@@ -31,7 +31,7 @@ exports.selectArticle = article => {
     });
 };
 
-exports.patchArticle = (body, params) => {
+const patchArticle = (body, params) => {
   console.log("im in the models");
   return db
     .from("articles")
@@ -45,7 +45,7 @@ exports.patchArticle = (body, params) => {
   // need to use selectArticles model to return the updated article, how can I do this?
 };
 
-exports.postArticleWithComment = (body, params) => {
+const postArticleWithComment = (body, params) => {
   console.log("im in the models - post");
   // votes and created_at will be given default values so they do not need to be inserted
   const toInsert = {
@@ -63,13 +63,65 @@ exports.postArticleWithComment = (body, params) => {
     });
 };
 
-exports.selectCommentsByArticleId = (params, query) => {
+const selectCommentsByArticleId = (params, query) => {
   console.log("In selectCommentsByArticleId", params.article_id, query.sort_by);
   // articles and comments tables will need to be joined by article_id
   // need to select comment_id, votes, created_at, author and body from comments table
   // need to accept queries containing:
   // sort_by -> any valid column (default to created_at)
   // order -> asc or desc (default to desc)
+  const doesArticleExist = selectArticle({ article_id: params.article_id });
+
+  return doesArticleExist
+    .then(articleExists => {
+      if (articleExists.length > 0) {
+        console.log("result:", Object.keys(articleExists));
+      }
+      return articleExists;
+    })
+    .then(checkCommentsExist => {
+      return db
+        .select(
+          "comments.comment_id",
+          "comments.author",
+          "comments.article_id",
+          "comments.votes",
+          "comments.created_at",
+          "comments.body"
+        )
+        .from("comments")
+        .where("comments.article_id", params.article_id)
+        .orderBy(
+          query.sort_by || "comments.created_at",
+          query.order_by || "desc"
+        )
+        .then(result => {
+          console.log(
+            "in models - GET - result",
+            "result.length = ",
+            result.length
+          );
+          if (result.length === 0) {
+            // return Promise.reject({
+            //   status: 404,
+            //   msg: "The article id is not in the database"
+            // });
+            return result;
+          } else if (
+            query.order_by !== undefined &&
+            query.order_by !== "asc" &&
+            query.order_by !== "desc"
+          ) {
+            return Promise.reject({
+              status: 400,
+              msg: "Invalid order_by value"
+            });
+          } else {
+            return result;
+          }
+        });
+    });
+
   return db
     .select(
       "comments.comment_id",
@@ -104,7 +156,7 @@ exports.selectCommentsByArticleId = (params, query) => {
     });
 };
 
-exports.selectAllArticles = query => {
+const selectAllArticles = query => {
   // change order of this program so it runs checkIfAuthorExists and checkIfTopicExists first
   // do it similar to a controller, like:
   //   const checkIfAuthorExists = selectUser({
@@ -205,3 +257,11 @@ exports.selectAllArticles = query => {
 //   });
 //   return numericCountArray;
 // }
+
+module.exports = {
+  selectArticle,
+  patchArticle,
+  postArticleWithComment,
+  selectCommentsByArticleId,
+  selectAllArticles
+};

@@ -221,10 +221,11 @@ describe("/api", () => {
           .get("/api/articles/1/comments?sort_by=author")
           .expect(200)
           .then(res => {
-            expect(res.body).to.be.an("array");
-            expect(res.body[0]).to.be.an("object");
-            expect(res.body.length).to.equal(13);
-            expect(res.body[0]).to.have.keys([
+            expect(res.body).to.be.an("object");
+            expect(res.body.comments).to.be.an("array");
+            expect(res.body.comments[0]).to.be.an("object");
+            expect(res.body.comments.length).to.equal(13);
+            expect(res.body.comments[0]).to.have.keys([
               "article_id",
               "comment_id",
               "body",
@@ -240,10 +241,11 @@ describe("/api", () => {
           .get("/api/articles/1/comments")
           .expect(200)
           .then(res => {
-            expect(res.body).to.be.an("array");
-            expect(res.body[0]).to.be.an("object");
-            expect(res.body.length).to.equal(13);
-            expect(res.body[0]).to.have.keys([
+            expect(res.body).to.be.an("object");
+            expect(res.body.comments).to.be.an("array");
+            expect(res.body.comments[0]).to.be.an("object");
+            expect(res.body.comments.length).to.equal(13);
+            expect(res.body.comments[0]).to.have.keys([
               "article_id",
               "comment_id",
               "body",
@@ -251,31 +253,9 @@ describe("/api", () => {
               "author",
               "created_at"
             ]);
-            expect(res.body).to.be.sortedBy("created_at", {
+            expect(res.body.comments).to.be.sortedBy("created_at", {
               descending: true
             });
-          });
-      });
-
-      it("GETS a status code of 200 and returns an array of sorted comments by the created_at for a given article id when valid queries are passed in the request with created_at as the sort by column and desc as the order by value", () => {
-        return request(app)
-          .get("/api/articles/2/comments")
-          .expect(200)
-          .then(res => {
-            expect(res.body).to.be.an("array");
-            // expect(res.body[0]).to.be.an("object");
-            expect(res.body.length).to.equal(0);
-            // expect(res.body[0]).to.have.keys([
-            //   "article_id",
-            //   "comment_id",
-            //   "body",
-            //   "votes",
-            //   "author",
-            //   "created_at"
-            // ]);
-            // expect(res.body).to.be.sortedBy("created_at", {
-            //   descending: true
-            // });
           });
       });
 
@@ -284,10 +264,11 @@ describe("/api", () => {
           .get("/api/articles/1/comments?sort_by=author")
           .expect(200)
           .then(res => {
-            expect(res.body).to.be.an("array");
-            expect(res.body[0]).to.be.an("object");
-            expect(res.body.length).to.equal(13);
-            expect(res.body[0]).to.have.keys([
+            expect(res.body).to.be.an("object");
+            expect(res.body.comments).to.be.an("array");
+            expect(res.body.comments[0]).to.be.an("object");
+            expect(res.body.comments.length).to.equal(13);
+            expect(res.body.comments[0]).to.have.keys([
               "article_id",
               "comment_id",
               "body",
@@ -295,7 +276,7 @@ describe("/api", () => {
               "author",
               "created_at"
             ]);
-            expect(res.body).to.be.sortedBy("author", {
+            expect(res.body.comments).to.be.sortedBy("author", {
               descending: true
             });
             expect(res.body[res.body.length - 1].author).to.equal(
@@ -304,15 +285,16 @@ describe("/api", () => {
           });
       });
 
-      it("GETS a status code of 200 and returns an array of sorted comments by the created_at for a given article id when valid queries are passed in the request with a valid column as the sort by column and order by value is asc", () => {
+      it("GETS a status code of 200 and returns an array of sorted comments by the created_at for a given article id when valid queries are passed in the request with a valid column as the sort by column and order by value is desc", () => {
         return request(app)
           .get("/api/articles/1/comments?order_by=desc")
           .expect(200)
           .then(res => {
-            expect(res.body).to.be.an("array");
-            expect(res.body[0]).to.be.an("object");
-            expect(res.body.length).to.equal(13);
-            expect(res.body[0]).to.have.keys([
+            expect(res.body).to.be.an("object");
+            expect(res.body.comments).to.be.an("array");
+            expect(res.body.comments[0]).to.be.an("object");
+            expect(res.body.comments.length).to.equal(13);
+            expect(res.body.comments[0]).to.have.keys([
               "article_id",
               "comment_id",
               "body",
@@ -320,7 +302,7 @@ describe("/api", () => {
               "author",
               "created_at"
             ]);
-            expect(res.body).to.be.sortedBy("created_at", {
+            expect(res.body.comments).to.be.sortedBy("created_at", {
               descending: true
             });
             expect(res.body[res.body.length - 1].author).to.equal(
@@ -334,10 +316,11 @@ describe("/api", () => {
           .get("/api/articles/1/comments?sort_by=author&order_by=asc")
           .expect(200)
           .then(res => {
-            expect(res.body).to.be.an("array");
-            expect(res.body[0]).to.be.an("object");
-            expect(res.body.length).to.equal(13);
-            expect(res.body[0]).to.have.keys([
+            expect(res.body).to.be.an("object");
+            expect(res.body.comments).to.be.an("array");
+            expect(res.body.comments[0]).to.be.an("object");
+            expect(res.body.comments.length).to.equal(13);
+            expect(res.body.comments[0]).to.have.keys([
               "article_id",
               "comment_id",
               "body",
@@ -345,7 +328,7 @@ describe("/api", () => {
               "author",
               "created_at"
             ]);
-            expect(res.body).to.be.sortedBy("author", {
+            expect(res.body.comments).to.be.sortedBy("author", {
               descending: false
             });
             expect(res.body[res.body.length - 1].author).to.equal(
@@ -369,6 +352,17 @@ describe("/api", () => {
           .expect(400)
           .then(res => {
             expect(res.body.msg).to.equal("Invalid order_by value");
+          });
+      });
+
+      it("GETS a status code of 200 and returns an empty articles array when passes an article_id which exists but is has not comments", () => {
+        return request(app)
+          .get("/api/articles/2/comments")
+          .expect(200)
+          .then(res => {
+            expect(res.body).to.be.an("object");
+            expect(res.body.comments).to.be.an("array");
+            expect(res.body.comments.length).to.equal(0);
           });
       });
 
