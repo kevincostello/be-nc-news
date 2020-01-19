@@ -105,6 +105,17 @@ exports.selectCommentsByArticleId = (params, query) => {
 };
 
 exports.selectAllArticles = query => {
+  // change order of this program so it runs checkIfAuthorExists and checkIfTopicExists first
+  // do it similar to a controller, like:
+  //   const checkIfAuthorExists = selectUser({
+  // username: query.author
+  // });
+  // return checkIfAuthorExists.then(res => {   const checkIfTopicExists = selectTopic(query.topic); // I have written this to test the api/articles?topic=xxxx
+  // return checkIfTopicExists;}).then(return db
+  // .select(
+  //   "articles.article_id",
+  //   "articles.author", etc)
+
   console.log("In selectAllArticles", query);
   return db
     .select(

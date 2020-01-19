@@ -13,6 +13,16 @@ chai.use(require("sams-chai-sorted"));
 describe("/api", () => {
   beforeEach(() => db.seed.run());
   after(() => db.destroy());
+
+  it("Returns DELETE /api with an error code of 405 Method Not Allowed", () => {
+    return request(app)
+      .delete("/api")
+      .expect(405)
+      .then(res => {
+        expect(res.body.msg).to.equal("method not allowed");
+      });
+  });
+
   describe("/topics", () => {
     it("GET responds with status code of 200 and returns array of topics", () => {
       return request(app)
@@ -68,6 +78,24 @@ describe("/api", () => {
         .expect(404)
         .then(res => {
           expect(res.body.msg).to.equal("The username does not exist");
+        });
+    });
+
+    it("Returns PATCH /api/users with an error code of 405 Method Not Allowed", () => {
+      return request(app)
+        .patch("/api/users")
+        .expect(405)
+        .then(res => {
+          expect(res.body.msg).to.equal("method not allowed");
+        });
+    });
+
+    it("Returns PUT /api/users/butter_bridge with an error code of 405 Method Not Allowed", () => {
+      return request(app)
+        .put("/api/users/butter_bridge")
+        .expect(405)
+        .then(res => {
+          expect(res.body.msg).to.equal("method not allowed");
         });
     });
   });
@@ -229,7 +257,7 @@ describe("/api", () => {
           });
       });
 
-      it.only("GETS a status code of 200 and returns an array of sorted comments by the created_at for a given article id when valid queries are passed in the request with created_at as the sort by column and desc as the order by value", () => {
+      it("GETS a status code of 200 and returns an array of sorted comments by the created_at for a given article id when valid queries are passed in the request with created_at as the sort by column and desc as the order by value", () => {
         return request(app)
           .get("/api/articles/2/comments")
           .expect(200)
@@ -646,6 +674,15 @@ describe("/api", () => {
             );
           });
       }); // end of it blocks
+
+      it("Returns PATCH /api/comments/1 with an error code of 405 Method Not Allowed", () => {
+        return request(app)
+          .put("/api/comments/1")
+          .expect(405)
+          .then(res => {
+            expect(res.body.msg).to.equal("method not allowed");
+          });
+      });
     });
   });
 });
