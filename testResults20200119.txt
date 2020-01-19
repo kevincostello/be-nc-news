@@ -18,8 +18,21 @@ creating topics table test
 Creating users table test
 creating articles table test
 creating comments table test
+In API controller
+im in the models
+In 4 parameter error handler
+in default 4 parameter error handler
+    1) Returns GET /api with status of 200 and a JSON containing all of the endpoints on the api
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
 In 405 error handler
-    ✓ Returns DELETE /api with an error code of 405 Method Not Allowed (44ms)
+    ✓ Returns DELETE /api with an error code of 405 Method Not Allowed
     /topics
 removing comments table test
 removing articles table test
@@ -1340,6 +1353,42 @@ creating comments table test
 In controller comment
 im in the models - post
 In 4 parameter error handler
+        ✓ POSTS a comment with status code of 400 when passed an object not containing any keys
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller comment
+im in the models - post
+In 4 parameter error handler
+        ✓ POSTS a comment with status code of 400 when passed an object not containing the username
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller comment
+im in the models - post
+In 4 parameter error handler
+        ✓ POSTS a comment with status code of 400 when passed an object not containing the body
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller comment
+im in the models - post
+In 4 parameter error handler
         ✓ POSTS a status code of 404 when the passed article_id is not on the database
 removing comments table test
 removing articles table test
@@ -2524,5 +2573,14 @@ In 405 error handler
         ✓ Returns PATCH /api/comments/1 with an error code of 405 Method Not Allowed
 
 
-  53 passing (10s)
+  56 passing (11s)
+  1 failing
+
+  1) /api
+       Returns GET /api with status of 200 and a JSON containing all of the endpoints on the api:
+     Error: Timeout of 2000ms exceeded. For async tests and hooks, ensure "done()" is called; if returning a Promise, ensure it resolves. (/Users/kevincostello/Northcoders/Backend/be-nc-news/spec/app.spec.js)
+      at listOnTimeout (internal/timers.js:531:17)
+      at processTimers (internal/timers.js:475:7)
+
+
 

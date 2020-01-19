@@ -177,6 +177,31 @@ describe("/api", () => {
         });
     });
 
+    it.only("PATCHES with a status code of 200 when passed an object containing the vote count change", () => {
+      return request(app)
+        .patch("/api/articles/1")
+        .send({ inc_votes: 9999 })
+        .expect(200)
+        .then(res => {
+          console.log(
+            "This is the result in the test",
+            res.body,
+            res.req_events.data
+          );
+          expect(res.body).to.be.an("object");
+          expect(res.body.article).to.be.an("object");
+          expect(res.body.article).to.deep.equal({
+            article_id: 1,
+            title: "Living in the shadow of a great man",
+            body: "I find this existence challenging",
+            votes: 10099,
+            topic: "mitch",
+            author: "butter_bridge",
+            created_at: "2018-11-15T12:21:54.171Z"
+          });
+        });
+    });
+
     it("PATCHES with as status code of 400 when passed an object with an invalid value for inc_votes", () => {
       return request(app)
         .patch("/api/articles/1")
@@ -189,7 +214,7 @@ describe("/api", () => {
         });
     });
 
-    it("Returns PATCH /api/articles/1 with an error code of 405 Method Not Allowed", () => {
+    it("Returns POST /api/articles/1 with an error code of 405 Method Not Allowed", () => {
       return request(app)
         .post("/api/articles/1")
         .expect(405)
