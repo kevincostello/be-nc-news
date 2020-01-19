@@ -6,6 +6,8 @@ const chaiSorted = require("chai-sorted");
 const { expect } = chai;
 const db = require("../db/connection");
 const { selectCommentsByArticleId } = require("../models/article-model");
+const endpoints = require("../endpoints.json");
+const stringy = JSON.stringify(endpoints);
 
 chai.use(require("sams-chai-sorted"));
 // console.log("db:", db);
@@ -14,10 +16,16 @@ describe("/api", () => {
   beforeEach(() => db.seed.run());
   after(() => db.destroy());
 
-  it("Returns GET /api with status of 200 and a JSON containing all of the endpoints on the api", () => {
+  it.only("Returns GET /api with status of 200 and a JSON containing all of the endpoints on the api", () => {
     return request(app)
       .get("/api")
-      .expect(200);
+      .send({ endpoints })
+      .expect(200)
+      .then(res => {
+        console.log("In test", res.body, "This is stringy", { endpoints });
+        expect(res.body).to.deep.equal({ endpoints });
+        // expect(res.body).to.deep.equal({ stringy: stringy });
+      });
   });
 
   it("Returns DELETE /api with an error code of 405 Method Not Allowed", () => {
@@ -171,22 +179,10 @@ describe("/api", () => {
         .send({ inc_votes: 9999 })
         .expect(200)
         .then(res => {
-          expect(res.body).to.be.an("object");
-          expect(res.body.article).to.be.an("object");
-          expect(res.body.article.votes).to.equal(10099);
-        });
-    });
-
-    it.only("PATCHES with a status code of 200 when passed an object containing the vote count change", () => {
-      return request(app)
-        .patch("/api/articles/1")
-        .send({ inc_votes: 9999 })
-        .expect(200)
-        .then(res => {
           console.log(
             "This is the result in the test",
             res.body,
-            res.req_events.data
+            res.req.ClientRequest
           );
           expect(res.body).to.be.an("object");
           expect(res.body.article).to.be.an("object");
@@ -695,23 +691,24 @@ describe("/api", () => {
 
   describe("/comments", () => {
     describe("/:comment_id", () => {
-      it("PATCHES with status of 200 when passed a valid votes object, checked against expected object in test", () => {
+      it.only("PATCHES with status of 200 when passed a valid votes object, checked against expected object in test", () => {
         return request(app)
           .patch("/api/comments/1")
           .send({ inc_votes: 99 })
           .expect(200)
           .then(res => {
-            expect(res.body.comment[0].votes).to.equal(115);
+            console.log(res.body);
+            expect(res.body.comment.votes).to.equal(115);
             expect(res.body.msg).to.equal(
               "The comment was updated with the passed values"
             );
             const testDate = new Date(1511354163389);
             const stringDate = testDate.toJSON();
 
-            const commentChanged = res.body.comment[0];
+            // const commentChanged = res.body.comment[0];
 
-            res.body.comment[0].created_at = Date.parse(
-              res.body.comment[0].created_at
+            res.body.comment.created_at = Date.parse(
+              res.body.comment.created_at
             );
 
             expect(res.body.comment).to.deep.equal([
@@ -729,41 +726,6 @@ describe("/api", () => {
             // return allComments;
           });
       });
-
-      it("PATCHES with status of 200 when passed a valid votes object, checks against the returned value from the comment table using Promise.all()", () => {
-        return request(app)
-          .patch("/api/comments/1")
-          .send({ inc_votes: 99 })
-          .expect(200)
-          .then(res => {
-            expect(res.body.comment[0].votes).to.equal(115);
-            expect(res.body.msg).to.equal(
-              "The comment was updated with the passed values"
-            );
-
-            const commentChanged = res.body.comment[0];
-
-            const allComments = selectCommentsByArticleId(
-              { article_id: 9 },
-              { sort_by: "comments.comment_id", order_by: "asc" }
-            );
-
-            Promise.all([allComments, res.body.comment]).then(
-              ([commentsAll, changedComment]) => {
-                console.log(
-                  "The response is:",
-                  changedComment[0],
-                  typeof changedComment[0],
-                  commentsAll[0],
-                  typeof commentsAll[0]
-                );
-                commentsAll[0].created_at = commentsAll[0].created_at.toJSON();
-
-                expect(changedComment[0]).to.deep.equal(commentsAll[0]);
-              }
-            );
-          });
-      }); // end of it blocks
 
       it("DELETES with status code of 204, when passed a comment_id", () => {
         return request(app)

@@ -9,7 +9,8 @@ exports.patchComment = (param, body) => {
     .increment("votes", body.inc_votes || 0)
     .returning("*")
     .then(result => {
-      return result;
+      console.log(result);
+      return result[0];
     });
 };
 
