@@ -93,23 +93,23 @@ const selectCommentsByArticleId = (params, query) => {
         .orderBy(
           query.sort_by || "comments.created_at",
           query.order_by || "desc"
-        )
-        .then(result => {
-          if (result.length === 0) {
-            return result;
-          } else if (
-            query.order_by !== undefined &&
-            query.order_by !== "asc" &&
-            query.order_by !== "desc"
-          ) {
-            return Promise.reject({
-              status: 400,
-              msg: "Invalid order_by value"
-            });
-          } else {
-            return result;
-          }
+        );
+    })
+    .then(result => {
+      if (result.length === 0) {
+        return result;
+      } else if (
+        query.order_by !== undefined &&
+        query.order_by !== "asc" &&
+        query.order_by !== "desc"
+      ) {
+        return Promise.reject({
+          status: 400,
+          msg: "Invalid order_by value"
         });
+      } else {
+        return result;
+      }
     });
 };
 
@@ -172,14 +172,7 @@ const selectAllArticles = query => {
           const checkIfTopicExists = selectTopic(query.topic); // I have written this to test the api/articles?topic=xxxx
           return checkIfTopicExists;
         }
-      }
-      // else if (query.order_by !== undefined && query.order_by !== "asc") {
-      //   return Promise.reject({
-      //     status: 400,
-      //     msg: "Invalid order_by value"
-      //   });
-      // }
-      else {
+      } else {
         const numericCountArray = result.map(article => {
           article.comment_count = Number(article.comment_count);
           return article;
@@ -196,23 +189,6 @@ const selectAllArticles = query => {
       }
     });
 };
-//         else if (
-//   query.order_by !== undefined &&
-//   query.order_by !== "asc" &&
-//   query.order_by !== "desc"
-// ) {
-//   return Promise.reject({
-//     status: 400,
-//     msg: "Invalid order_by value"
-//   });
-// } else {
-//   // convert comment_count to be a number not a string
-//   const numericCountArray = result.map(article => {
-//     article.comment_count = Number(article.comment_count);
-//     return article;
-//   });
-//   return numericCountArray;
-// }
 
 module.exports = {
   selectArticle,
