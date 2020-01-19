@@ -64,7 +64,7 @@ const postArticleWithComment = (body, params) => {
 };
 
 const selectCommentsByArticleId = (params, query) => {
-  console.log("In selectCommentsByArticleId", params.article_id, query.sort_by);
+  console.log("In selectCommentsByArticleId");
   // Accepts queries containing:
   // sort_by -> any valid column (default to created_at)
   // order -> asc or desc (default to desc)
@@ -95,11 +95,6 @@ const selectCommentsByArticleId = (params, query) => {
           query.order_by || "desc"
         )
         .then(result => {
-          console.log(
-            "in models - GET - result",
-            "result.length = ",
-            result.length
-          );
           if (result.length === 0) {
             return result;
           } else if (

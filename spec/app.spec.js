@@ -77,6 +77,7 @@ describe("/api", () => {
         .get("/api/users/gobbledygook")
         .expect(404)
         .then(res => {
+          console.log(res.body);
           expect(res.body.msg).to.equal("The username does not exist");
         });
     });
@@ -221,6 +222,7 @@ describe("/api", () => {
           .get("/api/articles/1/comments?sort_by=author")
           .expect(200)
           .then(res => {
+            console.log("The res.body is: ", res.body);
             expect(res.body).to.be.an("object");
             expect(res.body.comments).to.be.an("array");
             expect(res.body.comments[0]).to.be.an("object");
@@ -241,6 +243,7 @@ describe("/api", () => {
           .get("/api/articles/1/comments")
           .expect(200)
           .then(res => {
+            console.log("The res.body is: ", res.body);
             expect(res.body).to.be.an("object");
             expect(res.body.comments).to.be.an("array");
             expect(res.body.comments[0]).to.be.an("object");
@@ -264,6 +267,7 @@ describe("/api", () => {
           .get("/api/articles/1/comments?sort_by=author")
           .expect(200)
           .then(res => {
+            console.log("The res.body is: ", res.body);
             expect(res.body).to.be.an("object");
             expect(res.body.comments).to.be.an("array");
             expect(res.body.comments[0]).to.be.an("object");
@@ -433,7 +437,7 @@ describe("/api", () => {
         });
     });
 
-    it.only("GETS a status code of 200 when passed a valid path and sorts by the default column and default order by", () => {
+    it("GETS a status code of 200 when passed a valid path and sorts by the default column and default order by", () => {
       return request(app)
         .get("/api/articles")
         .expect(200)
@@ -642,7 +646,6 @@ describe("/api", () => {
             res.body.comment[0].created_at = Date.parse(
               res.body.comment[0].created_at
             );
-            console.log("res.body.comment[0]", res.body.comment[0]);
 
             expect(res.body.comment).to.deep.equal([
               {
