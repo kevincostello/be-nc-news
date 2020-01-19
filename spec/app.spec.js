@@ -279,9 +279,9 @@ describe("/api", () => {
             expect(res.body.comments).to.be.sortedBy("author", {
               descending: true
             });
-            expect(res.body[res.body.length - 1].author).to.equal(
-              "butter_bridge"
-            );
+            expect(
+              res.body.comments[res.body.comments.length - 1].author
+            ).to.equal("butter_bridge");
           });
       });
 
@@ -305,9 +305,9 @@ describe("/api", () => {
             expect(res.body.comments).to.be.sortedBy("created_at", {
               descending: true
             });
-            expect(res.body[res.body.length - 1].author).to.equal(
-              "butter_bridge"
-            );
+            expect(
+              res.body.comments[res.body.comments.length - 1].author
+            ).to.equal("butter_bridge");
           });
       });
 
@@ -331,9 +331,9 @@ describe("/api", () => {
             expect(res.body.comments).to.be.sortedBy("author", {
               descending: false
             });
-            expect(res.body[res.body.length - 1].author).to.equal(
-              "icellusedkars"
-            );
+            expect(
+              res.body.comments[res.body.comments.length - 1].author
+            ).to.equal("icellusedkars");
           });
       });
 
