@@ -14,6 +14,12 @@ describe("/api", () => {
   beforeEach(() => db.seed.run());
   after(() => db.destroy());
 
+  it("Returns GET /api with status of 200 and a JSON containing all of the endpoints on the api", () => {
+    return request(app)
+      .get("/api")
+      .expect(200);
+  });
+
   it("Returns DELETE /api with an error code of 405 Method Not Allowed", () => {
     return request(app)
       .delete("/api")
