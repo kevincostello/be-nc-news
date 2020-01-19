@@ -14,7 +14,7 @@ apiRouter.use("/articles", articlesRouter);
 apiRouter.use("/comments", commentsRouter);
 apiRouter
   .route("/")
-  .get(allAPIendpoints)
+  // .get(allAPIendpoints)
   .all(send405Error);
 
 module.exports = apiRouter;
