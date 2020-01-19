@@ -205,6 +205,42 @@ describe("/api", () => {
           });
       });
 
+      it("POSTS a comment with status code of 400 when passed an object not containing any keys", () => {
+        return request(app)
+          .post("/api/articles/1/comments")
+          .send({})
+          .expect(400)
+          .then(res => {
+            expect(res.body.msg).to.equal(
+              "Required keys are not supplied in POST"
+            );
+          });
+      });
+
+      it("POSTS a comment with status code of 400 when passed an object not containing the username", () => {
+        return request(app)
+          .post("/api/articles/1/comments")
+          .send({ body: "This is a comment" })
+          .expect(400)
+          .then(res => {
+            expect(res.body.msg).to.equal(
+              "Required keys are not supplied in POST"
+            );
+          });
+      });
+
+      it("POSTS a comment with status code of 400 when passed an object not containing the body", () => {
+        return request(app)
+          .post("/api/articles/1/comments")
+          .send({ username: "butter_bridge" })
+          .expect(400)
+          .then(res => {
+            expect(res.body.msg).to.equal(
+              "Required keys are not supplied in POST"
+            );
+          });
+      });
+
       it("POSTS a status code of 404 when the passed article_id is not on the database", () => {
         return request(app)
           .post("/api/articles/100/comments")

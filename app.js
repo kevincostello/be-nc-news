@@ -24,6 +24,8 @@ app.use(function(err, req, res, next) {
     res.status(404).send({ msg: "The article id is not in the database" });
   } else if (err.code === "42703") {
     res.status(400).send({ msg: "Invalid column for sort_by" });
+  } else if (err.code === "23502") {
+    res.status(400).send({ msg: "Required keys are not supplied in POST" });
   } else {
     console.log("in default 4 parameter error handler");
     res.status(err.status).send(err);
