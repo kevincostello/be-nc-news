@@ -311,6 +311,32 @@ describe("/api", () => {
           });
       });
 
+      it("GETS a status code of 200 and returns an array of sorted comments by the created_at for a given article id when valid queries are passed in the request with a default sort by column and order by value is asc", () => {
+        return request(app)
+          .get("/api/articles/1/comments?order_by=asc")
+          .expect(200)
+          .then(res => {
+            expect(res.body).to.be.an("object");
+            expect(res.body.comments).to.be.an("array");
+            expect(res.body.comments[0]).to.be.an("object");
+            expect(res.body.comments.length).to.equal(13);
+            expect(res.body.comments[0]).to.have.keys([
+              "article_id",
+              "comment_id",
+              "body",
+              "votes",
+              "author",
+              "created_at"
+            ]);
+            expect(res.body.comments).to.be.sortedBy("created_at", {
+              descending: false
+            });
+            expect(
+              res.body.comments[res.body.comments.length - 1].author
+            ).to.equal("butter_bridge");
+          });
+      });
+
       it("GETS a status code of 200 and returns an array of sorted comments by the created_at for a given article id when valid queries are passed in the request with a valid column as the sort by column and order by value is asc", () => {
         return request(app)
           .get("/api/articles/1/comments?sort_by=author&order_by=asc")
@@ -407,7 +433,7 @@ describe("/api", () => {
         });
     });
 
-    it("GETS a status code of 200 when passed a valid path and sorts by the default column and default order by", () => {
+    it.only("GETS a status code of 200 when passed a valid path and sorts by the default column and default order by", () => {
       return request(app)
         .get("/api/articles")
         .expect(200)
