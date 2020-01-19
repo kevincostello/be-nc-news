@@ -585,7 +585,7 @@ describe("/api", () => {
         });
     });
 
-    it("GET a status code of 404 No Content, author name not in the database", () => {
+    it("GET a status code of 404, author name not in the database", () => {
       return request(app)
         .get("/api/articles/?author=lurkerss")
         .expect(404);
@@ -674,6 +674,39 @@ describe("/api", () => {
             );
           });
       }); // end of it blocks
+
+      it("DELETES with status code of 204, when passed a comment_id", () => {
+        return request(app)
+          .delete("/api/comments/1")
+          .expect(204);
+      });
+
+      it("DELETES with status code of 404, when passed a misspelt path", () => {
+        return request(app)
+          .delete("/api/commentsss/2")
+          .expect(404)
+          .then(res => {
+            expect(res.body.msg).to.equal("Path is misspelt");
+          });
+      });
+
+      it("DELETES with status code of 404, when passed a comment_id that does not exist", () => {
+        return request(app)
+          .delete("/api/comments/199")
+          .expect(404)
+          .then(res => {
+            expect(res.body.msg).to.equal("The comment_id does not exist");
+          });
+      });
+
+      it("DELETES with status code of 400, when passed an invalid comment_id", () => {
+        return request(app)
+          .delete("/api/comments/gobbledygook")
+          .expect(400)
+          .then(res => {
+            expect(res.body.msg).to.equal("An invalid comment_id was passed");
+          });
+      });
 
       it("Returns PATCH /api/comments/1 with an error code of 405 Method Not Allowed", () => {
         return request(app)

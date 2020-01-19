@@ -12,3 +12,27 @@ exports.patchComment = (param, body) => {
       return result;
     });
 };
+
+exports.deleteComment = param => {
+  console.log("In delete comment model", param);
+  return db
+    .from("comments")
+    .where("comment_id", param.comment_id)
+    .delete()
+    .then(result => {
+      if (result > 0) {
+        console.log(
+          result,
+          "row was deleted from the comments table for ",
+          param
+        );
+        return result;
+      } else if (result === 0) {
+        console.log("result", result);
+        return Promise.reject({
+          status: 404,
+          msg: "The comment_id does not exist"
+        });
+      }
+    });
+};

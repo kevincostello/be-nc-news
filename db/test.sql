@@ -71,5 +71,5 @@ ORDER BY articles.created_at DESC
 
 -- SELECT * FROM users;
 
-
+SELECT comment_id FROM comments;
 
