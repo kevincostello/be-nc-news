@@ -1,4 +1,4 @@
-\c nc_news_test
+\c nc_news
 
 
 -- SELECT * FROM comments;
@@ -28,18 +28,18 @@
 
 -- SELECT * FROM comments;
 
-SELECT articles.article_id, count(comments.comment_id)
-FROM articles INNER JOIN comments ON articles.article_id = comments.article_id
+-- SELECT articles.article_id, count(comments.comment_id)
+-- FROM articles INNER JOIN comments ON articles.article_id = comments.article_id
 
-GROUP BY articles.article_id
-ORDER BY articles.created_at DESC
+-- GROUP BY articles.article_id
+-- ORDER BY articles.created_at DESC
 
-;
+-- ;
 
-SELECT articles.article_id, comments.comment_id
-FROM articles LEFT JOIN comments ON articles.article_id = comments.article_id
+-- SELECT articles.article_id, comments.comment_id
+-- FROM articles LEFT JOIN comments ON articles.article_id = comments.article_id
 
-;
+-- ;
 
 -- SELECT articles.article_id, articles.title ,articles. topic, articles.author, count(comments.comment_id)
 -- FROM articles LEFT JOIN comments ON articles.article_id = comments.article_id
@@ -71,4 +71,6 @@ FROM articles LEFT JOIN comments ON articles.article_id = comments.article_id
 -- SELECT * FROM users;
 
 -- SELECT comment_id FROM comments;
+
+SELECT article_id, title FROM articles;
 

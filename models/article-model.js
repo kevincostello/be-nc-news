@@ -59,7 +59,7 @@ const postArticleWithComment = (body, params) => {
     .returning("*")
     .then(res => {
       console.log("Am I in the post then?");
-      return res;
+      return res[0];
     });
 };
 
@@ -196,7 +196,6 @@ const selectAllArticles = query => {
       }
     });
 };
-
 //         else if (
 //   query.order_by !== undefined &&
 //   query.order_by !== "asc" &&

@@ -16,7 +16,7 @@ describe("/api", () => {
   beforeEach(() => db.seed.run());
   after(() => db.destroy());
 
-  it.only("Returns GET /api with status of 200 and a JSON containing all of the endpoints on the api", () => {
+  it("Returns GET /api with status of 200 and a JSON containing all of the endpoints on the api", () => {
     return request(app)
       .get("/api")
       .send({ endpoints })
@@ -226,9 +226,31 @@ describe("/api", () => {
           .send({ username: "butter_bridge", body: "This is a comment" })
           .expect(201)
           .then(res => {
+            console.log("test response is", res.body);
             expect(res.body.msg).to.equal(
               "Your comment was posted on the article"
             );
+            expect(res.body.comment).to.be.an("object");
+            expect(res.body.comment).to.have.keys([
+              "comment_id",
+              "author",
+              "article_id",
+              "votes",
+              "created_at",
+              "body"
+            ]);
+            // expect(res.body.comment).to.deep.equal({
+            //   comment_id: 19,
+            //   author: "butter_bridge",
+            //   article_id: 1,
+            //   votes: 0,
+            //   body: "This is a comment"
+            // });
+            expect(res.body.comment.comment_id).to.equal(19);
+            expect(res.body.comment.author).to.equal("butter_bridge");
+            expect(res.body.comment.article_id).to.equal(1);
+            expect(res.body.comment.votes).to.equal(0);
+            expect(res.body.comment.body).to.equal("This is a comment");
           });
       });
 
@@ -691,39 +713,28 @@ describe("/api", () => {
 
   describe("/comments", () => {
     describe("/:comment_id", () => {
-      it.only("PATCHES with status of 200 when passed a valid votes object, checked against expected object in test", () => {
+      it("PATCHES with status of 200 when passed a valid votes object, checked against expected object in test", () => {
         return request(app)
           .patch("/api/comments/1")
           .send({ inc_votes: 99 })
           .expect(200)
           .then(res => {
-            console.log(res.body);
-            expect(res.body.comment.votes).to.equal(115);
+            console.log("test response is", res.body);
             expect(res.body.msg).to.equal(
               "The comment was updated with the passed values"
             );
-            const testDate = new Date(1511354163389);
-            const stringDate = testDate.toJSON();
-
-            // const commentChanged = res.body.comment[0];
-
             res.body.comment.created_at = Date.parse(
               res.body.comment.created_at
             );
-
-            expect(res.body.comment).to.deep.equal([
-              {
-                comment_id: 1,
-                body:
-                  "Oh, I've got compassion running out of my nose, pal! I'm the Sultan of Sentiment!",
-                article_id: 9,
-                author: "butter_bridge",
-                votes: 115,
-                created_at: 1511354163389
-              }
-            ]);
-
-            // return allComments;
+            expect(res.body.comment).to.deep.equal({
+              comment_id: 1,
+              body:
+                "Oh, I've got compassion running out of my nose, pal! I'm the Sultan of Sentiment!",
+              article_id: 9,
+              author: "butter_bridge",
+              votes: 115,
+              created_at: 1511354163389
+            });
           });
       });
 
