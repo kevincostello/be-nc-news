@@ -1,10 +1,10 @@
-\c nc_news
+\c nc_news_test
 
 
 -- SELECT * FROM comments;
 -- SELECT * FROM users;
 
--- SELECT * FROM topics;
+SELECT * FROM topics;
 
 -- SELECT * FROM users
 -- WHERE users.username = 'tickle122';
@@ -68,9 +68,9 @@
 --   WHERE comment_id = 1
 --   ;
 
--- SELECT * FROM users;
+SELECT * FROM users;
 
 -- SELECT comment_id FROM comments;
 
-SELECT article_id, title FROM articles;
+SELECT topic, author FROM articles;
 
