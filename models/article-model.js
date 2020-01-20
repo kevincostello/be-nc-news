@@ -90,22 +90,19 @@ const selectCommentsByArticleId = (params, query) => {
         )
         .from("comments")
         .where("comments.article_id", params.article_id)
-        .orderBy(
-          query.sort_by || "comments.created_at",
-          query.order_by || "desc"
-        );
+        .orderBy(query.sort_by || "comments.created_at", query.order || "desc");
     })
     .then(result => {
       if (result.length === 0) {
         return result;
       } else if (
-        query.order_by !== undefined &&
-        query.order_by !== "asc" &&
-        query.order_by !== "desc"
+        query.order !== undefined &&
+        query.order !== "asc" &&
+        query.order !== "desc"
       ) {
         return Promise.reject({
           status: 400,
-          msg: "Invalid order_by value"
+          msg: "Invalid order value"
         });
       } else {
         return result;
@@ -163,10 +160,7 @@ const selectAllArticles = query => {
         .count("comments.comment_id as comment_count")
         .leftJoin("comments", "articles.article_id", "=", "comments.article_id")
         .groupBy("articles.article_id")
-        .orderBy(
-          query.sort_by || "articles.created_at",
-          query.order_by || "desc"
-        )
+        .orderBy(query.sort_by || "articles.created_at", query.order || "desc")
         .modify(sqlQuery => {
           // need to filter for both query.author and query.topic if passed both in query
           if (query.author) {
@@ -179,13 +173,13 @@ const selectAllArticles = query => {
     })
     .then(result => {
       if (
-        query.order_by !== undefined &&
-        query.order_by !== "asc" &&
-        query.order_by !== "desc"
+        query.order !== undefined &&
+        query.order !== "asc" &&
+        query.order !== "desc"
       ) {
         return Promise.reject({
           status: 400,
-          msg: "Invalid order_by value"
+          msg: "Invalid order value"
         });
       } else if (result.length === 0) {
         return result;

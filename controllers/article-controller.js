@@ -29,7 +29,7 @@ const sendArticleToBePatched = (req, res, next) => {
 };
 
 const sendArticleWithComment = (req, res, next) => {
-  console.log("In controller comment");
+  console.log("In controller comment", req.body);
   postArticleWithComment(req.body, req.params)
     .then(comment => {
       res
@@ -42,7 +42,7 @@ const sendArticleWithComment = (req, res, next) => {
 };
 
 const sendCommentsByArticleId = (req, res, next) => {
-  console.log("In controller get comments by article id");
+  console.log("In controller get comments by article id", req.query);
   selectCommentsByArticleId(req.params, req.query)
     .then(comments => {
       console.log("comments:", comments);

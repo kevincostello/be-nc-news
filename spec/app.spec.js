@@ -376,7 +376,7 @@ describe("/api", () => {
 
       it("GETS a status code of 200 and returns an array of sorted comments by the created_at for a given article id when valid queries are passed in the request with a valid column as the sort by column and order by value is desc", () => {
         return request(app)
-          .get("/api/articles/1/comments?order_by=desc")
+          .get("/api/articles/1/comments?order=desc")
           .expect(200)
           .then(res => {
             expect(res.body).to.be.an("object");
@@ -400,9 +400,9 @@ describe("/api", () => {
           });
       });
 
-      it("GETS a status code of 200 and returns an array of sorted comments by the created_at for a given article id when valid queries are passed in the request with a default sort by column and order by value is asc", () => {
+      it.only("GETS a status code of 200 and returns an array of sorted comments by the created_at for a given article id when valid queries are passed in the request with a default sort by column and order by value is asc", () => {
         return request(app)
-          .get("/api/articles/1/comments?order_by=asc")
+          .get("/api/articles/1/comments?order=asc")
           .expect(200)
           .then(res => {
             expect(res.body).to.be.an("object");
@@ -428,7 +428,7 @@ describe("/api", () => {
 
       it("GETS a status code of 200 and returns an array of sorted comments by the created_at for a given article id when valid queries are passed in the request with a valid column as the sort by column and order by value is asc", () => {
         return request(app)
-          .get("/api/articles/1/comments?sort_by=author&order_by=asc")
+          .get("/api/articles/1/comments?sort_by=author&order=asc")
           .expect(200)
           .then(res => {
             expect(res.body).to.be.an("object");
@@ -461,12 +461,12 @@ describe("/api", () => {
           });
       });
 
-      it("GETS a status code of 400 with message of invalid order_by value when passed an invalid order_by value ", () => {
+      it("GETS a status code of 400 with message of invalid order value when passed an invalid order value ", () => {
         return request(app)
-          .get("/api/articles/1/comments?order_by=gobbledygook")
+          .get("/api/articles/1/comments?order=gobbledygook")
           .expect(400)
           .then(res => {
-            expect(res.body.msg).to.equal("Invalid order_by value");
+            expect(res.body.msg).to.equal("Invalid order value");
           });
       });
 
@@ -553,7 +553,7 @@ describe("/api", () => {
 
     it("GETS a status code of 200 and returns an array of sorted articles by the created_at for a given article id when valid queries are passed in the request with order by value of asc", () => {
       return request(app)
-        .get("/api/articles?order_by=asc")
+        .get("/api/articles?order=asc")
         .expect(200)
         .then(res => {
           expect(res.body.articles).to.be.sortedBy("created_at", {
@@ -565,7 +565,7 @@ describe("/api", () => {
 
     it("GETS a status code of 200 and returns an array of sorted articles by the title fwhen valid queries are passed in the request with a valid column as the sort by column and order by value is asc", () => {
       return request(app)
-        .get("/api/articles/?sort_by=title&order_by=asc")
+        .get("/api/articles/?sort_by=title&order=asc")
         .expect(200)
         .then(res => {
           expect(res.body.articles).to.be.sortedBy("title", {
@@ -577,7 +577,7 @@ describe("/api", () => {
 
     it("GETS a status code of 200 and returns an array of sorted articles by the title filtered by author when passedwhen valid queries are passed in the request with a valid column as the sort by column and order by value is asc and a valid value for author", () => {
       return request(app)
-        .get("/api/articles/?sort_by=title&order_by=asc&author=butter_bridge")
+        .get("/api/articles/?sort_by=title&order=asc&author=butter_bridge")
         .expect(200)
         .then(res => {
           expect(res.body.articles).to.be.sortedBy("title", {
@@ -592,7 +592,7 @@ describe("/api", () => {
     it("GETS a status code of 200 and returns an array of sorted articles by the title filtered by topic when passed valid queries are passed in the request with a valid column as the sort by column and order by value is asc and a valid value for topic", () => {
       return request(app)
         .get(
-          "/api/articles/?sort_by=title&order_by=asc&topic=mitch&author=butter_bridge"
+          "/api/articles/?sort_by=title&order=asc&topic=mitch&author=butter_bridge"
         )
         .expect(200)
         .then(res => {
@@ -607,7 +607,7 @@ describe("/api", () => {
 
     it("GETS a status code of 200 and returns an array of sorted articles by the title filtered by topic but not filterd by author when passed valid queries are passed in the request with a valid column as the sort by column and order by value is asc and a valid value for topic", () => {
       return request(app)
-        .get("/api/articles/?sort_by=title&order_by=asc&topic=mitch")
+        .get("/api/articles/?sort_by=title&order=asc&topic=mitch")
         .expect(200)
         .then(res => {
           expect(res.body.articles).to.be.sortedBy("title", {
@@ -623,7 +623,7 @@ describe("/api", () => {
 
     it("GETS a status code of 200 and returns an array of sorted articles by the title filtered by topic but not filterd by topic when passed valid queries are passed in the request with a valid column as the sort by column and order by value is asc and a valid value for author", () => {
       return request(app)
-        .get("/api/articles/?sort_by=title&order_by=asc&author=rogersop")
+        .get("/api/articles/?sort_by=title&order=asc&author=rogersop")
         .expect(200)
         .then(res => {
           expect(res.body.articles).to.be.sortedBy("title", {
@@ -676,10 +676,10 @@ describe("/api", () => {
 
     it("GETS a status code of 400 when passed invalid order by value", () => {
       return request(app)
-        .get("/api/articles/?order_by=gobbledygook")
+        .get("/api/articles/?order=gobbledygook")
         .expect(400)
         .then(res => {
-          expect(res.body.msg).to.equal("Invalid order_by value");
+          expect(res.body.msg).to.equal("Invalid order value");
         });
     });
 
