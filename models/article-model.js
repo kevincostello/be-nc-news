@@ -1,7 +1,7 @@
 const db = require("../db/connection");
 
 const { selectUser } = require("../models/user-model");
-const { selectTopics, selectTopic } = require("../models/topic-model");
+const { selectTopics } = require("../models/topic-model");
 
 const selectArticle = article => {
   console.log("im in the models");
@@ -119,6 +119,24 @@ const selectAllArticles = query => {
     if (query.author !== undefined) {
       return selectUser({ username: query.author });
     } else return Promise.resolve();
+  };
+
+  const selectTopic = topic => {
+    console.log("im in the models - new selectTopic");
+    return db
+      .select("*")
+      .from("topics")
+      .where("slug", topic)
+      .then(result => {
+        if (result.length === 0) {
+          return Promise.reject({
+            status: 404,
+            msg: "The query value is not on the database"
+          });
+        } else {
+          return result;
+        }
+      });
   };
 
   const checkTopic = () => {

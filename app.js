@@ -7,6 +7,7 @@ app.use(express.json());
 app.get("/", function(req, res, next) {
   res.send("Welcome to my wonderful API!");
 });
+
 app.use("/api", apiRouter);
 app.use("/*", (req, res, next) => {
   console.log("in 3 parameter 404 error log");

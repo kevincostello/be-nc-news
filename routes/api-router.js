@@ -18,8 +18,8 @@ apiRouter.use("/comments", commentsRouter);
 //   .all(send405Error);
 
 apiRouter
-  // .route("/")
-  .get("/", function(req, res, next) {
+  .route("/")
+  .get(function(req, res, next) {
     res.status(200).send({ endpoints });
   })
   .all(send405Error);

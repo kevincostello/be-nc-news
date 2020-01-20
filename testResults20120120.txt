@@ -1,0 +1,2206 @@
+
+> be-nc-news@1.0.0 test /Users/kevincostello/Northcoders/Backend/be-nc-news
+> mocha spec/app.spec.js
+
+topicsRouter
+usersRouter
+articlesRouter
+commentsRouter
+
+
+  /api
+test
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In test {
+  endpoints: {
+    'GET /api': {
+      description: 'serves up a json representation of all the available endpoints of the api'
+    },
+    'GET /api/topics': {
+      description: 'serves an array of all topics',
+      queries: [],
+      exampleResponse: [Object]
+    },
+    'GET /api/articles': {
+      description: 'serves an array of all topics',
+      queries: [Array],
+      exampleResponse: [Object]
+    }
+  }
+} This is stringy {
+  endpoints: {
+    'GET /api': {
+      description: 'serves up a json representation of all the available endpoints of the api'
+    },
+    'GET /api/topics': {
+      description: 'serves an array of all topics',
+      queries: [],
+      exampleResponse: [Object]
+    },
+    'GET /api/articles': {
+      description: 'serves an array of all topics',
+      queries: [Array],
+      exampleResponse: [Object]
+    }
+  }
+}
+    ✓ Returns GET /api with status of 200 and a JSON containing all of the endpoints on the api (48ms)
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+in 3 parameter 404 error log
+    1) Returns DELETE /api with an error code of 405 Method Not Allowed
+    /topics
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller
+im in the models
+{
+  topics: [
+    { slug: 'mitch', description: 'The man, the Mitch, the legend' },
+    { slug: 'cats', description: 'Not dogs' },
+    { slug: 'paper', description: 'what books are made of' }
+  ]
+}
+      ✓ GET responds with status code of 200 and returns array of topics
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+in 3 parameter 404 error log
+      ✓ GET responds with status code of 404 when the path has a misspelling
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In 405 error handler
+      ✓ Returns PATCH /api/topics with an error code of 405 Method Not Allowed
+    /users
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+{ username: 'rogersop' }
+In controller
+im in the models - user
+{
+  user: {
+    username: 'rogersop',
+    avatar_url: 'https://avatars2.githubusercontent.com/u/24394918?s=400&v=4',
+    name: 'paul'
+  }
+}
+      ✓ GETS a status code of 200 when a valid username is passed as a parameter in the path
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+{ username: 'gobbledygook' }
+In controller
+im in the models - user
+{ status: 404, msg: 'The username does not exist' }
+In 4 parameter error handler { status: 404, msg: 'The username does not exist' }
+in default 4 parameter error handler
+{ status: 404, msg: 'The username does not exist' }
+      ✓ GETS a status code of 404 when passed an invalid username
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In 405 error handler
+      ✓ Returns PATCH /api/users with an error code of 405 Method Not Allowed
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In 405 error handler
+      ✓ Returns PUT /api/users/butter_bridge with an error code of 405 Method Not Allowed
+    /articles
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller
+im in the models
+{
+  article: {
+    article_id: 1,
+    title: 'Living in the shadow of a great man',
+    body: 'I find this existence challenging',
+    votes: 100,
+    topic: 'mitch',
+    author: 'butter_bridge',
+    created_at: '2018-11-15T12:21:54.171Z',
+    comment_count: 13
+  }
+}
+      ✓ GETS a status code of 200 when passed a valid article id
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller
+im in the models
+In 4 parameter error handler error: invalid input syntax for type integer: "snnn"
+    at Connection.parseE (/Users/kevincostello/Northcoders/Backend/be-nc-news/node_modules/pg/lib/connection.js:604:13)
+    at Connection.parseMessage (/Users/kevincostello/Northcoders/Backend/be-nc-news/node_modules/pg/lib/connection.js:403:19)
+    at Socket.<anonymous> (/Users/kevincostello/Northcoders/Backend/be-nc-news/node_modules/pg/lib/connection.js:123:22)
+    at Socket.emit (events.js:210:5)
+    at addChunk (_stream_readable.js:308:12)
+    at readableAddChunk (_stream_readable.js:289:11)
+    at Socket.Readable.push (_stream_readable.js:223:10)
+    at TCP.onStreamRead (internal/stream_base_commons.js:182:23) {
+  name: 'error',
+  length: 105,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: undefined,
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '259',
+  routine: 'pg_strtoint32'
+}
+      ✓ GETS a status code of 400 when passed an invalid article id
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller
+im in the models
+In 4 parameter error handler { status: 404, msg: 'The article id is not in the database' }
+in default 4 parameter error handler
+      ✓ GETS a status code of 404 when passed a valid article id which is not in the database
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller
+im in the models
+{
+  article: {
+    article_id: 1,
+    title: 'Living in the shadow of a great man',
+    body: 'I find this existence challenging',
+    votes: 100,
+    topic: 'mitch',
+    author: 'butter_bridge',
+    created_at: '2018-11-15T12:21:54.171Z',
+    comment_count: 13
+  }
+}
+      ✓ GETS a status code of 200 and creates the comment count correctly when passed a valid article id
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller
+im in the models
+{
+  article: {
+    article_id: 3,
+    title: 'Eight pug gifs that remind me of mitch',
+    body: 'some gifs',
+    votes: 0,
+    topic: 'mitch',
+    author: 'icellusedkars',
+    created_at: '2010-11-17T12:21:54.171Z',
+    comment_count: 0
+  }
+}
+      ✓ GETS a status code of 200 and creates the comment count of zero when passed a valid article id which is not in the comments table
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller
+im in the models
+patching result is completed
+This is the result in the test {
+  article: {
+    article_id: 1,
+    title: 'Living in the shadow of a great man',
+    body: 'I find this existence challenging',
+    votes: 10099,
+    topic: 'mitch',
+    author: 'butter_bridge',
+    created_at: '2018-11-15T12:21:54.171Z'
+  }
+} undefined
+      ✓ PATCHES with a status code of 200 when passed an object containing the vote count change
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller
+im in the models
+In 4 parameter error handler error: invalid input syntax for type integer: "NaN"
+    at Connection.parseE (/Users/kevincostello/Northcoders/Backend/be-nc-news/node_modules/pg/lib/connection.js:604:13)
+    at Connection.parseMessage (/Users/kevincostello/Northcoders/Backend/be-nc-news/node_modules/pg/lib/connection.js:403:19)
+    at Socket.<anonymous> (/Users/kevincostello/Northcoders/Backend/be-nc-news/node_modules/pg/lib/connection.js:123:22)
+    at Socket.emit (events.js:210:5)
+    at addChunk (_stream_readable.js:308:12)
+    at readableAddChunk (_stream_readable.js:289:11)
+    at Socket.Readable.push (_stream_readable.js:223:10)
+    at TCP.onStreamRead (internal/stream_base_commons.js:182:23) {
+  name: 'error',
+  length: 104,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: undefined,
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '259',
+  routine: 'pg_strtoint32'
+}
+      ✓ PATCHES with as status code of 400 when passed an object with an invalid value for inc_votes
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In 405 error handler
+      ✓ Returns POST /api/articles/1 with an error code of 405 Method Not Allowed
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In sendAllArticles
+In selectAllArticles {}
+{
+  articles: [
+    {
+      article_id: 1,
+      author: 'butter_bridge',
+      title: 'Living in the shadow of a great man',
+      topic: 'mitch',
+      created_at: '2018-11-15T12:21:54.171Z',
+      votes: 100,
+      comment_count: 13
+    },
+    {
+      article_id: 2,
+      author: 'icellusedkars',
+      title: 'Sony Vaio; or, The Laptop',
+      topic: 'mitch',
+      created_at: '2014-11-16T12:21:54.171Z',
+      votes: 0,
+      comment_count: 0
+    },
+    {
+      article_id: 3,
+      author: 'icellusedkars',
+      title: 'Eight pug gifs that remind me of mitch',
+      topic: 'mitch',
+      created_at: '2010-11-17T12:21:54.171Z',
+      votes: 0,
+      comment_count: 0
+    },
+    {
+      article_id: 4,
+      author: 'rogersop',
+      title: 'Student SUES Mitch!',
+      topic: 'mitch',
+      created_at: '2006-11-18T12:21:54.171Z',
+      votes: 0,
+      comment_count: 0
+    },
+    {
+      article_id: 5,
+      author: 'rogersop',
+      title: 'UNCOVERED: catspiracy to bring down democracy',
+      topic: 'cats',
+      created_at: '2002-11-19T12:21:54.171Z',
+      votes: 0,
+      comment_count: 2
+    },
+    {
+      article_id: 6,
+      author: 'icellusedkars',
+      title: 'A',
+      topic: 'mitch',
+      created_at: '1998-11-20T12:21:54.171Z',
+      votes: 0,
+      comment_count: 1
+    },
+    {
+      article_id: 7,
+      author: 'icellusedkars',
+      title: 'Z',
+      topic: 'mitch',
+      created_at: '1994-11-21T12:21:54.171Z',
+      votes: 0,
+      comment_count: 0
+    },
+    {
+      article_id: 8,
+      author: 'icellusedkars',
+      title: 'Does Mitch predate civilisation?',
+      topic: 'mitch',
+      created_at: '1990-11-22T12:21:54.171Z',
+      votes: 0,
+      comment_count: 0
+    },
+    {
+      article_id: 9,
+      author: 'butter_bridge',
+      title: "They're not exactly dogs, are they?",
+      topic: 'mitch',
+      created_at: '1986-11-23T12:21:54.171Z',
+      votes: 0,
+      comment_count: 2
+    },
+    {
+      article_id: 10,
+      author: 'rogersop',
+      title: 'Seven inspirational thought leaders from Manchester UK',
+      topic: 'mitch',
+      created_at: '1982-11-24T12:21:54.171Z',
+      votes: 0,
+      comment_count: 0
+    },
+    {
+      article_id: 11,
+      author: 'icellusedkars',
+      title: 'Am I a cat?',
+      topic: 'mitch',
+      created_at: '1978-11-25T12:21:54.171Z',
+      votes: 0,
+      comment_count: 0
+    },
+    {
+      article_id: 12,
+      author: 'butter_bridge',
+      title: 'Moustache',
+      topic: 'mitch',
+      created_at: '1974-11-26T12:21:54.171Z',
+      votes: 0,
+      comment_count: 0
+    }
+  ]
+}
+      ✓ GETS a status code of 200 when passed a valid path to /api/articles
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+in 3 parameter 404 error log
+      ✓ GETS a status code of 404 when passed an invalid path to /api/articles
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In sendAllArticles
+In selectAllArticles {}
+      ✓ GETS a status code of 200 when passed a valid path and sorts by the default column and default order by
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In sendAllArticles
+In selectAllArticles { sort_by: 'title' }
+      ✓ GETS a status code of 200 and returns an array of sorted articles by the created_at for a given article id when valid queries are passed in the request with a valid column as the sort by column and default order by value
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In sendAllArticles
+In selectAllArticles { order_by: 'asc' }
+      ✓ GETS a status code of 200 and returns an array of sorted articles by the created_at for a given article id when valid queries are passed in the request with order by value of asc
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In sendAllArticles
+In selectAllArticles { sort_by: 'title', order_by: 'asc' }
+      ✓ GETS a status code of 200 and returns an array of sorted articles by the title fwhen valid queries are passed in the request with a valid column as the sort by column and order by value is asc
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In sendAllArticles
+In selectAllArticles { sort_by: 'title', order_by: 'asc', author: 'butter_bridge' }
+im in the models - user
+      ✓ GETS a status code of 200 and returns an array of sorted articles by the title filtered by author when passedwhen valid queries are passed in the request with a valid column as the sort by column and order by value is asc and a valid value for author
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In sendAllArticles
+In selectAllArticles {
+  sort_by: 'title',
+  order_by: 'asc',
+  topic: 'mitch',
+  author: 'butter_bridge'
+}
+im in the models - user
+im in the models - new selectTopic
+      ✓ GETS a status code of 200 and returns an array of sorted articles by the title filtered by topic when passed valid queries are passed in the request with a valid column as the sort by column and order by value is asc and a valid value for topic
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In sendAllArticles
+In selectAllArticles { sort_by: 'title', order_by: 'asc', topic: 'mitch' }
+im in the models - new selectTopic
+      ✓ GETS a status code of 200 and returns an array of sorted articles by the title filtered by topic but not filterd by author when passed valid queries are passed in the request with a valid column as the sort by column and order by value is asc and a valid value for topic
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In sendAllArticles
+In selectAllArticles { sort_by: 'title', order_by: 'asc', author: 'rogersop' }
+im in the models - user
+      ✓ GETS a status code of 200 and returns an array of sorted articles by the title filtered by topic but not filterd by topic when passed valid queries are passed in the request with a valid column as the sort by column and order by value is asc and a valid value for author
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In sendAllArticles
+In selectAllArticles { author: 'rogersopp' }
+im in the models - user
+In 4 parameter error handler { status: 404, msg: 'The username does not exist' }
+in default 4 parameter error handler
+      ✓ GETS a status code of 404 when passed an author name not in the database
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In sendAllArticles
+In selectAllArticles { topic: 'gobbledygook' }
+im in the models - new selectTopic
+In 4 parameter error handler { status: 404, msg: 'The query value is not on the database' }
+in default 4 parameter error handler
+      ✓ GETS a status code of 404 when passed a title not in the database
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In sendAllArticles
+In selectAllArticles { author: 'noauthor', topic: 'gobbledygook' }
+im in the models - user
+In 4 parameter error handler { status: 404, msg: 'The username does not exist' }
+in default 4 parameter error handler
+      ✓ GETS a status code of 404 when passed an author and a title not in the database
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In sendAllArticles
+In selectAllArticles { sort_by: 'gobbledygook' }
+In 4 parameter error handler error: column "gobbledygook" does not exist
+    at Connection.parseE (/Users/kevincostello/Northcoders/Backend/be-nc-news/node_modules/pg/lib/connection.js:604:13)
+    at Connection.parseMessage (/Users/kevincostello/Northcoders/Backend/be-nc-news/node_modules/pg/lib/connection.js:403:19)
+    at Socket.<anonymous> (/Users/kevincostello/Northcoders/Backend/be-nc-news/node_modules/pg/lib/connection.js:123:22)
+    at Socket.emit (events.js:210:5)
+    at addChunk (_stream_readable.js:308:12)
+    at readableAddChunk (_stream_readable.js:289:11)
+    at Socket.Readable.push (_stream_readable.js:223:10)
+    at TCP.onStreamRead (internal/stream_base_commons.js:182:23) {
+  name: 'error',
+  length: 113,
+  severity: 'ERROR',
+  code: '42703',
+  detail: undefined,
+  hint: undefined,
+  position: '321',
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: undefined,
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'parse_relation.c',
+  line: '3359',
+  routine: 'errorMissingColumn'
+}
+      ✓ GETS a status code of 400 when passed sort_by column not on the database
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In sendAllArticles
+In selectAllArticles { order_by: 'gobbledygook' }
+In 4 parameter error handler { status: 400, msg: 'Invalid order_by value' }
+in default 4 parameter error handler
+      ✓ GETS a status code of 400 when passed invalid order by value
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In sendAllArticles
+In selectAllArticles { author: 'lurker' }
+im in the models - user
+      ✓ GET a status code of 200 an empty array when passed a valid author who has no articles
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In sendAllArticles
+In selectAllArticles { author: 'lurkerss' }
+im in the models - user
+In 4 parameter error handler { status: 404, msg: 'The username does not exist' }
+in default 4 parameter error handler
+      ✓ GET a status code of 404, author name not in the database
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In 405 error handler
+      ✓ Returns PATCH /api/articles with an error code of 405 Method Not Allowed
+      /:article_id/comments
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller comment
+im in the models - post
+Am I in the post then?
+test response is {
+  comment: {
+    comment_id: 19,
+    author: 'butter_bridge',
+    article_id: 1,
+    votes: 0,
+    created_at: '2020-01-20T09:16:22.011Z',
+    body: 'This is a comment'
+  },
+  msg: 'Your comment was posted on the article'
+}
+        ✓ POSTS a comment with status code of 201 when passed an object containing the comment
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller comment
+im in the models - post
+In 4 parameter error handler error: null value in column "author" violates not-null constraint
+    at Connection.parseE (/Users/kevincostello/Northcoders/Backend/be-nc-news/node_modules/pg/lib/connection.js:604:13)
+    at Connection.parseMessage (/Users/kevincostello/Northcoders/Backend/be-nc-news/node_modules/pg/lib/connection.js:403:19)
+    at Socket.<anonymous> (/Users/kevincostello/Northcoders/Backend/be-nc-news/node_modules/pg/lib/connection.js:123:22)
+    at Socket.emit (events.js:210:5)
+    at addChunk (_stream_readable.js:308:12)
+    at readableAddChunk (_stream_readable.js:289:11)
+    at Socket.Readable.push (_stream_readable.js:223:10)
+    at TCP.onStreamRead (internal/stream_base_commons.js:182:23) {
+  name: 'error',
+  length: 224,
+  severity: 'ERROR',
+  code: '23502',
+  detail: 'Failing row contains (19, null, 1, 0, 2020-01-20 09:16:22.146714+00, null).',
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: undefined,
+  schema: 'public',
+  table: 'comments',
+  column: 'author',
+  dataType: undefined,
+  constraint: undefined,
+  file: 'execMain.c',
+  line: '1974',
+  routine: 'ExecConstraints'
+}
+        ✓ POSTS a comment with status code of 400 when passed an object not containing any keys
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller comment
+im in the models - post
+In 4 parameter error handler error: null value in column "author" violates not-null constraint
+    at Connection.parseE (/Users/kevincostello/Northcoders/Backend/be-nc-news/node_modules/pg/lib/connection.js:604:13)
+    at Connection.parseMessage (/Users/kevincostello/Northcoders/Backend/be-nc-news/node_modules/pg/lib/connection.js:403:19)
+    at Socket.<anonymous> (/Users/kevincostello/Northcoders/Backend/be-nc-news/node_modules/pg/lib/connection.js:123:22)
+    at Socket.emit (events.js:210:5)
+    at addChunk (_stream_readable.js:308:12)
+    at readableAddChunk (_stream_readable.js:289:11)
+    at Socket.Readable.push (_stream_readable.js:223:10)
+    at TCP.onStreamRead (internal/stream_base_commons.js:182:23) {
+  name: 'error',
+  length: 237,
+  severity: 'ERROR',
+  code: '23502',
+  detail: 'Failing row contains (19, null, 1, 0, 2020-01-20 09:16:22.283073+00, This is a comment).',
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: undefined,
+  schema: 'public',
+  table: 'comments',
+  column: 'author',
+  dataType: undefined,
+  constraint: undefined,
+  file: 'execMain.c',
+  line: '1974',
+  routine: 'ExecConstraints'
+}
+        ✓ POSTS a comment with status code of 400 when passed an object not containing the username
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller comment
+im in the models - post
+In 4 parameter error handler error: null value in column "body" violates not-null constraint
+    at Connection.parseE (/Users/kevincostello/Northcoders/Backend/be-nc-news/node_modules/pg/lib/connection.js:604:13)
+    at Connection.parseMessage (/Users/kevincostello/Northcoders/Backend/be-nc-news/node_modules/pg/lib/connection.js:403:19)
+    at Socket.<anonymous> (/Users/kevincostello/Northcoders/Backend/be-nc-news/node_modules/pg/lib/connection.js:123:22)
+    at Socket.emit (events.js:210:5)
+    at addChunk (_stream_readable.js:308:12)
+    at readableAddChunk (_stream_readable.js:289:11)
+    at Socket.Readable.push (_stream_readable.js:223:10)
+    at TCP.onStreamRead (internal/stream_base_commons.js:182:23) {
+  name: 'error',
+  length: 229,
+  severity: 'ERROR',
+  code: '23502',
+  detail: 'Failing row contains (19, butter_bridge, 1, 0, 2020-01-20 09:16:22.424875+00, null).',
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: undefined,
+  schema: 'public',
+  table: 'comments',
+  column: 'body',
+  dataType: undefined,
+  constraint: undefined,
+  file: 'execMain.c',
+  line: '1974',
+  routine: 'ExecConstraints'
+}
+        ✓ POSTS a comment with status code of 400 when passed an object not containing the body
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller comment
+im in the models - post
+In 4 parameter error handler error: insert or update on table "comments" violates foreign key constraint "comments_article_id_foreign"
+    at Connection.parseE (/Users/kevincostello/Northcoders/Backend/be-nc-news/node_modules/pg/lib/connection.js:604:13)
+    at Connection.parseMessage (/Users/kevincostello/Northcoders/Backend/be-nc-news/node_modules/pg/lib/connection.js:403:19)
+    at Socket.<anonymous> (/Users/kevincostello/Northcoders/Backend/be-nc-news/node_modules/pg/lib/connection.js:123:22)
+    at Socket.emit (events.js:210:5)
+    at addChunk (_stream_readable.js:308:12)
+    at readableAddChunk (_stream_readable.js:289:11)
+    at Socket.Readable.push (_stream_readable.js:223:10)
+    at TCP.onStreamRead (internal/stream_base_commons.js:182:23) {
+  name: 'error',
+  length: 274,
+  severity: 'ERROR',
+  code: '23503',
+  detail: 'Key (article_id)=(100) is not present in table "articles".',
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: undefined,
+  schema: 'public',
+  table: 'comments',
+  column: undefined,
+  dataType: undefined,
+  constraint: 'comments_article_id_foreign',
+  file: 'ri_triggers.c',
+  line: '2474',
+  routine: 'ri_ReportViolation'
+}
+        ✓ POSTS a status code of 404 when the passed article_id is not on the database
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller get comments by article id
+In selectCommentsByArticleId
+im in the models
+comments: [
+  {
+    comment_id: 13,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 0,
+    created_at: 2005-11-25T12:36:03.389Z,
+    body: 'Fruit pastilles'
+  },
+  {
+    comment_id: 3,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 100,
+    created_at: 2015-11-23T12:36:03.389Z,
+    body: 'Replacing the quiet elegance of the dark suit and tie with the casual indifference of these muted earth tones is a form of fashion suicide, but, uh, call me crazy — onyou it works.'
+  },
+  {
+    comment_id: 4,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: -100,
+    created_at: 2014-11-23T12:36:03.389Z,
+    body: ' I carry a log — yes. Is it funny to you? It is not to me.'
+  },
+  {
+    comment_id: 5,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 0,
+    created_at: 2013-11-23T12:36:03.389Z,
+    body: 'I hate streaming noses'
+  },
+  {
+    comment_id: 6,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 0,
+    created_at: 2012-11-23T12:36:03.389Z,
+    body: 'I hate streaming eyes even more'
+  },
+  {
+    comment_id: 7,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 0,
+    created_at: 2011-11-24T12:36:03.389Z,
+    body: 'Lobster pot'
+  },
+  {
+    comment_id: 8,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 0,
+    created_at: 2010-11-24T12:36:03.389Z,
+    body: 'Delicious crackerbreads'
+  },
+  {
+    comment_id: 9,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 0,
+    created_at: 2009-11-24T12:36:03.389Z,
+    body: 'Superficially charming'
+  },
+  {
+    comment_id: 10,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 0,
+    created_at: 2008-11-24T12:36:03.389Z,
+    body: 'git push origin master'
+  },
+  {
+    comment_id: 11,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 0,
+    created_at: 2007-11-25T12:36:03.389Z,
+    body: 'Ambidextrous marsupial'
+  },
+  {
+    comment_id: 12,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 0,
+    created_at: 2006-11-25T12:36:03.389Z,
+    body: 'Massive intercranial brain haemorrhage'
+  },
+  {
+    comment_id: 18,
+    author: 'butter_bridge',
+    article_id: 1,
+    votes: 16,
+    created_at: 2000-11-26T12:36:03.389Z,
+    body: 'This morning, I showered for nine minutes.'
+  },
+  {
+    comment_id: 2,
+    author: 'butter_bridge',
+    article_id: 1,
+    votes: 14,
+    created_at: 2016-11-22T12:36:03.389Z,
+    body: 'The beautiful thing about treasure is that it exists. Got to find out what kind of sheets these are; not cotton, not rayon, silky.'
+  }
+]
+The res.body is:  {
+  comments: [
+    {
+      comment_id: 13,
+      author: 'icellusedkars',
+      article_id: 1,
+      votes: 0,
+      created_at: '2005-11-25T12:36:03.389Z',
+      body: 'Fruit pastilles'
+    },
+    {
+      comment_id: 3,
+      author: 'icellusedkars',
+      article_id: 1,
+      votes: 100,
+      created_at: '2015-11-23T12:36:03.389Z',
+      body: 'Replacing the quiet elegance of the dark suit and tie with the casual indifference of these muted earth tones is a form of fashion suicide, but, uh, call me crazy — onyou it works.'
+    },
+    {
+      comment_id: 4,
+      author: 'icellusedkars',
+      article_id: 1,
+      votes: -100,
+      created_at: '2014-11-23T12:36:03.389Z',
+      body: ' I carry a log — yes. Is it funny to you? It is not to me.'
+    },
+    {
+      comment_id: 5,
+      author: 'icellusedkars',
+      article_id: 1,
+      votes: 0,
+      created_at: '2013-11-23T12:36:03.389Z',
+      body: 'I hate streaming noses'
+    },
+    {
+      comment_id: 6,
+      author: 'icellusedkars',
+      article_id: 1,
+      votes: 0,
+      created_at: '2012-11-23T12:36:03.389Z',
+      body: 'I hate streaming eyes even more'
+    },
+    {
+      comment_id: 7,
+      author: 'icellusedkars',
+      article_id: 1,
+      votes: 0,
+      created_at: '2011-11-24T12:36:03.389Z',
+      body: 'Lobster pot'
+    },
+    {
+      comment_id: 8,
+      author: 'icellusedkars',
+      article_id: 1,
+      votes: 0,
+      created_at: '2010-11-24T12:36:03.389Z',
+      body: 'Delicious crackerbreads'
+    },
+    {
+      comment_id: 9,
+      author: 'icellusedkars',
+      article_id: 1,
+      votes: 0,
+      created_at: '2009-11-24T12:36:03.389Z',
+      body: 'Superficially charming'
+    },
+    {
+      comment_id: 10,
+      author: 'icellusedkars',
+      article_id: 1,
+      votes: 0,
+      created_at: '2008-11-24T12:36:03.389Z',
+      body: 'git push origin master'
+    },
+    {
+      comment_id: 11,
+      author: 'icellusedkars',
+      article_id: 1,
+      votes: 0,
+      created_at: '2007-11-25T12:36:03.389Z',
+      body: 'Ambidextrous marsupial'
+    },
+    {
+      comment_id: 12,
+      author: 'icellusedkars',
+      article_id: 1,
+      votes: 0,
+      created_at: '2006-11-25T12:36:03.389Z',
+      body: 'Massive intercranial brain haemorrhage'
+    },
+    {
+      comment_id: 18,
+      author: 'butter_bridge',
+      article_id: 1,
+      votes: 16,
+      created_at: '2000-11-26T12:36:03.389Z',
+      body: 'This morning, I showered for nine minutes.'
+    },
+    {
+      comment_id: 2,
+      author: 'butter_bridge',
+      article_id: 1,
+      votes: 14,
+      created_at: '2016-11-22T12:36:03.389Z',
+      body: 'The beautiful thing about treasure is that it exists. Got to find out what kind of sheets these are; not cotton, not rayon, silky.'
+    }
+  ]
+}
+        ✓ GETS a status code of 200 and returns an array of comments for a given article id when valid queries are passed in the request
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller get comments by article id
+In selectCommentsByArticleId
+im in the models
+comments: [
+  {
+    comment_id: 2,
+    author: 'butter_bridge',
+    article_id: 1,
+    votes: 14,
+    created_at: 2016-11-22T12:36:03.389Z,
+    body: 'The beautiful thing about treasure is that it exists. Got to find out what kind of sheets these are; not cotton, not rayon, silky.'
+  },
+  {
+    comment_id: 3,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 100,
+    created_at: 2015-11-23T12:36:03.389Z,
+    body: 'Replacing the quiet elegance of the dark suit and tie with the casual indifference of these muted earth tones is a form of fashion suicide, but, uh, call me crazy — onyou it works.'
+  },
+  {
+    comment_id: 4,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: -100,
+    created_at: 2014-11-23T12:36:03.389Z,
+    body: ' I carry a log — yes. Is it funny to you? It is not to me.'
+  },
+  {
+    comment_id: 5,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 0,
+    created_at: 2013-11-23T12:36:03.389Z,
+    body: 'I hate streaming noses'
+  },
+  {
+    comment_id: 6,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 0,
+    created_at: 2012-11-23T12:36:03.389Z,
+    body: 'I hate streaming eyes even more'
+  },
+  {
+    comment_id: 7,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 0,
+    created_at: 2011-11-24T12:36:03.389Z,
+    body: 'Lobster pot'
+  },
+  {
+    comment_id: 8,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 0,
+    created_at: 2010-11-24T12:36:03.389Z,
+    body: 'Delicious crackerbreads'
+  },
+  {
+    comment_id: 9,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 0,
+    created_at: 2009-11-24T12:36:03.389Z,
+    body: 'Superficially charming'
+  },
+  {
+    comment_id: 10,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 0,
+    created_at: 2008-11-24T12:36:03.389Z,
+    body: 'git push origin master'
+  },
+  {
+    comment_id: 11,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 0,
+    created_at: 2007-11-25T12:36:03.389Z,
+    body: 'Ambidextrous marsupial'
+  },
+  {
+    comment_id: 12,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 0,
+    created_at: 2006-11-25T12:36:03.389Z,
+    body: 'Massive intercranial brain haemorrhage'
+  },
+  {
+    comment_id: 13,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 0,
+    created_at: 2005-11-25T12:36:03.389Z,
+    body: 'Fruit pastilles'
+  },
+  {
+    comment_id: 18,
+    author: 'butter_bridge',
+    article_id: 1,
+    votes: 16,
+    created_at: 2000-11-26T12:36:03.389Z,
+    body: 'This morning, I showered for nine minutes.'
+  }
+]
+The res.body is:  {
+  comments: [
+    {
+      comment_id: 2,
+      author: 'butter_bridge',
+      article_id: 1,
+      votes: 14,
+      created_at: '2016-11-22T12:36:03.389Z',
+      body: 'The beautiful thing about treasure is that it exists. Got to find out what kind of sheets these are; not cotton, not rayon, silky.'
+    },
+    {
+      comment_id: 3,
+      author: 'icellusedkars',
+      article_id: 1,
+      votes: 100,
+      created_at: '2015-11-23T12:36:03.389Z',
+      body: 'Replacing the quiet elegance of the dark suit and tie with the casual indifference of these muted earth tones is a form of fashion suicide, but, uh, call me crazy — onyou it works.'
+    },
+    {
+      comment_id: 4,
+      author: 'icellusedkars',
+      article_id: 1,
+      votes: -100,
+      created_at: '2014-11-23T12:36:03.389Z',
+      body: ' I carry a log — yes. Is it funny to you? It is not to me.'
+    },
+    {
+      comment_id: 5,
+      author: 'icellusedkars',
+      article_id: 1,
+      votes: 0,
+      created_at: '2013-11-23T12:36:03.389Z',
+      body: 'I hate streaming noses'
+    },
+    {
+      comment_id: 6,
+      author: 'icellusedkars',
+      article_id: 1,
+      votes: 0,
+      created_at: '2012-11-23T12:36:03.389Z',
+      body: 'I hate streaming eyes even more'
+    },
+    {
+      comment_id: 7,
+      author: 'icellusedkars',
+      article_id: 1,
+      votes: 0,
+      created_at: '2011-11-24T12:36:03.389Z',
+      body: 'Lobster pot'
+    },
+    {
+      comment_id: 8,
+      author: 'icellusedkars',
+      article_id: 1,
+      votes: 0,
+      created_at: '2010-11-24T12:36:03.389Z',
+      body: 'Delicious crackerbreads'
+    },
+    {
+      comment_id: 9,
+      author: 'icellusedkars',
+      article_id: 1,
+      votes: 0,
+      created_at: '2009-11-24T12:36:03.389Z',
+      body: 'Superficially charming'
+    },
+    {
+      comment_id: 10,
+      author: 'icellusedkars',
+      article_id: 1,
+      votes: 0,
+      created_at: '2008-11-24T12:36:03.389Z',
+      body: 'git push origin master'
+    },
+    {
+      comment_id: 11,
+      author: 'icellusedkars',
+      article_id: 1,
+      votes: 0,
+      created_at: '2007-11-25T12:36:03.389Z',
+      body: 'Ambidextrous marsupial'
+    },
+    {
+      comment_id: 12,
+      author: 'icellusedkars',
+      article_id: 1,
+      votes: 0,
+      created_at: '2006-11-25T12:36:03.389Z',
+      body: 'Massive intercranial brain haemorrhage'
+    },
+    {
+      comment_id: 13,
+      author: 'icellusedkars',
+      article_id: 1,
+      votes: 0,
+      created_at: '2005-11-25T12:36:03.389Z',
+      body: 'Fruit pastilles'
+    },
+    {
+      comment_id: 18,
+      author: 'butter_bridge',
+      article_id: 1,
+      votes: 16,
+      created_at: '2000-11-26T12:36:03.389Z',
+      body: 'This morning, I showered for nine minutes.'
+    }
+  ]
+}
+        ✓ GETS a status code of 200 and returns an array of sorted comments by the created_at for a given article id when valid queries are passed in the request with created_at as the sort by column and desc as the order by value
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller get comments by article id
+In selectCommentsByArticleId
+im in the models
+comments: [
+  {
+    comment_id: 13,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 0,
+    created_at: 2005-11-25T12:36:03.389Z,
+    body: 'Fruit pastilles'
+  },
+  {
+    comment_id: 3,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 100,
+    created_at: 2015-11-23T12:36:03.389Z,
+    body: 'Replacing the quiet elegance of the dark suit and tie with the casual indifference of these muted earth tones is a form of fashion suicide, but, uh, call me crazy — onyou it works.'
+  },
+  {
+    comment_id: 4,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: -100,
+    created_at: 2014-11-23T12:36:03.389Z,
+    body: ' I carry a log — yes. Is it funny to you? It is not to me.'
+  },
+  {
+    comment_id: 5,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 0,
+    created_at: 2013-11-23T12:36:03.389Z,
+    body: 'I hate streaming noses'
+  },
+  {
+    comment_id: 6,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 0,
+    created_at: 2012-11-23T12:36:03.389Z,
+    body: 'I hate streaming eyes even more'
+  },
+  {
+    comment_id: 7,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 0,
+    created_at: 2011-11-24T12:36:03.389Z,
+    body: 'Lobster pot'
+  },
+  {
+    comment_id: 8,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 0,
+    created_at: 2010-11-24T12:36:03.389Z,
+    body: 'Delicious crackerbreads'
+  },
+  {
+    comment_id: 9,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 0,
+    created_at: 2009-11-24T12:36:03.389Z,
+    body: 'Superficially charming'
+  },
+  {
+    comment_id: 10,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 0,
+    created_at: 2008-11-24T12:36:03.389Z,
+    body: 'git push origin master'
+  },
+  {
+    comment_id: 11,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 0,
+    created_at: 2007-11-25T12:36:03.389Z,
+    body: 'Ambidextrous marsupial'
+  },
+  {
+    comment_id: 12,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 0,
+    created_at: 2006-11-25T12:36:03.389Z,
+    body: 'Massive intercranial brain haemorrhage'
+  },
+  {
+    comment_id: 18,
+    author: 'butter_bridge',
+    article_id: 1,
+    votes: 16,
+    created_at: 2000-11-26T12:36:03.389Z,
+    body: 'This morning, I showered for nine minutes.'
+  },
+  {
+    comment_id: 2,
+    author: 'butter_bridge',
+    article_id: 1,
+    votes: 14,
+    created_at: 2016-11-22T12:36:03.389Z,
+    body: 'The beautiful thing about treasure is that it exists. Got to find out what kind of sheets these are; not cotton, not rayon, silky.'
+  }
+]
+The res.body is:  {
+  comments: [
+    {
+      comment_id: 13,
+      author: 'icellusedkars',
+      article_id: 1,
+      votes: 0,
+      created_at: '2005-11-25T12:36:03.389Z',
+      body: 'Fruit pastilles'
+    },
+    {
+      comment_id: 3,
+      author: 'icellusedkars',
+      article_id: 1,
+      votes: 100,
+      created_at: '2015-11-23T12:36:03.389Z',
+      body: 'Replacing the quiet elegance of the dark suit and tie with the casual indifference of these muted earth tones is a form of fashion suicide, but, uh, call me crazy — onyou it works.'
+    },
+    {
+      comment_id: 4,
+      author: 'icellusedkars',
+      article_id: 1,
+      votes: -100,
+      created_at: '2014-11-23T12:36:03.389Z',
+      body: ' I carry a log — yes. Is it funny to you? It is not to me.'
+    },
+    {
+      comment_id: 5,
+      author: 'icellusedkars',
+      article_id: 1,
+      votes: 0,
+      created_at: '2013-11-23T12:36:03.389Z',
+      body: 'I hate streaming noses'
+    },
+    {
+      comment_id: 6,
+      author: 'icellusedkars',
+      article_id: 1,
+      votes: 0,
+      created_at: '2012-11-23T12:36:03.389Z',
+      body: 'I hate streaming eyes even more'
+    },
+    {
+      comment_id: 7,
+      author: 'icellusedkars',
+      article_id: 1,
+      votes: 0,
+      created_at: '2011-11-24T12:36:03.389Z',
+      body: 'Lobster pot'
+    },
+    {
+      comment_id: 8,
+      author: 'icellusedkars',
+      article_id: 1,
+      votes: 0,
+      created_at: '2010-11-24T12:36:03.389Z',
+      body: 'Delicious crackerbreads'
+    },
+    {
+      comment_id: 9,
+      author: 'icellusedkars',
+      article_id: 1,
+      votes: 0,
+      created_at: '2009-11-24T12:36:03.389Z',
+      body: 'Superficially charming'
+    },
+    {
+      comment_id: 10,
+      author: 'icellusedkars',
+      article_id: 1,
+      votes: 0,
+      created_at: '2008-11-24T12:36:03.389Z',
+      body: 'git push origin master'
+    },
+    {
+      comment_id: 11,
+      author: 'icellusedkars',
+      article_id: 1,
+      votes: 0,
+      created_at: '2007-11-25T12:36:03.389Z',
+      body: 'Ambidextrous marsupial'
+    },
+    {
+      comment_id: 12,
+      author: 'icellusedkars',
+      article_id: 1,
+      votes: 0,
+      created_at: '2006-11-25T12:36:03.389Z',
+      body: 'Massive intercranial brain haemorrhage'
+    },
+    {
+      comment_id: 18,
+      author: 'butter_bridge',
+      article_id: 1,
+      votes: 16,
+      created_at: '2000-11-26T12:36:03.389Z',
+      body: 'This morning, I showered for nine minutes.'
+    },
+    {
+      comment_id: 2,
+      author: 'butter_bridge',
+      article_id: 1,
+      votes: 14,
+      created_at: '2016-11-22T12:36:03.389Z',
+      body: 'The beautiful thing about treasure is that it exists. Got to find out what kind of sheets these are; not cotton, not rayon, silky.'
+    }
+  ]
+}
+        ✓ GETS a status code of 200 and returns an array of sorted comments by the created_at for a given article id when valid queries are passed in the request with a valid column as the sort by column and default order by value
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller get comments by article id
+In selectCommentsByArticleId
+im in the models
+comments: [
+  {
+    comment_id: 2,
+    author: 'butter_bridge',
+    article_id: 1,
+    votes: 14,
+    created_at: 2016-11-22T12:36:03.389Z,
+    body: 'The beautiful thing about treasure is that it exists. Got to find out what kind of sheets these are; not cotton, not rayon, silky.'
+  },
+  {
+    comment_id: 3,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 100,
+    created_at: 2015-11-23T12:36:03.389Z,
+    body: 'Replacing the quiet elegance of the dark suit and tie with the casual indifference of these muted earth tones is a form of fashion suicide, but, uh, call me crazy — onyou it works.'
+  },
+  {
+    comment_id: 4,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: -100,
+    created_at: 2014-11-23T12:36:03.389Z,
+    body: ' I carry a log — yes. Is it funny to you? It is not to me.'
+  },
+  {
+    comment_id: 5,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 0,
+    created_at: 2013-11-23T12:36:03.389Z,
+    body: 'I hate streaming noses'
+  },
+  {
+    comment_id: 6,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 0,
+    created_at: 2012-11-23T12:36:03.389Z,
+    body: 'I hate streaming eyes even more'
+  },
+  {
+    comment_id: 7,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 0,
+    created_at: 2011-11-24T12:36:03.389Z,
+    body: 'Lobster pot'
+  },
+  {
+    comment_id: 8,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 0,
+    created_at: 2010-11-24T12:36:03.389Z,
+    body: 'Delicious crackerbreads'
+  },
+  {
+    comment_id: 9,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 0,
+    created_at: 2009-11-24T12:36:03.389Z,
+    body: 'Superficially charming'
+  },
+  {
+    comment_id: 10,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 0,
+    created_at: 2008-11-24T12:36:03.389Z,
+    body: 'git push origin master'
+  },
+  {
+    comment_id: 11,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 0,
+    created_at: 2007-11-25T12:36:03.389Z,
+    body: 'Ambidextrous marsupial'
+  },
+  {
+    comment_id: 12,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 0,
+    created_at: 2006-11-25T12:36:03.389Z,
+    body: 'Massive intercranial brain haemorrhage'
+  },
+  {
+    comment_id: 13,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 0,
+    created_at: 2005-11-25T12:36:03.389Z,
+    body: 'Fruit pastilles'
+  },
+  {
+    comment_id: 18,
+    author: 'butter_bridge',
+    article_id: 1,
+    votes: 16,
+    created_at: 2000-11-26T12:36:03.389Z,
+    body: 'This morning, I showered for nine minutes.'
+  }
+]
+        ✓ GETS a status code of 200 and returns an array of sorted comments by the created_at for a given article id when valid queries are passed in the request with a valid column as the sort by column and order by value is desc
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller get comments by article id
+In selectCommentsByArticleId
+im in the models
+comments: [
+  {
+    comment_id: 18,
+    author: 'butter_bridge',
+    article_id: 1,
+    votes: 16,
+    created_at: 2000-11-26T12:36:03.389Z,
+    body: 'This morning, I showered for nine minutes.'
+  },
+  {
+    comment_id: 13,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 0,
+    created_at: 2005-11-25T12:36:03.389Z,
+    body: 'Fruit pastilles'
+  },
+  {
+    comment_id: 12,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 0,
+    created_at: 2006-11-25T12:36:03.389Z,
+    body: 'Massive intercranial brain haemorrhage'
+  },
+  {
+    comment_id: 11,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 0,
+    created_at: 2007-11-25T12:36:03.389Z,
+    body: 'Ambidextrous marsupial'
+  },
+  {
+    comment_id: 10,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 0,
+    created_at: 2008-11-24T12:36:03.389Z,
+    body: 'git push origin master'
+  },
+  {
+    comment_id: 9,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 0,
+    created_at: 2009-11-24T12:36:03.389Z,
+    body: 'Superficially charming'
+  },
+  {
+    comment_id: 8,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 0,
+    created_at: 2010-11-24T12:36:03.389Z,
+    body: 'Delicious crackerbreads'
+  },
+  {
+    comment_id: 7,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 0,
+    created_at: 2011-11-24T12:36:03.389Z,
+    body: 'Lobster pot'
+  },
+  {
+    comment_id: 6,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 0,
+    created_at: 2012-11-23T12:36:03.389Z,
+    body: 'I hate streaming eyes even more'
+  },
+  {
+    comment_id: 5,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 0,
+    created_at: 2013-11-23T12:36:03.389Z,
+    body: 'I hate streaming noses'
+  },
+  {
+    comment_id: 4,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: -100,
+    created_at: 2014-11-23T12:36:03.389Z,
+    body: ' I carry a log — yes. Is it funny to you? It is not to me.'
+  },
+  {
+    comment_id: 3,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 100,
+    created_at: 2015-11-23T12:36:03.389Z,
+    body: 'Replacing the quiet elegance of the dark suit and tie with the casual indifference of these muted earth tones is a form of fashion suicide, but, uh, call me crazy — onyou it works.'
+  },
+  {
+    comment_id: 2,
+    author: 'butter_bridge',
+    article_id: 1,
+    votes: 14,
+    created_at: 2016-11-22T12:36:03.389Z,
+    body: 'The beautiful thing about treasure is that it exists. Got to find out what kind of sheets these are; not cotton, not rayon, silky.'
+  }
+]
+        ✓ GETS a status code of 200 and returns an array of sorted comments by the created_at for a given article id when valid queries are passed in the request with a default sort by column and order by value is asc
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller get comments by article id
+In selectCommentsByArticleId
+im in the models
+comments: [
+  {
+    comment_id: 2,
+    author: 'butter_bridge',
+    article_id: 1,
+    votes: 14,
+    created_at: 2016-11-22T12:36:03.389Z,
+    body: 'The beautiful thing about treasure is that it exists. Got to find out what kind of sheets these are; not cotton, not rayon, silky.'
+  },
+  {
+    comment_id: 18,
+    author: 'butter_bridge',
+    article_id: 1,
+    votes: 16,
+    created_at: 2000-11-26T12:36:03.389Z,
+    body: 'This morning, I showered for nine minutes.'
+  },
+  {
+    comment_id: 4,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: -100,
+    created_at: 2014-11-23T12:36:03.389Z,
+    body: ' I carry a log — yes. Is it funny to you? It is not to me.'
+  },
+  {
+    comment_id: 5,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 0,
+    created_at: 2013-11-23T12:36:03.389Z,
+    body: 'I hate streaming noses'
+  },
+  {
+    comment_id: 6,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 0,
+    created_at: 2012-11-23T12:36:03.389Z,
+    body: 'I hate streaming eyes even more'
+  },
+  {
+    comment_id: 7,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 0,
+    created_at: 2011-11-24T12:36:03.389Z,
+    body: 'Lobster pot'
+  },
+  {
+    comment_id: 8,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 0,
+    created_at: 2010-11-24T12:36:03.389Z,
+    body: 'Delicious crackerbreads'
+  },
+  {
+    comment_id: 9,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 0,
+    created_at: 2009-11-24T12:36:03.389Z,
+    body: 'Superficially charming'
+  },
+  {
+    comment_id: 10,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 0,
+    created_at: 2008-11-24T12:36:03.389Z,
+    body: 'git push origin master'
+  },
+  {
+    comment_id: 11,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 0,
+    created_at: 2007-11-25T12:36:03.389Z,
+    body: 'Ambidextrous marsupial'
+  },
+  {
+    comment_id: 12,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 0,
+    created_at: 2006-11-25T12:36:03.389Z,
+    body: 'Massive intercranial brain haemorrhage'
+  },
+  {
+    comment_id: 13,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 0,
+    created_at: 2005-11-25T12:36:03.389Z,
+    body: 'Fruit pastilles'
+  },
+  {
+    comment_id: 3,
+    author: 'icellusedkars',
+    article_id: 1,
+    votes: 100,
+    created_at: 2015-11-23T12:36:03.389Z,
+    body: 'Replacing the quiet elegance of the dark suit and tie with the casual indifference of these muted earth tones is a form of fashion suicide, but, uh, call me crazy — onyou it works.'
+  }
+]
+        ✓ GETS a status code of 200 and returns an array of sorted comments by the created_at for a given article id when valid queries are passed in the request with a valid column as the sort by column and order by value is asc
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller get comments by article id
+In selectCommentsByArticleId
+im in the models
+In 4 parameter error handler error: column "authorrs" does not exist
+    at Connection.parseE (/Users/kevincostello/Northcoders/Backend/be-nc-news/node_modules/pg/lib/connection.js:604:13)
+    at Connection.parseMessage (/Users/kevincostello/Northcoders/Backend/be-nc-news/node_modules/pg/lib/connection.js:403:19)
+    at Socket.<anonymous> (/Users/kevincostello/Northcoders/Backend/be-nc-news/node_modules/pg/lib/connection.js:123:22)
+    at Socket.emit (events.js:210:5)
+    at addChunk (_stream_readable.js:308:12)
+    at readableAddChunk (_stream_readable.js:289:11)
+    at Socket.Readable.push (_stream_readable.js:223:10)
+    at TCP.onStreamRead (internal/stream_base_commons.js:182:23) {
+  name: 'error',
+  length: 171,
+  severity: 'ERROR',
+  code: '42703',
+  detail: undefined,
+  hint: 'Perhaps you meant to reference the column "comments.author".',
+  position: '202',
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: undefined,
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'parse_relation.c',
+  line: '3359',
+  routine: 'errorMissingColumn'
+}
+        ✓ GETS a status code of 400 with message of invalid column for sort_by when passed an invalid column for sort_by 
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller get comments by article id
+In selectCommentsByArticleId
+im in the models
+In 4 parameter error handler { status: 400, msg: 'Invalid order_by value' }
+in default 4 parameter error handler
+        ✓ GETS a status code of 400 with message of invalid order_by value when passed an invalid order_by value 
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller get comments by article id
+In selectCommentsByArticleId
+im in the models
+comments: []
+        ✓ GETS a status code of 200 and returns an empty articles array when passes an article_id which exists but is has not comments
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In 405 error handler
+        ✓ Returns PATCH /api/articles with an error code of 405 Method Not Allowed
+    /comments
+      /:comment_id
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller { comment_id: '1' }
+im in the models { comment_id: '1' } { inc_votes: 99 }
+[
+  {
+    comment_id: 1,
+    author: 'butter_bridge',
+    article_id: 9,
+    votes: 115,
+    created_at: 2017-11-22T12:36:03.389Z,
+    body: "Oh, I've got compassion running out of my nose, pal! I'm the Sultan of Sentiment!"
+  }
+]
+test response is {
+  comment: {
+    comment_id: 1,
+    author: 'butter_bridge',
+    article_id: 9,
+    votes: 115,
+    created_at: '2017-11-22T12:36:03.389Z',
+    body: "Oh, I've got compassion running out of my nose, pal! I'm the Sultan of Sentiment!"
+  },
+  msg: 'The comment was updated with the passed values'
+}
+        ✓ PATCHES with status of 200 when passed a valid votes object, checked against expected object in test
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller { comment_id: '1' }
+im in the models { comment_id: '1' } { inc_votes: 'gobbledygook' }
+In 4 parameter error handler error: invalid input syntax for type integer: "NaN"
+    at Connection.parseE (/Users/kevincostello/Northcoders/Backend/be-nc-news/node_modules/pg/lib/connection.js:604:13)
+    at Connection.parseMessage (/Users/kevincostello/Northcoders/Backend/be-nc-news/node_modules/pg/lib/connection.js:403:19)
+    at Socket.<anonymous> (/Users/kevincostello/Northcoders/Backend/be-nc-news/node_modules/pg/lib/connection.js:123:22)
+    at Socket.emit (events.js:210:5)
+    at addChunk (_stream_readable.js:308:12)
+    at readableAddChunk (_stream_readable.js:289:11)
+    at Socket.Readable.push (_stream_readable.js:223:10)
+    at TCP.onStreamRead (internal/stream_base_commons.js:182:23) {
+  name: 'error',
+  length: 104,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: undefined,
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '259',
+  routine: 'pg_strtoint32'
+}
+        ✓ PATCHES with as status code of 400 when passed an object with an invalid value for inc_votes
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller { comment_id: '1' }
+im in the models { comment_id: '1' } {}
+in here promise.reject
+In 4 parameter error handler { status: 400, msg: 'Required keys are not supplied in PATCH' }
+in default 4 parameter error handler
+        ✓ PATCHES a comment with status code of 400 when passed an object not containing any keys
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller { comment_id: '1' }
+im in the models { comment_id: '1' } { username: 'butter_bridge' }
+in here promise.reject
+In 4 parameter error handler { status: 400, msg: 'Required keys are not supplied in PATCH' }
+in default 4 parameter error handler
+        ✓ PATCHES with a status code of 404 when the passed a key not on the database
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller { comment_id: '1' }
+In delete comment model { comment_id: '1' }
+1 row was deleted from the comments table for  { comment_id: '1' }
+        ✓ DELETES with status code of 204, when passed a comment_id
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+in 3 parameter 404 error log
+        ✓ DELETES with status code of 404, when passed a misspelt path
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller { comment_id: '199' }
+In delete comment model { comment_id: '199' }
+result 0
+In 4 parameter error handler { status: 404, msg: 'The comment_id does not exist' }
+in default 4 parameter error handler
+        ✓ DELETES with status code of 404, when passed a comment_id that does not exist
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In controller { comment_id: 'gobbledygook' }
+In delete comment model { comment_id: 'gobbledygook' }
+In 4 parameter error handler error: invalid input syntax for type integer: "gobbledygook"
+    at Connection.parseE (/Users/kevincostello/Northcoders/Backend/be-nc-news/node_modules/pg/lib/connection.js:604:13)
+    at Connection.parseMessage (/Users/kevincostello/Northcoders/Backend/be-nc-news/node_modules/pg/lib/connection.js:403:19)
+    at Socket.<anonymous> (/Users/kevincostello/Northcoders/Backend/be-nc-news/node_modules/pg/lib/connection.js:123:22)
+    at Socket.emit (events.js:210:5)
+    at addChunk (_stream_readable.js:308:12)
+    at readableAddChunk (_stream_readable.js:289:11)
+    at Socket.Readable.push (_stream_readable.js:223:10)
+    at TCP.onStreamRead (internal/stream_base_commons.js:182:23) {
+  name: 'error',
+  length: 113,
+  severity: 'ERROR',
+  code: '22P02',
+  detail: undefined,
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: undefined,
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'numutils.c',
+  line: '259',
+  routine: 'pg_strtoint32'
+}
+        ✓ DELETES with status code of 400, when passed an invalid comment_id
+removing comments table test
+removing articles table test
+Dropping users table test
+removing topics table test
+creating topics table test
+Creating users table test
+creating articles table test
+creating comments table test
+In 405 error handler
+        ✓ Returns PATCH /api/comments/1 with an error code of 405 Method Not Allowed
+
+
+  58 passing (10s)
+  1 failing
+
+  1) /api
+       Returns DELETE /api with an error code of 405 Method Not Allowed:
+     Error: expected 405 "Method Not Allowed", got 404 "Not Found"
+      at Test._assertStatus (node_modules/supertest/lib/test.js:268:12)
+      at Test._assertFunction (node_modules/supertest/lib/test.js:283:11)
+      at Test.assert (node_modules/supertest/lib/test.js:173:18)
+      at Server.localAssert (node_modules/supertest/lib/test.js:131:12)
+      at emitCloseNT (net.js:1644:8)
+      at processTicksAndRejections (internal/process/task_queues.js:79:21)
+
+
+
