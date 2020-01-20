@@ -117,25 +117,21 @@ const selectAllArticles = query => {
   console.log("In selectAllArticles", query);
   const checkUser = () => {
     if (query.author !== undefined) {
-      console.log("running selectUser");
       return selectUser({ username: query.author });
     } else return Promise.resolve();
   };
 
   const checkTopic = () => {
     if (query.topic !== undefined) {
-      console.log("running selectTopic");
       return selectTopic(query.topic);
     } else return Promise.resolve();
   };
 
   return checkUser()
     .then(inAuthor => {
-      console.log("inAuthor", inAuthor);
       return checkTopic();
     })
     .then(inTopic => {
-      console.log("inTopic", inTopic);
       return db
         .select(
           "articles.article_id",
@@ -174,7 +170,6 @@ const selectAllArticles = query => {
           msg: "Invalid order_by value"
         });
       } else if (result.length === 0) {
-        console.log("in result = 0", result);
         return result;
       } else {
         const numericCountArray = result.map(article => {
@@ -201,80 +196,3 @@ module.exports = {
   selectCommentsByArticleId,
   selectAllArticles
 };
-
-// const selectAllArticles = query => {
-//   // change order of this program so it runs checkIfAuthorExists and checkIfTopicExists first
-//   // do it similar to a controller, like:
-//   //   const checkIfAuthorExists = selectUser({
-//   // username: query.author
-//   // });
-//   // return checkIfAuthorExists.then(res => {   const checkIfTopicExists = selectTopic(query.topic); // I have written this to test the api/articles?topic=xxxx
-//   // return checkIfTopicExists;}).then(return db
-//   // .select(
-//   //   "articles.article_id",
-//   //   "articles.author", etc)
-
-//   console.log("In selectAllArticles", query);
-//   return db
-//     .select(
-//       "articles.article_id",
-//       "articles.author",
-//       "articles.title",
-//       "articles.topic",
-//       "articles.created_at",
-//       "articles.votes"
-//     )
-//     .from("articles")
-//     .count("comments.comment_id as comment_count")
-//     .leftJoin("comments", "articles.article_id", "=", "comments.article_id")
-//     .groupBy("articles.article_id")
-//     .orderBy(query.sort_by || "articles.created_at", query.order_by || "desc")
-//     .modify(sqlQuery => {
-//       // need to filter for both query.author and query.topic if passed both in query
-//       if (query.author) {
-//         sqlQuery.where("articles.author", query.author);
-//       }
-//       if (query.topic) {
-//         sqlQuery.where("articles.topic", query.topic);
-//       }
-//     })
-//     .then(result => {
-//       // if (result.length === 0 && query.author !== undefined) {
-//       if (
-//         query.order_by !== undefined &&
-//         query.order_by !== "asc" &&
-//         query.order_by !== "desc"
-//       ) {
-//         return Promise.reject({
-//           status: 400,
-//           msg: "Invalid order_by value"
-//         });
-//       } else if (result.length === 0) {
-//         if (query.author !== undefined) {
-//           const checkIfAuthorExists = selectUser({
-//             username: query.author
-//           });
-//           return checkIfAuthorExists;
-//         }
-
-//         if (query.topic !== undefined) {
-//           const checkIfTopicExists = selectTopic(query.topic); // I have written this to test the api/articles?topic=xxxx
-//           return checkIfTopicExists;
-//         }
-//       } else {
-//         const numericCountArray = result.map(article => {
-//           article.comment_count = Number(article.comment_count);
-//           return article;
-//         });
-//         return numericCountArray;
-//       }
-//     })
-//     .then(authorResult => {
-//       console.log("Are we in authorResult?", authorResult);
-//       if (authorResult.length > 0) {
-//         return authorResult;
-//       } else {
-//         return [];
-//       }
-//     });
-// };
