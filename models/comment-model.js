@@ -1,12 +1,11 @@
 const db = require("../db/connection");
 
 const patchComment = (param, body) => {
-  console.log("im in the models", param, body);
+  console.log("im in the models");
 
   // function to check if body exists, return Promise.reject() if it doesn't
   const bodyVotesExists = () => {
-    if (body.inc_votes === undefined) {
-      console.log("in here promise.reject");
+    if (body.inc_votes === undefined && Object.keys(body).length > 0) {
       return Promise.reject({
         status: 400,
         msg: "Required keys are not supplied in PATCH"
@@ -25,27 +24,25 @@ const patchComment = (param, body) => {
         .returning("*");
     })
     .then(result => {
-      console.log(result);
-      return result[0];
+      if (result.length === 0) {
+        return Promise.reject({
+          status: 404,
+          msg: "The comment id is not in the database"
+        });
+      } else return result[0];
     });
 };
 
 const deleteComment = param => {
-  console.log("In delete comment model", param);
+  console.log("In delete comment model");
   return db
     .from("comments")
     .where("comment_id", param.comment_id)
     .delete()
     .then(result => {
       if (result > 0) {
-        console.log(
-          result,
-          "row was deleted from the comments table for ",
-          param
-        );
         return result;
       } else if (result === 0) {
-        console.log("result", result);
         return Promise.reject({
           status: 404,
           msg: "The comment_id does not exist"

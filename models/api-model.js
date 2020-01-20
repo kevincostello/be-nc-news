@@ -1,7 +1,7 @@
 const db = require("../db/connection");
 
 const selectAPIendpoints = requests => {
-  console.log("im in the models", requests, typeof requests);
+  console.log("im in the models");
   const jsonReturn = inParam => {
     return inParam;
   };

@@ -1,7 +1,7 @@
 const { patchComment, deleteComment } = require("../models/comment-model");
 
 const sendCommentToBePatched = (req, res, next) => {
-  console.log("In controller", req.params);
+  console.log("In controller");
   patchComment(req.params, req.body)
     .then(comment => {
       res.status(200).send({
@@ -15,7 +15,7 @@ const sendCommentToBePatched = (req, res, next) => {
 };
 
 const sendCommentToBeDeleted = (req, res, next) => {
-  console.log("In controller", req.params);
+  console.log("In controller");
   deleteComment(req.params)
     .then(comment => {
       res.status(204).send();

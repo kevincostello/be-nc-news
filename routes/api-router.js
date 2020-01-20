@@ -12,10 +12,6 @@ apiRouter.use("/topics", topicsRouter);
 apiRouter.use("/users", usersRouter);
 apiRouter.use("/articles", articlesRouter);
 apiRouter.use("/comments", commentsRouter);
-// apiRouter
-//   .route("/")
-//   .get(allAPIendpoints)
-//   .all(send405Error);
 
 apiRouter
   .route("/")

@@ -10,7 +10,6 @@ const endpoints = require("../endpoints.json");
 const stringy = JSON.stringify(endpoints);
 
 chai.use(require("sams-chai-sorted"));
-// console.log("db:", db);
 
 describe("/api", () => {
   beforeEach(() => db.seed.run());
@@ -22,7 +21,6 @@ describe("/api", () => {
       .send({ endpoints })
       .expect(200)
       .then(res => {
-        console.log("In test", res.body, "This is stringy", { endpoints });
         expect(res.body).to.deep.equal({ endpoints });
         // expect(res.body).to.deep.equal({ stringy: stringy });
       });
@@ -43,7 +41,6 @@ describe("/api", () => {
         .get("/api/topics")
         .expect(200)
         .then(res => {
-          console.log(res.body);
           expect(res.body).to.be.an("object");
           expect(res.body.topics).to.be.an("array");
           expect(res.body.topics[0]).to.be.an("object");
@@ -75,7 +72,6 @@ describe("/api", () => {
         .get("/api/users/rogersop")
         .expect(200)
         .then(res => {
-          console.log(res.body);
           expect(res.body).to.be.an("object");
           expect(res.body.user).to.be.an("object");
           expect(res.body.user).to.have.keys([
@@ -91,7 +87,6 @@ describe("/api", () => {
         .get("/api/users/gobbledygook")
         .expect(404)
         .then(res => {
-          console.log(res.body);
           expect(res.body.msg).to.equal("The username does not exist");
         });
     });
@@ -121,7 +116,6 @@ describe("/api", () => {
         .get("/api/articles/1")
         .expect(200)
         .then(res => {
-          console.log(res.body);
           expect(res.body).to.be.an("object");
           expect(res.body.article).to.be.an("object");
           expect(res.body.article).to.contain.keys([
@@ -158,7 +152,6 @@ describe("/api", () => {
         .get("/api/articles/1")
         .expect(200)
         .then(res => {
-          console.log(res.body);
           expect(res.body.article.comment_count).to.equal(13);
         });
     });
@@ -168,7 +161,6 @@ describe("/api", () => {
         .get("/api/articles/3")
         .expect(200)
         .then(res => {
-          console.log(res.body);
           expect(res.body.article.comment_count).to.equal(0);
         });
     });
@@ -179,11 +171,6 @@ describe("/api", () => {
         .send({ inc_votes: 9999 })
         .expect(200)
         .then(res => {
-          console.log(
-            "This is the result in the test",
-            res.body,
-            res.req.ClientRequest
-          );
           expect(res.body).to.be.an("object");
           expect(res.body.article).to.be.an("object");
           expect(res.body.article).to.deep.equal({
@@ -226,7 +213,6 @@ describe("/api", () => {
           .send({ username: "butter_bridge", body: "This is a comment" })
           .expect(201)
           .then(res => {
-            console.log("test response is", res.body);
             expect(res.body.msg).to.equal(
               "Your comment was posted on the article"
             );
@@ -307,7 +293,6 @@ describe("/api", () => {
           .get("/api/articles/1/comments?sort_by=author")
           .expect(200)
           .then(res => {
-            console.log("The res.body is: ", res.body);
             expect(res.body).to.be.an("object");
             expect(res.body.comments).to.be.an("array");
             expect(res.body.comments[0]).to.be.an("object");
@@ -328,7 +313,6 @@ describe("/api", () => {
           .get("/api/articles/1/comments")
           .expect(200)
           .then(res => {
-            console.log("The res.body is: ", res.body);
             expect(res.body).to.be.an("object");
             expect(res.body.comments).to.be.an("array");
             expect(res.body.comments[0]).to.be.an("object");
@@ -352,7 +336,6 @@ describe("/api", () => {
           .get("/api/articles/1/comments?sort_by=author")
           .expect(200)
           .then(res => {
-            console.log("The res.body is: ", res.body);
             expect(res.body).to.be.an("object");
             expect(res.body.comments).to.be.an("array");
             expect(res.body.comments[0]).to.be.an("object");
@@ -400,7 +383,7 @@ describe("/api", () => {
           });
       });
 
-      it.only("GETS a status code of 200 and returns an array of sorted comments by the created_at for a given article id when valid queries are passed in the request with a default sort by column and order by value is asc", () => {
+      it("GETS a status code of 200 and returns an array of sorted comments by the created_at for a given article id when valid queries are passed in the request with a default sort by column and order by value is asc", () => {
         return request(app)
           .get("/api/articles/1/comments?order=asc")
           .expect(200)
@@ -496,7 +479,6 @@ describe("/api", () => {
         .get("/api/articles")
         .expect(200)
         .then(res => {
-          console.log(res.body);
           expect(res.body.articles).to.be.an("array");
           expect(res.body.articles[0]).to.be.an("object");
           expect(res.body.articles[0]).to.have.keys([
@@ -719,7 +701,6 @@ describe("/api", () => {
           .send({ inc_votes: 99 })
           .expect(200)
           .then(res => {
-            console.log("test response is", res.body);
             expect(res.body.msg).to.equal(
               "The comment was updated with the passed values"
             );
@@ -750,14 +731,22 @@ describe("/api", () => {
           });
       });
 
-      it("PATCHES a comment with status code of 400 when passed an object not containing any keys", () => {
+      it("PATCHES a comment with status code of 200 and returns the unchanged comment when passed an object not containing any keys", () => {
         return request(app)
           .patch("/api/comments/1")
-          .send({})
-          .expect(400)
+          .expect(200)
+          .then(res => {
+            expect(res.body.comment.votes).to.equal(16);
+          });
+      });
+
+      it("PATCHES a comment with status code of 200 and returns the unchanged comment when passed an object not containing any keys", () => {
+        return request(app)
+          .patch("/api/comments/1000")
+          .expect(404)
           .then(res => {
             expect(res.body.msg).to.equal(
-              "Required keys are not supplied in PATCH"
+              "The comment id is not in the database"
             );
           });
       });

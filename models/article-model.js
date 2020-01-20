@@ -58,7 +58,6 @@ const postArticleWithComment = (body, params) => {
     .into("comments")
     .returning("*")
     .then(res => {
-      console.log("Am I in the post then?");
       return res[0];
     });
 };
@@ -111,7 +110,7 @@ const selectCommentsByArticleId = (params, query) => {
 };
 
 const selectAllArticles = query => {
-  console.log("In selectAllArticles", query);
+  console.log("In selectAllArticles");
   const checkUser = () => {
     if (query.author !== undefined) {
       return selectUser({ username: query.author });
@@ -119,7 +118,7 @@ const selectAllArticles = query => {
   };
 
   const selectTopic = topic => {
-    console.log("im in the models - new selectTopic");
+    console.log("im in the models");
     return db
       .select("*")
       .from("topics")
@@ -191,14 +190,6 @@ const selectAllArticles = query => {
         return numericCountArray;
       }
     });
-  // .then(authorResult => {
-  //   console.log("Are we in authorResult?", authorResult);
-  //   if (authorResult.length > 0) {
-  //     return authorResult;
-  //   } else {
-  //     return [];
-  //   }
-  // });
 };
 
 module.exports = {
