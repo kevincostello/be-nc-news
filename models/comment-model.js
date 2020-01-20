@@ -1,20 +1,36 @@
 const db = require("../db/connection");
 
-exports.patchComment = (param, body) => {
-  console.log("im in the models");
-  return db
-    .select("*")
-    .from("comments")
-    .where("comment_id", param.comment_id)
-    .increment("votes", body.inc_votes || 0)
-    .returning("*")
+const patchComment = (param, body) => {
+  console.log("im in the models", param, body);
+
+  // function to check if body exists, return Promise.reject() if it doesn't
+  const bodyVotesExists = () => {
+    if (body.inc_votes === undefined) {
+      console.log("in here promise.reject");
+      return Promise.reject({
+        status: 400,
+        msg: "Required keys are not supplied in PATCH"
+      });
+    }
+    return Promise.resolve(); // if body exists this will be passed onto the then
+  };
+
+  return bodyVotesExists()
+    .then(runQuery => {
+      return db
+        .select("*")
+        .from("comments")
+        .where("comment_id", param.comment_id)
+        .increment("votes", body.inc_votes || 0)
+        .returning("*");
+    })
     .then(result => {
       console.log(result);
       return result[0];
     });
 };
 
-exports.deleteComment = param => {
+const deleteComment = param => {
   console.log("In delete comment model", param);
   return db
     .from("comments")
@@ -36,4 +52,9 @@ exports.deleteComment = param => {
         });
       }
     });
+};
+
+module.exports = {
+  patchComment,
+  deleteComment
 };

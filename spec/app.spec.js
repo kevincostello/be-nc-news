@@ -738,6 +738,42 @@ describe("/api", () => {
           });
       });
 
+      it("PATCHES with as status code of 400 when passed an object with an invalid value for inc_votes", () => {
+        return request(app)
+          .patch("/api/comments/1")
+          .send({ inc_votes: "gobbledygook" })
+          .expect(400)
+          .then(res => {
+            expect(res.body.msg).to.equal(
+              "An invalid value for inc_votes was entered"
+            );
+          });
+      });
+
+      it("PATCHES a comment with status code of 400 when passed an object not containing any keys", () => {
+        return request(app)
+          .patch("/api/comments/1")
+          .send({})
+          .expect(400)
+          .then(res => {
+            expect(res.body.msg).to.equal(
+              "Required keys are not supplied in PATCH"
+            );
+          });
+      });
+
+      it("PATCHES with a status code of 404 when the passed a key not on the database", () => {
+        return request(app)
+          .patch("/api/comments/1")
+          .send({ username: "butter_bridge" })
+          .expect(400)
+          .then(res => {
+            expect(res.body.msg).to.equal(
+              "Required keys are not supplied in PATCH"
+            );
+          });
+      });
+
       it("DELETES with status code of 204, when passed a comment_id", () => {
         return request(app)
           .delete("/api/comments/1")
