@@ -7,10 +7,12 @@ exports.up = function(knex) {
       .references("username")
       .inTable("users")
       .notNullable();
+    commentsTable.integer("article_id");
     commentsTable
-      .integer("article_id")
+      .foreign("article_id")
       .references("article_id")
-      .inTable("articles");
+      .inTable("articles")
+      .onDelete("CASCADE");
     commentsTable.integer("votes").defaultTo(0);
     commentsTable.timestamp("created_at").defaultTo(knex.fn.now());
     commentsTable.text("body").notNullable();

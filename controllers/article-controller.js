@@ -3,7 +3,8 @@ const {
   patchArticle,
   postArticleWithComment,
   selectCommentsByArticleId,
-  selectAllArticles
+  selectAllArticles,
+  deleteArticle
 } = require("../models/article-model.js");
 
 const sendArticle = (req, res, next) => {
@@ -63,10 +64,22 @@ const sendAllArticles = (req, res, next) => {
     });
 };
 
+const sendArticleToBeRemoved = (req, res, next) => {
+  console.log("In sendArticleToBeRemoved");
+  deleteArticle(req.params)
+    .then(article => {
+      res.status(204).send();
+    })
+    .catch(err => {
+      next(err);
+    });
+};
+
 module.exports = {
   sendArticle,
   sendArticleToBePatched,
   sendArticleWithComment,
   sendCommentsByArticleId,
-  sendAllArticles
+  sendAllArticles,
+  sendArticleToBeRemoved
 };

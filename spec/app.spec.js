@@ -206,6 +206,27 @@ describe("/api", () => {
         });
     });
 
+    it("Returns DELETE /api/articles/:article_id with status of 204 when passed a valid article_id", () => {
+      return request(app)
+        .delete("/api/articles/1")
+        .expect(204);
+    });
+
+    it("Returns DELETE with status of 404 when passed an article_id which does not exist", () => {
+      return request(app)
+        .delete("/api/articles/999")
+        .expect(404);
+    });
+
+    it("DELETES with status code of 400, when passed an invalid article_id", () => {
+      return request(app)
+        .delete("/api/articles/gobbledygook")
+        .expect(400)
+        .then(res => {
+          expect(res.body.msg).to.equal("Invalid article ID");
+        });
+    });
+
     describe("/:article_id/comments", () => {
       it("POSTS a comment with status code of 201 when passed an object containing the comment", () => {
         return request(app)
@@ -296,7 +317,7 @@ describe("/api", () => {
             expect(res.body).to.be.an("object");
             expect(res.body.comments).to.be.an("array");
             expect(res.body.comments[0]).to.be.an("object");
-            expect(res.body.comments.length).to.equal(13);
+            expect(res.body.comments.length).to.equal(10);
             expect(res.body.comments[0]).to.have.keys([
               "article_id",
               "comment_id",
@@ -316,7 +337,7 @@ describe("/api", () => {
             expect(res.body).to.be.an("object");
             expect(res.body.comments).to.be.an("array");
             expect(res.body.comments[0]).to.be.an("object");
-            expect(res.body.comments.length).to.equal(13);
+            expect(res.body.comments.length).to.equal(10);
             expect(res.body.comments[0]).to.have.keys([
               "article_id",
               "comment_id",
@@ -339,7 +360,7 @@ describe("/api", () => {
             expect(res.body).to.be.an("object");
             expect(res.body.comments).to.be.an("array");
             expect(res.body.comments[0]).to.be.an("object");
-            expect(res.body.comments.length).to.equal(13);
+            expect(res.body.comments.length).to.equal(10);
             expect(res.body.comments[0]).to.have.keys([
               "article_id",
               "comment_id",
@@ -353,7 +374,7 @@ describe("/api", () => {
             });
             expect(
               res.body.comments[res.body.comments.length - 1].author
-            ).to.equal("butter_bridge");
+            ).to.equal("icellusedkars");
           });
       });
 
@@ -365,7 +386,7 @@ describe("/api", () => {
             expect(res.body).to.be.an("object");
             expect(res.body.comments).to.be.an("array");
             expect(res.body.comments[0]).to.be.an("object");
-            expect(res.body.comments.length).to.equal(13);
+            expect(res.body.comments.length).to.equal(10);
             expect(res.body.comments[0]).to.have.keys([
               "article_id",
               "comment_id",
@@ -379,7 +400,7 @@ describe("/api", () => {
             });
             expect(
               res.body.comments[res.body.comments.length - 1].author
-            ).to.equal("butter_bridge");
+            ).to.equal("icellusedkars");
           });
       });
 
@@ -391,7 +412,7 @@ describe("/api", () => {
             expect(res.body).to.be.an("object");
             expect(res.body.comments).to.be.an("array");
             expect(res.body.comments[0]).to.be.an("object");
-            expect(res.body.comments.length).to.equal(13);
+            expect(res.body.comments.length).to.equal(10);
             expect(res.body.comments[0]).to.have.keys([
               "article_id",
               "comment_id",
@@ -405,11 +426,11 @@ describe("/api", () => {
             });
             expect(
               res.body.comments[res.body.comments.length - 1].author
-            ).to.equal("butter_bridge");
+            ).to.equal("icellusedkars");
           });
       });
 
-      it.only("GETS a status code of 200 and returns an array of sorted comments by the created_at for a given article id when valid queries are passed in the request with a valid column as the sort by column and order by value is asc", () => {
+      it("GETS a status code of 200 and returns an array of sorted comments by the created_at for a given article id when valid queries are passed in the request with a valid column as the sort by column and order by value is asc", () => {
         return request(app)
           .get("/api/articles/1/comments?sort_by=author&order=asc")
           .expect(200)
@@ -473,7 +494,7 @@ describe("/api", () => {
           });
       });
 
-      it.only("GETS with status of 200 and returns an array of comments from the page and limit specified in the query", () => {
+      it("GETS with status of 200 and returns an array of comments from the page and limit specified in the query", () => {
         return request(app)
           .get("/api/articles/1/comments?limit=2&&p=3")
           .expect(200)
@@ -522,10 +543,10 @@ describe("/api", () => {
           expect(res.body.articles).to.be.sortedBy("created_at", {
             descending: true
           });
-          expect(res.body.articles.length).to.equal(12);
+          expect(res.body.articles.length).to.equal(10);
           expect(
             res.body.articles[res.body.articles.length - 1].article_id
-          ).to.equal(12);
+          ).to.equal(10);
           expect(res.body.articles[0].article_id).to.equal(1);
           expect(res.body.articles[8].comment_count).to.equal(2);
         });
@@ -606,10 +627,10 @@ describe("/api", () => {
             descending: false
           });
           expect(res.body.articles[0].topic).to.equal("mitch");
-          expect(res.body.articles.length).to.equal(11);
+          expect(res.body.articles.length).to.equal(10);
           expect(
             res.body.articles[res.body.articles.length - 2].comment_count
-          ).to.equal(2);
+          ).to.equal(0);
         });
     });
 

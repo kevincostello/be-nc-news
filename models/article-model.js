@@ -198,10 +198,30 @@ const selectAllArticles = query => {
     });
 };
 
+const deleteArticle = params => {
+  console.log("In models deleteArticle", params);
+  return db
+    .from("articles")
+    .where("article_id", params.article_id)
+    .delete()
+    .then(res => {
+      if (res > 0) {
+        console.log("res is: ", res);
+        return res;
+      } else if (res === 0) {
+        return Promise.reject({
+          status: 404,
+          msg: "The article_id does not exist"
+        });
+      }
+    });
+};
+
 module.exports = {
   selectArticle,
   patchArticle,
   postArticleWithComment,
   selectCommentsByArticleId,
-  selectAllArticles
+  selectAllArticles,
+  deleteArticle
 };
