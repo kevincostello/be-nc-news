@@ -110,7 +110,7 @@ const selectCommentsByArticleId = (params, query) => {
 };
 
 const selectAllArticles = query => {
-  console.log("In selectAllArticles");
+  console.log("In selectAllArticles", query);
   const checkUser = () => {
     if (query.author !== undefined) {
       return selectUser({ username: query.author });
@@ -160,6 +160,8 @@ const selectAllArticles = query => {
         .leftJoin("comments", "articles.article_id", "=", "comments.article_id")
         .groupBy("articles.article_id")
         .orderBy(query.sort_by || "articles.created_at", query.order || "desc")
+        .limit(query.limit || 10)
+        .offset((query.p - 1) * query.limit)
         .modify(sqlQuery => {
           // need to filter for both query.author and query.topic if passed both in query
           if (query.author) {
@@ -171,6 +173,7 @@ const selectAllArticles = query => {
         });
     })
     .then(result => {
+      console.log("the result is: ", result);
       if (
         query.order !== undefined &&
         query.order !== "asc" &&

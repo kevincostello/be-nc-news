@@ -474,7 +474,7 @@ describe("/api", () => {
       });
     }); // end of /api/articles/:article_id/comments describe block
 
-    it("GETS a status code of 200 when passed a valid path to /api/articles", () => {
+    it.only("GETS a status code of 200 when passed a valid path to /api/articles", () => {
       return request(app)
         .get("/api/articles")
         .expect(200)
@@ -492,6 +492,7 @@ describe("/api", () => {
           ]);
           expect(res.body.articles[0].comment_count).to.equal(13);
           expect(res.body.articles[4].comment_count).to.equal(2);
+          expect(res.body.articles.length).to.equal(10);
         });
     });
 
@@ -689,6 +690,15 @@ describe("/api", () => {
         .expect(405)
         .then(res => {
           expect(res.body.msg).to.equal("method not allowed");
+        });
+    });
+
+    it.only("RETURNS GET /api/articles with status of 200 and returns a certain page and number of rows when passed page number and limit", () => {
+      return request(app)
+        .get("/api/articles?limit=5&&p=3")
+        .expect(200)
+        .then(res => {
+          expect(res.body.articles.length).to.equal(2);
         });
     });
   });
