@@ -217,11 +217,24 @@ const deleteArticle = params => {
     });
 };
 
+const insertNewArticle = body => {
+  console.log("in model - insert new article", body);
+  return db
+    .from("articles")
+    .insert(body)
+    .returning("*")
+    .then(result => {
+      console.log("The result is: ", result);
+      return result[0];
+    });
+};
+
 module.exports = {
   selectArticle,
   patchArticle,
   postArticleWithComment,
   selectCommentsByArticleId,
   selectAllArticles,
-  deleteArticle
+  deleteArticle,
+  insertNewArticle
 };

@@ -831,6 +831,19 @@ describe("/api", () => {
           expect(res.body.articles.length).to.equal(2);
         });
     });
+
+    it.only("Returns POST /api/articles with status of 201 when passed a valid article object and returns the posted article", () => {
+      const newArticle = {
+        title: "This is a new article",
+        body: "This is the body of the new article",
+        topic: "cats",
+        author: "lurker"
+      };
+      return request(app)
+        .post("/api/articles")
+        .send(newArticle)
+        .expect(201);
+    });
   });
 
   describe("/comments", () => {

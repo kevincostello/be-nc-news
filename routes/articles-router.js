@@ -5,7 +5,8 @@ const {
   sendArticleWithComment,
   sendCommentsByArticleId,
   sendAllArticles,
-  sendArticleToBeRemoved
+  sendArticleToBeRemoved,
+  sendNewArticle
 } = require("../controllers/article-controller");
 
 const { send405Error } = require("../errors/index.js");
@@ -28,6 +29,7 @@ articlesRouter
 articlesRouter
   .route("/")
   .get(sendAllArticles)
+  .post(sendNewArticle)
   .all(send405Error);
 
 module.exports = articlesRouter;
