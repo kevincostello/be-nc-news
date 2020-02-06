@@ -167,6 +167,21 @@ describe("/api", () => {
           expect(res.body.msg).to.equal("method not allowed");
         });
     });
+
+    it("Returns POST /api/users with status of 201 when passed a valid user object to add to the database", () => {
+      const newUser = {
+        username: "olegunnar",
+        avatar_url: "",
+        name: "jimsmith"
+      };
+      return request(app)
+        .post("/api/users")
+        .send(newUser)
+        .expect(201)
+        .then(res => {
+          expect(res.body.user).to.deep.equal(newUser);
+        });
+    });
   });
 
   describe("/articles", () => {

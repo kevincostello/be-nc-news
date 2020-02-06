@@ -1,5 +1,5 @@
 const usersRouter = require("express").Router();
-const { sendUser } = require("../controllers/user-controller");
+const { sendUser, sendNewUser } = require("../controllers/user-controller");
 const { send405Error } = require("../errors/index");
 
 console.log("usersRouter");
@@ -11,6 +11,7 @@ usersRouter
 usersRouter
   .route("/")
   .get(sendUser)
+  .post(sendNewUser)
   .all(send405Error);
 
 module.exports = usersRouter;

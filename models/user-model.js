@@ -17,3 +17,14 @@ exports.selectUser = user => {
       }
     });
 };
+
+exports.insertNewUser = body => {
+  console.log("im in the models - insert new user");
+  return db
+    .from("users")
+    .insert(body)
+    .returning("*")
+    .then(result => {
+      return result[0];
+    });
+};
