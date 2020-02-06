@@ -1,4 +1,8 @@
-const { selectUser, insertNewUser } = require("../models/user-model.js");
+const {
+  selectUser,
+  insertNewUser,
+  selectAllUsers
+} = require("../models/user-model.js");
 
 const sendUser = (req, res, next) => {
   console.log("In controller");
@@ -22,4 +26,15 @@ const sendNewUser = (req, res, next) => {
     });
 };
 
-module.exports = { sendUser, sendNewUser };
+const sendAllUsers = (req, res, next) => {
+  console.log("In controller");
+  selectAllUsers()
+    .then(users => {
+      res.status(200).send({ users });
+    })
+    .catch(err => {
+      next(err);
+    });
+};
+
+module.exports = { sendUser, sendNewUser, sendAllUsers };

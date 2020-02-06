@@ -182,6 +182,32 @@ describe("/api", () => {
           expect(res.body.user).to.deep.equal(newUser);
         });
     });
+
+    it("Returns GET /api/users with status of 200 and returns an array of user objects", () => {
+      return request(app)
+        .get("/api/users")
+        .expect(200)
+        .then(res => {
+          expect(res.body.users.length).to.equal(4);
+          expect(res.body.users[0]).to.have.keys([
+            "username",
+            "avatar_url",
+            "name"
+          ]);
+          expect(res.body).to.be.an("object");
+          expect(res.body.users).to.be.an("array");
+          expect(res.body.users[0]).to.be.an("object");
+        });
+    });
+
+    it("Returns GET /api/userrs with status of 404 as passed a misspelt path", () => {
+      return request(app)
+        .get("/api/userrs")
+        .expect(404)
+        .then(res => {
+          expect(res.body.msg).to.equal("Path is misspelt");
+        });
+    });
   });
 
   describe("/articles", () => {

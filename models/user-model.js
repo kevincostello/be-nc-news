@@ -28,3 +28,14 @@ exports.insertNewUser = body => {
       return result[0];
     });
 };
+
+exports.selectAllUsers = () => {
+  console.log("im in the models - select all users");
+  return db
+    .select("*")
+    .from("users")
+    .then(result => {
+      console.log("the users are: ", result);
+      return result;
+    });
+};
