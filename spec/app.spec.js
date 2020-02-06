@@ -409,7 +409,7 @@ describe("/api", () => {
           });
       });
 
-      it("GETS a status code of 200 and returns an array of sorted comments by the created_at for a given article id when valid queries are passed in the request with a valid column as the sort by column and order by value is asc", () => {
+      it.only("GETS a status code of 200 and returns an array of sorted comments by the created_at for a given article id when valid queries are passed in the request with a valid column as the sort by column and order by value is asc", () => {
         return request(app)
           .get("/api/articles/1/comments?sort_by=author&order=asc")
           .expect(200)
@@ -417,7 +417,7 @@ describe("/api", () => {
             expect(res.body).to.be.an("object");
             expect(res.body.comments).to.be.an("array");
             expect(res.body.comments[0]).to.be.an("object");
-            expect(res.body.comments.length).to.equal(13);
+            expect(res.body.comments.length).to.equal(10);
             expect(res.body.comments[0]).to.have.keys([
               "article_id",
               "comment_id",
@@ -472,9 +472,18 @@ describe("/api", () => {
             expect(res.body.msg).to.equal("method not allowed");
           });
       });
+
+      it.only("GETS with status of 200 and returns an array of comments from the page and limit specified in the query", () => {
+        return request(app)
+          .get("/api/articles/1/comments?limit=2&&p=3")
+          .expect(200)
+          .then(res => {
+            expect(res.body.comments.length).to.equal(2);
+          });
+      });
     }); // end of /api/articles/:article_id/comments describe block
 
-    it.only("GETS a status code of 200 when passed a valid path to /api/articles", () => {
+    it("GETS a status code of 200 when passed a valid path to /api/articles", () => {
       return request(app)
         .get("/api/articles")
         .expect(200)
@@ -693,7 +702,7 @@ describe("/api", () => {
         });
     });
 
-    it.only("RETURNS GET /api/articles with status of 200 and returns a certain page and number of rows when passed page number and limit", () => {
+    it("RETURNS GET /api/articles with status of 200 and returns a certain page and number of rows when passed page number and limit", () => {
       return request(app)
         .get("/api/articles?limit=5&&p=3")
         .expect(200)

@@ -63,7 +63,7 @@ const postArticleWithComment = (body, params) => {
 };
 
 const selectCommentsByArticleId = (params, query) => {
-  console.log("In selectCommentsByArticleId");
+  console.log("In selectCommentsByArticleId", query);
   // Accepts queries containing:
   // sort_by -> any valid column (default to created_at)
   // order -> asc or desc (default to desc)
@@ -89,7 +89,9 @@ const selectCommentsByArticleId = (params, query) => {
         )
         .from("comments")
         .where("comments.article_id", params.article_id)
-        .orderBy(query.sort_by || "comments.created_at", query.order || "desc");
+        .orderBy(query.sort_by || "comments.created_at", query.order || "desc")
+        .limit(query.limit || 10)
+        .offset((query.p - 1) * (query.limit || 10));
     })
     .then(result => {
       if (result.length === 0) {
@@ -104,6 +106,7 @@ const selectCommentsByArticleId = (params, query) => {
           msg: "Invalid order value"
         });
       } else {
+        console.log("the result is: ", result);
         return result;
       }
     });
