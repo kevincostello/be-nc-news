@@ -1,4 +1,4 @@
-const { selectTopics } = require("../models/topic-model.js");
+const { selectTopics, insertNewTopic } = require("../models/topic-model.js");
 
 const sendTopics = (req, res, next) => {
   console.log("In controller");
@@ -12,4 +12,11 @@ const sendTopics = (req, res, next) => {
     });
 };
 
-module.exports = { sendTopics };
+const sendNewTopic = (req, res, next) => {
+  console.log("In controller");
+  insertNewTopic(req.body).then(topic => {
+    res.status(201).send({ topic });
+  });
+};
+
+module.exports = { sendTopics, sendNewTopic };

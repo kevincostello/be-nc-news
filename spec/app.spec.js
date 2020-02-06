@@ -64,6 +64,19 @@ describe("/api", () => {
           expect(res.body.msg).to.equal("method not allowed");
         });
     });
+
+    it.only("RETURNS POST /api/topics/:topic_id with status 200 and adds a new topic to the database when passed a new topic as a parameter", () => {
+      return request(app)
+        .post("/api/topics")
+        .send({ slug: "footy", description: "The beautiful game" })
+        .expect(201)
+        .then(res => {
+          expect(res.body.topic).to.deep.equal({
+            slug: "footy",
+            description: "The beautiful game"
+          });
+        });
+    });
   });
 
   describe("/users", () => {

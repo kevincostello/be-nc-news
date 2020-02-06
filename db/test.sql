@@ -74,9 +74,9 @@ SELECT * FROM topics;
 
 -- SELECT topic, author FROM articles;
 
-SELECT article_id, topic, author, created_at
-FROM articles
-ORDER BY created_at ASC
+-- SELECT article_id, topic, author, created_at
+-- FROM articles
+-- ORDER BY created_at ASC
 
-;
+-- ;
 
