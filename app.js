@@ -15,7 +15,7 @@ app.use("/*", (req, res, next) => {
 });
 
 app.use(function(err, req, res, next) {
-  console.log("In 4 parameter error handler", err);
+  console.log("In 4 parameter error handler");
   if (err.code === "22P02") {
     if (req.body.hasOwnProperty("inc_votes")) {
       res

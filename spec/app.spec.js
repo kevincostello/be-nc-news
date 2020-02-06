@@ -832,7 +832,7 @@ describe("/api", () => {
         });
     });
 
-    it.only("Returns POST /api/articles with status of 201 when passed a valid article object and returns the posted article", () => {
+    it("Returns POST /api/articles with status of 201 when passed a valid article object and returns the posted article", () => {
       const newArticle = {
         title: "This is a new article",
         body: "This is the body of the new article",
@@ -843,6 +843,14 @@ describe("/api", () => {
         .post("/api/articles")
         .send(newArticle)
         .expect(201);
+    });
+
+    it("Returns POST /api/articles with status of 400 when passed an empty body", () => {
+      const newArticle = {};
+      return request(app)
+        .post("/api/articles")
+        .send(newArticle)
+        .expect(400);
     });
   });
 
