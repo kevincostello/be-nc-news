@@ -14,9 +14,13 @@ const sendTopics = (req, res, next) => {
 
 const sendNewTopic = (req, res, next) => {
   console.log("In controller");
-  insertNewTopic(req.body).then(topic => {
-    res.status(201).send({ topic });
-  });
+  insertNewTopic(req.body)
+    .then(topic => {
+      res.status(201).send({ topic });
+    })
+    .catch(err => {
+      next(err);
+    });
 };
 
 module.exports = { sendTopics, sendNewTopic };

@@ -65,7 +65,7 @@ describe("/api", () => {
         });
     });
 
-    it.only("RETURNS POST /api/topics/:topic_id with status 200 and adds a new topic to the database when passed a new topic as a parameter", () => {
+    it("RETURNS POST /api/topics/:topic_id with status 200 and adds a new topic to the database when passed a new topic as a parameter", () => {
       return request(app)
         .post("/api/topics")
         .send({ slug: "footy", description: "The beautiful game" })
@@ -75,6 +75,52 @@ describe("/api", () => {
             slug: "footy",
             description: "The beautiful game"
           });
+        });
+    });
+
+    it("POSTS a comment with status code of 400 when passed an object not containing any keys", () => {
+      return request(app)
+        .post("/api/topics")
+        .send({})
+        .expect(400)
+        .then(res => {
+          expect(res.body.msg).to.equal(
+            "Required keys are not supplied in POST"
+          );
+        });
+    });
+
+    it("POSTS a comment with status code of 400 when passed an object not containing the slug", () => {
+      return request(app)
+        .post("/api/topics")
+        .send({ description: "This is a description" })
+        .expect(400)
+        .then(res => {
+          expect(res.body.msg).to.equal(
+            "Required keys are not supplied in POST"
+          );
+        });
+    });
+
+    it("POSTS a comment with status code of 400 when passed an object not containing the description", () => {
+      return request(app)
+        .post("/api/topics")
+        .send({ slug: "this is a slug" })
+        .expect(400)
+        .then(res => {
+          expect(res.body.msg).to.equal(
+            "Required keys are not supplied in POST"
+          );
+        });
+    });
+
+    it("POSTS with return of 404 error when passed a misspelt path", () => {
+      return request(app)
+        .post("/api/topicss")
+        .send({ slug: "this is a slug" })
+        .expect(404)
+        .then(res => {
+          expect(res.body.msg).to.equal("Path is misspelt");
         });
     });
   });
