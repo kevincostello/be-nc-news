@@ -706,6 +706,15 @@ describe("/api", () => {
           });
       });
 
+      it("GETS with status of 400 for invalid query", () => {
+        return request(app)
+          .get("/api/articles/1/comments?limit=zz")
+          .expect(400)
+          .then(res => {
+            expect(res.body.msg).to.equal("Invalid limit or p value");
+          });
+      });
+
       it("GETS with status of 200 when passed valid p query and no limit vlaue", () => {
         return request(app)
           .get("/api/articles/1/comments?p=1")

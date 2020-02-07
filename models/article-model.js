@@ -79,6 +79,11 @@ const selectCommentsByArticleId = (params, query) => {
         status: 400,
         msg: "Invalid limit or p value"
       });
+    } else if (query.limit && isNaN(limitNumeric)) {
+      return Promise.reject({
+        status: 400,
+        msg: "Invalid limit or p value"
+      });
     } else if (
       !query.limit ||
       !query.p ||
