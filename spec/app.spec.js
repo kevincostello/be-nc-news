@@ -505,6 +505,29 @@ describe("/api", () => {
           });
       });
 
+      it("GETS a status code of 200 and returns an array of sorted comments by the created_at for a given article id when valid queries are passed in the request with created_at as the sort by column and desc as the order by value", () => {
+        return request(app)
+          .get("/api/articles/1/comments")
+          .expect(200)
+          .then(res => {
+            expect(res.body).to.be.an("object");
+            expect(res.body.comments).to.be.an("array");
+            expect(res.body.comments[0]).to.be.an("object");
+            expect(res.body.comments.length).to.equal(10);
+            expect(res.body.comments[0]).to.have.keys([
+              "article_id",
+              "comment_id",
+              "body",
+              "votes",
+              "author",
+              "created_at"
+            ]);
+            expect(res.body.comments).to.be.sortedBy("created_at", {
+              descending: true
+            });
+          });
+      });
+
       it("GETS a status code of 200 and returns an array of sorted comments by the created_at for a given article id when valid queries are passed in the request with a valid column as the sort by column and default order by value", () => {
         return request(app)
           .get("/api/articles/1/comments?sort_by=author")
@@ -662,6 +685,33 @@ describe("/api", () => {
           .expect(400)
           .then(res => {
             expect(res.body.msg).to.equal("Invalid limit or p value");
+          });
+      });
+
+      it("GETS with status of 400 for invalid query", () => {
+        return request(app)
+          .get("/api/articles/1/comments?limit=10&&p=zz")
+          .expect(400)
+          .then(res => {
+            expect(res.body.msg).to.equal("Invalid limit or p value");
+          });
+      });
+
+      it("GETS with status of 400 for invalid query", () => {
+        return request(app)
+          .get("/api/articles/1/comments?p=zz")
+          .expect(400)
+          .then(res => {
+            expect(res.body.msg).to.equal("Invalid limit or p value");
+          });
+      });
+
+      it("GETS with status of 200 when passed valid p query and no limit vlaue", () => {
+        return request(app)
+          .get("/api/articles/1/comments?p=1")
+          .expect(200)
+          .then(res => {
+            expect(res.body.comments.length).to.equal(10);
           });
       });
     }); // end of /api/articles/:article_id/comments describe block

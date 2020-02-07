@@ -82,8 +82,12 @@
 
 -- SELECT * FROM users;
 
-SELECT count(article_id) AS total_count
-  FROM articles
-  ;
+-- SELECT count(article_id) AS total_count
+--   FROM articles
+--   ;
 
+SELECT article_id, count(comment_id) AS count 
+FROM comments
+GROUP BY article_id
+;
 

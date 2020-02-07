@@ -65,6 +65,7 @@ const selectCommentsByArticleId = (params, query) => {
 
   const limitNumeric = Number(query.limit);
   const pNumeric = Number(query.p);
+  const calculatePage = (pNumeric - 1) * 10;
 
   // check if query is valid
   const checkQuery = () => {
@@ -73,8 +74,14 @@ const selectCommentsByArticleId = (params, query) => {
         status: 400,
         msg: "Invalid limit or p value"
       });
+    } else if (query.p && isNaN(pNumeric)) {
+      return Promise.reject({
+        status: 400,
+        msg: "Invalid limit or p value"
+      });
     } else if (
-      (!query.limit && !query.p) ||
+      !query.limit ||
+      !query.p ||
       (Number.isInteger(limitNumeric) && Number.isInteger(pNumeric))
     ) {
       return Promise.resolve();
@@ -112,13 +119,20 @@ const selectCommentsByArticleId = (params, query) => {
             query.order || "desc"
           )
           .modify(queryBuilder => {
+            // limit and p are present and numeric values
             if (query.limit && limitNumeric && query.p && pNumeric) {
               queryBuilder.limit(query.limit || 10);
               queryBuilder.offset((query.p - 1) * (query.limit || 10));
-            } else if (!query.limit || !query.p) {
+            } else if (!query.limit && query.p) {
+              // p is present but limit is not
               queryBuilder.limit(10);
-            } else {
-              queryBuilder.limit(0);
+              queryBuilder.offset(calculatePage);
+            } else if (query.limit && !query.p) {
+              // limit is present but p is not
+              queryBuilder.limit(query.limit);
+            } else if (!query.limit && !query.p) {
+              // limit and p are not present
+              queryBuilder.limit(10);
             }
           });
       })
