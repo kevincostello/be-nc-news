@@ -183,6 +183,66 @@ describe("/api", () => {
         });
     });
 
+    it("POSTS a user with status code of 400 when passed an object not containing any keys", () => {
+      const newUser = {};
+      return request(app)
+        .post("/api/users")
+        .send(newUser)
+        .expect(400)
+        .then(res => {
+          expect(res.body.msg).to.equal(
+            "Required keys are not supplied in POST"
+          );
+        });
+    });
+
+    it("POSTS a user with status code of 400 when passed an object not containing the username", () => {
+      const newUser = {
+        avatar_url: "",
+        name: "jimsmith"
+      };
+      return request(app)
+        .post("/api/users")
+        .send(newUser)
+        .expect(400)
+        .then(res => {
+          expect(res.body.msg).to.equal(
+            "Required keys are not supplied in POST"
+          );
+        });
+    });
+
+    it("POSTS a user with status code of 400 when passed an object not containing the name", () => {
+      const newUser = {
+        username: "olegunnar",
+        avatar_url: ""
+      };
+      return request(app)
+        .post("/api/users")
+        .send(newUser)
+        .expect(400)
+        .then(res => {
+          expect(res.body.msg).to.equal(
+            "Required keys are not supplied in POST"
+          );
+        });
+    });
+
+    it("POSTS with return of 404 error when passed a misspelt path", () => {
+      const newUser = {
+        username: "olegunnar",
+        avatar_url: "",
+        name: "jimsmith"
+      };
+      return request(app)
+        .post("/api/uuseers")
+        .send(newUser)
+        .expect(404)
+        .then(res => {
+          expect(res.body.msg).to.equal("Path is misspelt");
+        });
+    });
+
     it("Returns GET /api/users with status of 200 and returns an array of user objects", () => {
       return request(app)
         .get("/api/users")
@@ -854,42 +914,40 @@ describe("/api", () => {
         .expect(400);
     });
 
-    "POSTS a article with status code of 400 when passed an object not containing the title",
-      () => {
-        const newArticle = {
-          body: "This is the body of the new article",
-          topic: "cats",
-          author: "lurker",
-          created_at: "2020-02-07T07:56:06.017Z"
-        };
-        return request(app)
-          .post("/api/articles")
-          .send(newArticle)
-          .expect(400)
-          .then(res => {
-            expect(res.body.msg).to.equal(
-              "Required keys are not supplied in POST"
-            );
-          });
+    it("POSTS a article with status code of 400 when passed an object not containing the title", () => {
+      const newArticle = {
+        body: "This is the body of the new article",
+        topic: "cats",
+        author: "lurker",
+        created_at: "2020-02-07T07:56:06.017Z"
       };
+      return request(app)
+        .post("/api/articles")
+        .send(newArticle)
+        .expect(400)
+        .then(res => {
+          expect(res.body.msg).to.equal(
+            "Required keys are not supplied in POST"
+          );
+        });
+    });
 
-    "POSTS with return of 404 error when passed a misspelt path",
-      () => {
-        const newArticle = {
-          title: "This is a new article",
-          body: "This is the body of the new article",
-          topic: "cats",
-          author: "lurker",
-          created_at: "2020-02-07T07:56:06.017Z"
-        };
-        return request(app)
-          .post("/api/arrtticles")
-          .send(newArticle)
-          .expect(404)
-          .then(res => {
-            expect(res.body.msg).to.equal("Path is misspelt");
-          });
+    it("POSTS with return of 404 error when passed a misspelt path", () => {
+      const newArticle = {
+        title: "This is a new article",
+        body: "This is the body of the new article",
+        topic: "cats",
+        author: "lurker",
+        created_at: "2020-02-07T07:56:06.017Z"
       };
+      return request(app)
+        .post("/api/arrtticles")
+        .send(newArticle)
+        .expect(404)
+        .then(res => {
+          expect(res.body.msg).to.equal("Path is misspelt");
+        });
+    });
   });
 
   describe("/comments", () => {
