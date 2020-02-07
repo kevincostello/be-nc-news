@@ -346,13 +346,6 @@ describe("/api", () => {
               "created_at",
               "body"
             ]);
-            // expect(res.body.comment).to.deep.equal({
-            //   comment_id: 19,
-            //   author: "butter_bridge",
-            //   article_id: 1,
-            //   votes: 0,
-            //   body: "This is a comment"
-            // });
             expect(res.body.comment.comment_id).to.equal(19);
             expect(res.body.comment.author).to.equal("butter_bridge");
             expect(res.body.comment.article_id).to.equal(1);
@@ -837,12 +830,20 @@ describe("/api", () => {
         title: "This is a new article",
         body: "This is the body of the new article",
         topic: "cats",
-        author: "lurker"
+        author: "lurker",
+        created_at: "2020-02-07T07:56:06.017Z"
       };
       return request(app)
         .post("/api/articles")
         .send(newArticle)
-        .expect(201);
+        .expect(201)
+        .then(res => {
+          expect(res.body.article).to.deep.equal({
+            ...newArticle,
+            article_id: 13,
+            votes: 0
+          });
+        });
     });
 
     it("Returns POST /api/articles with status of 400 when passed an empty body", () => {
@@ -852,6 +853,43 @@ describe("/api", () => {
         .send(newArticle)
         .expect(400);
     });
+
+    "POSTS a article with status code of 400 when passed an object not containing the title",
+      () => {
+        const newArticle = {
+          body: "This is the body of the new article",
+          topic: "cats",
+          author: "lurker",
+          created_at: "2020-02-07T07:56:06.017Z"
+        };
+        return request(app)
+          .post("/api/articles")
+          .send(newArticle)
+          .expect(400)
+          .then(res => {
+            expect(res.body.msg).to.equal(
+              "Required keys are not supplied in POST"
+            );
+          });
+      };
+
+    "POSTS with return of 404 error when passed a misspelt path",
+      () => {
+        const newArticle = {
+          title: "This is a new article",
+          body: "This is the body of the new article",
+          topic: "cats",
+          author: "lurker",
+          created_at: "2020-02-07T07:56:06.017Z"
+        };
+        return request(app)
+          .post("/api/arrtticles")
+          .send(newArticle)
+          .expect(404)
+          .then(res => {
+            expect(res.body.msg).to.equal("Path is misspelt");
+          });
+      };
   });
 
   describe("/comments", () => {

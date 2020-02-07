@@ -80,7 +80,7 @@ const sendNewArticle = (req, res, next) => {
   console.log("In sendNewArticle", req.body);
   insertNewArticle(req.body)
     .then(article => {
-      res.status(201).send();
+      res.status(201).send({ article });
     })
     .catch(err => {
       next(err);
