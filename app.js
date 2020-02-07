@@ -10,12 +10,10 @@ app.get("/", function(req, res, next) {
 
 app.use("/api", apiRouter);
 app.use("/*", (req, res, next) => {
-  console.log("in 3 parameter 404 error log");
   res.status(404).send({ status: 404, msg: "Path is misspelt" });
 });
 
 app.use(function(err, req, res, next) {
-  console.log("In 4 parameter error handler");
   if (err.code === "22P02") {
     if (req.body.hasOwnProperty("inc_votes")) {
       res
@@ -31,7 +29,6 @@ app.use(function(err, req, res, next) {
   } else if (err.code === "23502") {
     res.status(400).send({ msg: "Required keys are not supplied in POST" });
   } else {
-    console.log("in default 4 parameter error handler");
     res.status(err.status).send(err);
   }
 });

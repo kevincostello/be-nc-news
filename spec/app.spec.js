@@ -270,7 +270,7 @@ describe("/api", () => {
     });
   });
 
-  describe("/articles", () => {
+  describe.only("/articles", () => {
     it("GETS a status code of 200 when passed a valid article id", () => {
       return request(app)
         .get("/api/articles/1")

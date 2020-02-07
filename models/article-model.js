@@ -196,7 +196,6 @@ const selectAllArticles = query => {
         .leftJoin("comments", "articles.article_id", "=", "comments.article_id")
         .groupBy("articles.article_id")
         .orderBy(query.sort_by || "articles.created_at", query.order || "desc")
-        .offset((query.p - 1) * query.limit)
         .modify(sqlQuery => {
           // need to filter for both query.author and query.topic if passed both in query
           if (query.author) {
@@ -207,9 +206,9 @@ const selectAllArticles = query => {
           }
           if (
             query.limit &&
-            Number.isInteger(query.limit) &&
+            Number.isInteger(Number(query.limit)) &&
             query.p &&
-            Number.isInteger(query.p)
+            Number.isInteger(Number(query.p))
           ) {
             sqlQuery.limit(query.limit || 10);
             sqlQuery.offset((query.p - 1) * (query.limit || 10));
