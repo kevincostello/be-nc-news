@@ -14,7 +14,6 @@ usersRouter
   .all(send405Error);
 usersRouter
   .route("/")
-  // .get(sendUser)
   .get(sendAllUsers)
   .post(sendNewUser)
   .all(send405Error);

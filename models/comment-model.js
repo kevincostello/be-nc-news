@@ -1,8 +1,6 @@
 const db = require("../db/connection");
 
 const patchComment = (param, body) => {
-  console.log("im in the models");
-
   // function to check if body exists, return Promise.reject() if it doesn't
   const bodyVotesExists = () => {
     if (body.inc_votes === undefined && Object.keys(body).length > 0) {
@@ -34,7 +32,6 @@ const patchComment = (param, body) => {
 };
 
 const deleteComment = param => {
-  console.log("In delete comment model");
   return db
     .from("comments")
     .where("comment_id", param.comment_id)

@@ -655,6 +655,15 @@ describe("/api", () => {
             expect(res.body.comments.length).to.equal(2);
           });
       });
+
+      it("GETS with status of 400 for invalid query", () => {
+        return request(app)
+          .get("/api/articles/1/comments?limit=aa&&p=3")
+          .expect(400)
+          .then(res => {
+            expect(res.body.msg).to.equal("Invalid limit or p value");
+          });
+      });
     }); // end of /api/articles/:article_id/comments describe block
 
     it("GETS a status code of 200 when passed a valid path to /api/articles", () => {
@@ -664,7 +673,7 @@ describe("/api", () => {
         .then(res => {
           expect(res.body.articles).to.be.an("array");
           expect(res.body.articles[0]).to.be.an("object");
-          expect(res.body.articles[0]).to.have.keys([
+          expect(res.body.articles[0]).to.contain.keys([
             "author",
             "title",
             "article_id",
@@ -731,7 +740,7 @@ describe("/api", () => {
 
     it("GETS a status code of 200 and returns an array of sorted articles by the title fwhen valid queries are passed in the request with a valid column as the sort by column and order by value is asc", () => {
       return request(app)
-        .get("/api/articles/?sort_by=title&order=asc")
+        .get("/api/articles?sort_by=title&order=asc")
         .expect(200)
         .then(res => {
           expect(res.body.articles).to.be.sortedBy("title", {
@@ -743,7 +752,7 @@ describe("/api", () => {
 
     it("GETS a status code of 200 and returns an array of sorted articles by the title filtered by author when passedwhen valid queries are passed in the request with a valid column as the sort by column and order by value is asc and a valid value for author", () => {
       return request(app)
-        .get("/api/articles/?sort_by=title&order=asc&author=butter_bridge")
+        .get("/api/articles?sort_by=title&order=asc&author=butter_bridge")
         .expect(200)
         .then(res => {
           expect(res.body.articles).to.be.sortedBy("title", {
@@ -758,7 +767,7 @@ describe("/api", () => {
     it("GETS a status code of 200 and returns an array of sorted articles by the title filtered by topic when passed valid queries are passed in the request with a valid column as the sort by column and order by value is asc and a valid value for topic", () => {
       return request(app)
         .get(
-          "/api/articles/?sort_by=title&order=asc&topic=mitch&author=butter_bridge"
+          "/api/articles?sort_by=title&order=asc&topic=mitch&author=butter_bridge"
         )
         .expect(200)
         .then(res => {
@@ -773,7 +782,7 @@ describe("/api", () => {
 
     it("GETS a status code of 200 and returns an array of sorted articles by the title filtered by topic but not filterd by author when passed valid queries are passed in the request with a valid column as the sort by column and order by value is asc and a valid value for topic", () => {
       return request(app)
-        .get("/api/articles/?sort_by=title&order=asc&topic=mitch")
+        .get("/api/articles?sort_by=title&order=asc&topic=mitch")
         .expect(200)
         .then(res => {
           expect(res.body.articles).to.be.sortedBy("title", {
@@ -789,7 +798,7 @@ describe("/api", () => {
 
     it("GETS a status code of 200 and returns an array of sorted articles by the title filtered by topic but not filterd by topic when passed valid queries are passed in the request with a valid column as the sort by column and order by value is asc and a valid value for author", () => {
       return request(app)
-        .get("/api/articles/?sort_by=title&order=asc&author=rogersop")
+        .get("/api/articles?sort_by=title&order=asc&author=rogersop")
         .expect(200)
         .then(res => {
           expect(res.body.articles).to.be.sortedBy("title", {
@@ -804,7 +813,7 @@ describe("/api", () => {
     // I need to recheck all of these
     it("GETS a status code of 404 when passed an author name not in the database", () => {
       return request(app)
-        .get("/api/articles/?author=rogersopp")
+        .get("/api/articles?author=rogersopp")
         .expect(404)
         .then(res => {
           expect(res.body.msg).to.equal("The username does not exist");
@@ -813,7 +822,7 @@ describe("/api", () => {
 
     it("GETS a status code of 404 when passed a title not in the database", () => {
       return request(app)
-        .get("/api/articles/?topic=gobbledygook")
+        .get("/api/articles?topic=gobbledygook")
         .expect(404)
         .then(res => {
           expect(res.body.msg).to.equal(
@@ -824,7 +833,7 @@ describe("/api", () => {
 
     it("GETS a status code of 404 when passed an author and a title not in the database", () => {
       return request(app)
-        .get("/api/articles/?author=noauthor&topic=gobbledygook")
+        .get("/api/articles?author=noauthor&topic=gobbledygook")
         .expect(404)
         .then(res => {
           expect(res.body.msg).to.equal("The username does not exist");
@@ -833,7 +842,7 @@ describe("/api", () => {
 
     it("GETS a status code of 400 when passed sort_by column not on the database", () => {
       return request(app)
-        .get("/api/articles/?sort_by=gobbledygook")
+        .get("/api/articles?sort_by=gobbledygook")
         .expect(400)
         .then(res => {
           expect(res.body.msg).to.equal("Invalid column for sort_by");
@@ -842,7 +851,7 @@ describe("/api", () => {
 
     it("GETS a status code of 400 when passed invalid order by value", () => {
       return request(app)
-        .get("/api/articles/?order=gobbledygook")
+        .get("/api/articles?order=gobbledygook")
         .expect(400)
         .then(res => {
           expect(res.body.msg).to.equal("Invalid order value");
@@ -851,7 +860,7 @@ describe("/api", () => {
 
     it("GET a status code of 200 an empty array when passed a valid author who has no articles", () => {
       return request(app)
-        .get("/api/articles/?author=lurker")
+        .get("/api/articles?author=lurker")
         .expect(200)
         .then(res => {
           expect(res.body).to.be.an("object");
@@ -862,7 +871,7 @@ describe("/api", () => {
 
     it("GET a status code of 404, author name not in the database", () => {
       return request(app)
-        .get("/api/articles/?author=lurkerss")
+        .get("/api/articles?author=lurkerss")
         .expect(404);
     });
     // end of I need to recheck all of these
@@ -882,6 +891,16 @@ describe("/api", () => {
         .expect(200)
         .then(res => {
           expect(res.body.articles.length).to.equal(2);
+        });
+    });
+
+    it("GETS /api/articles with a total_count property representing the total number of articles", () => {
+      return request(app)
+        .get("/api/articles")
+        .expect(200)
+        .then(res => {
+          expect(res.body.articles[0].total_count).to.equal("12");
+          expect(res.body.articles[0]).to.contain.key("total_count");
         });
     });
 

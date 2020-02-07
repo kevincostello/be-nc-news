@@ -9,7 +9,6 @@ const {
 } = require("../models/article-model.js");
 
 const sendArticle = (req, res, next) => {
-  console.log("In controller");
   selectArticle(req.params)
     .then(article => {
       res.status(200).send({ article });
@@ -20,7 +19,6 @@ const sendArticle = (req, res, next) => {
 };
 
 const sendArticleToBePatched = (req, res, next) => {
-  console.log("In controller");
   patchArticle(req.body, req.params)
     .then(article => {
       res.status(200).send({ article });
@@ -31,7 +29,6 @@ const sendArticleToBePatched = (req, res, next) => {
 };
 
 const sendArticleWithComment = (req, res, next) => {
-  console.log("In controller comment");
   postArticleWithComment(req.body, req.params)
     .then(comment => {
       res
@@ -44,7 +41,6 @@ const sendArticleWithComment = (req, res, next) => {
 };
 
 const sendCommentsByArticleId = (req, res, next) => {
-  console.log("In controller get comments by article id");
   selectCommentsByArticleId(req.params, req.query)
     .then(comments => {
       res.status(200).send({ comments });
@@ -55,7 +51,6 @@ const sendCommentsByArticleId = (req, res, next) => {
 };
 
 const sendAllArticles = (req, res, next) => {
-  console.log("In sendAllArticles");
   selectAllArticles(req.query)
     .then(articles => {
       res.status(200).send({ articles });
@@ -66,7 +61,6 @@ const sendAllArticles = (req, res, next) => {
 };
 
 const sendArticleToBeRemoved = (req, res, next) => {
-  console.log("In sendArticleToBeRemoved");
   deleteArticle(req.params)
     .then(article => {
       res.status(204).send();
@@ -77,7 +71,6 @@ const sendArticleToBeRemoved = (req, res, next) => {
 };
 
 const sendNewArticle = (req, res, next) => {
-  console.log("In sendNewArticle", req.body);
   insertNewArticle(req.body)
     .then(article => {
       res.status(201).send({ article });

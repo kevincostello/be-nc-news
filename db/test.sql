@@ -80,5 +80,10 @@
 
 -- ;
 
-SELECT * FROM users;
+-- SELECT * FROM users;
+
+SELECT count(article_id) AS total_count
+  FROM articles
+  ;
+
 

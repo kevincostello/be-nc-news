@@ -4,7 +4,6 @@ const { selectUser } = require("../models/user-model");
 const { selectTopics } = require("../models/topic-model");
 
 const selectArticle = article => {
-  console.log("im in the models");
   return db
     .select("articles.*")
     .from("articles")
@@ -32,7 +31,6 @@ const selectArticle = article => {
 };
 
 const patchArticle = (body, params) => {
-  console.log("im in the models");
   return db
     .from("articles")
     .where("articles.article_id", params.article_id)
@@ -46,7 +44,6 @@ const patchArticle = (body, params) => {
 };
 
 const postArticleWithComment = (body, params) => {
-  console.log("im in the models - post");
   // votes and created_at will be given default values so they do not need to be inserted
   const toInsert = {
     author: body.username,
@@ -63,57 +60,94 @@ const postArticleWithComment = (body, params) => {
 };
 
 const selectCommentsByArticleId = (params, query) => {
-  console.log("In selectCommentsByArticleId", query);
   // Accepts queries containing:
   // sort_by -> any valid column (default to created_at)
   // order -> asc or desc (default to desc)
 
+  const limitNumeric = Number(query.limit);
+  const pNumeric = Number(query.p);
+
+  // check if query is valid
+  const checkQuery = () => {
+    if (query.limit && query.p && (isNaN(limitNumeric) || isNaN(pNumeric))) {
+      return Promise.reject({
+        status: 400,
+        msg: "Invalid limit or p value"
+      });
+    } else if (
+      (!query.limit && !query.p) ||
+      (Number.isInteger(limitNumeric) && Number.isInteger(pNumeric))
+    ) {
+      return Promise.resolve();
+    }
+  };
+
   // (1) - First check if the article_id exists in the database
   const doesArticleExist = selectArticle({ article_id: params.article_id });
 
-  return doesArticleExist
-    .then(articleExists => {
-      if (articleExists.length > 0) {
-        return articleExists;
-      }
-    })
-    .then(checkCommentsExist => {
-      return db
-        .select(
-          "comments.comment_id",
-          "comments.author",
-          "comments.article_id",
-          "comments.votes",
-          "comments.created_at",
-          "comments.body"
-        )
-        .from("comments")
-        .where("comments.article_id", params.article_id)
-        .orderBy(query.sort_by || "comments.created_at", query.order || "desc")
-        .limit(query.limit || 10)
-        .offset((query.p - 1) * (query.limit || 10));
-    })
-    .then(result => {
-      if (result.length === 0) {
-        return result;
-      } else if (
-        query.order !== undefined &&
-        query.order !== "asc" &&
-        query.order !== "desc"
-      ) {
-        return Promise.reject({
-          status: 400,
-          msg: "Invalid order value"
-        });
-      } else {
-        console.log("the result is: ", result);
-        return result;
-      }
-    });
+  return (
+    checkQuery()
+      .then(moveOn => {
+        return doesArticleExist;
+      })
+      // return doesArticleExist
+      .then(articleExists => {
+        if (articleExists.length > 0) {
+          return articleExists;
+        }
+      })
+      .then(checkCommentsExist => {
+        return db
+          .select(
+            "comments.comment_id",
+            "comments.author",
+            "comments.article_id",
+            "comments.votes",
+            "comments.created_at",
+            "comments.body"
+          )
+          .from("comments")
+          .where("comments.article_id", params.article_id)
+          .orderBy(
+            query.sort_by || "comments.created_at",
+            query.order || "desc"
+          )
+          .modify(queryBuilder => {
+            if (query.limit && limitNumeric && query.p && pNumeric) {
+              queryBuilder.limit(query.limit || 10);
+              queryBuilder.offset((query.p - 1) * (query.limit || 10));
+            } else if (!query.limit || !query.p) {
+              queryBuilder.limit(10);
+            } else {
+              queryBuilder.limit(0);
+            }
+          });
+      })
+      .then(result => {
+        if (result.length === 0) {
+          return result;
+        } else if (
+          query.order !== undefined &&
+          query.order !== "asc" &&
+          query.order !== "desc"
+        ) {
+          return Promise.reject({
+            status: 400,
+            msg: "Invalid order value"
+          });
+        } else {
+          return result;
+        }
+      })
+  );
 };
 
 const selectAllArticles = query => {
-  console.log("In selectAllArticles", query);
+  // add total_count of articles to articles object returned
+  const articleCount = () => {
+    return db.count("article_id as total_count").from("articles");
+  };
+
   const checkUser = () => {
     if (query.author !== undefined) {
       return selectUser({ username: query.author });
@@ -121,7 +155,6 @@ const selectAllArticles = query => {
   };
 
   const selectTopic = topic => {
-    console.log("im in the models");
     return db
       .select("*")
       .from("topics")
@@ -163,7 +196,6 @@ const selectAllArticles = query => {
         .leftJoin("comments", "articles.article_id", "=", "comments.article_id")
         .groupBy("articles.article_id")
         .orderBy(query.sort_by || "articles.created_at", query.order || "desc")
-        .limit(query.limit || 10)
         .offset((query.p - 1) * query.limit)
         .modify(sqlQuery => {
           // need to filter for both query.author and query.topic if passed both in query
@@ -173,10 +205,20 @@ const selectAllArticles = query => {
           if (query.topic) {
             sqlQuery.where("articles.topic", query.topic);
           }
+          if (
+            query.limit &&
+            Number.isInteger(query.limit) &&
+            query.p &&
+            Number.isInteger(query.p)
+          ) {
+            sqlQuery.limit(query.limit || 10);
+            sqlQuery.offset((query.p - 1) * (query.limit || 10));
+          } else if (!query.limit || !query.p) {
+            sqlQuery.limit(10);
+          }
         });
     })
     .then(result => {
-      console.log("the result is: ", result);
       if (
         query.order !== undefined &&
         query.order !== "asc" &&
@@ -195,18 +237,27 @@ const selectAllArticles = query => {
         });
         return numericCountArray;
       }
+    })
+    .then(articlesArray => {
+      const totalCount = articleCount();
+      return Promise.all([totalCount, articlesArray]);
+    })
+    .then(([totalCountResponse, articlesArrayResponse]) => {
+      const articlesWithCount = articlesArrayResponse.map(article => {
+        article.total_count = totalCountResponse[0].total_count;
+        return article;
+      });
+      return articlesWithCount;
     });
 };
 
 const deleteArticle = params => {
-  console.log("In models deleteArticle", params);
   return db
     .from("articles")
     .where("article_id", params.article_id)
     .delete()
     .then(res => {
       if (res > 0) {
-        console.log("res is: ", res);
         return res;
       } else if (res === 0) {
         return Promise.reject({
@@ -218,13 +269,11 @@ const deleteArticle = params => {
 };
 
 const insertNewArticle = body => {
-  console.log("in model - insert new article", body);
   return db
     .from("articles")
     .insert(body)
     .returning("*")
     .then(result => {
-      console.log("The result is: ", result);
       return result[0];
     });
 };
