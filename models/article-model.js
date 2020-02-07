@@ -37,7 +37,6 @@ const patchArticle = (body, params) => {
     .increment("votes", body.inc_votes || 0)
     .returning("*")
     .then(result => {
-      console.log("patching result is completed");
       return result[0];
     });
   // need to use selectArticles model to return the updated article, how can I do this?
@@ -143,6 +142,25 @@ const selectCommentsByArticleId = (params, query) => {
 };
 
 const selectAllArticles = query => {
+  // check if query is valid
+
+  const limitNumeric = Number(query.limit);
+  const pNumeric = Number(query.p);
+
+  const checkQuery = () => {
+    if (query.limit && query.p && (isNaN(limitNumeric) || isNaN(pNumeric))) {
+      return Promise.reject({
+        status: 400,
+        msg: "Invalid limit or p value"
+      });
+    } else if (
+      (!query.limit && !query.p) ||
+      (Number.isInteger(limitNumeric) && Number.isInteger(pNumeric))
+    ) {
+      return Promise.resolve();
+    }
+  };
+
   // add total_count of articles to articles object returned
   const articleCount = () => {
     return db.count("article_id as total_count").from("articles");
@@ -177,7 +195,12 @@ const selectAllArticles = query => {
     } else return Promise.resolve();
   };
 
-  return checkUser()
+  const limitQueryValid = checkQuery();
+
+  return limitQueryValid
+    .then(queryValid => {
+      return checkUser();
+    })
     .then(inAuthor => {
       return checkTopic();
     })

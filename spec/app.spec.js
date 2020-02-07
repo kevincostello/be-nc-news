@@ -270,7 +270,7 @@ describe("/api", () => {
     });
   });
 
-  describe.only("/articles", () => {
+  describe("/articles", () => {
     it("GETS a status code of 200 when passed a valid article id", () => {
       return request(app)
         .get("/api/articles/1")
@@ -891,6 +891,15 @@ describe("/api", () => {
         .expect(200)
         .then(res => {
           expect(res.body.articles.length).to.equal(2);
+        });
+    });
+
+    it("RETURNS GET /api/articles with status of 400 when passed invalid page number", () => {
+      return request(app)
+        .get("/api/articles?limit=5&&p=goobledygook")
+        .expect(400)
+        .then(res => {
+          expect(res.body.msg).to.equal("Invalid limit or p value");
         });
     });
 
