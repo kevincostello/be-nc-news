@@ -174,7 +174,8 @@ const selectAllArticles = query => {
       });
     } else if (
       (!query.limit && !query.p) ||
-      (Number.isInteger(limitNumeric) && Number.isInteger(pNumeric))
+      Number.isInteger(limitNumeric) ||
+      Number.isInteger(pNumeric)
     ) {
       return Promise.resolve();
     }
@@ -254,6 +255,19 @@ const selectAllArticles = query => {
           ) {
             sqlQuery.limit(query.limit || 10);
             sqlQuery.offset((query.p - 1) * (query.limit || 10));
+          } else if (
+            query.limit &&
+            Number.isInteger(Number(query.limit)) &&
+            !query.p
+          ) {
+            sqlQuery.limit(query.limit || 10);
+          } else if (
+            query.p &&
+            Number.isInteger(Number(query.p)) &&
+            !query.limit
+          ) {
+            sqlQuery.limit(10);
+            sqlQuery.offset((query.p - 1) * 10);
           } else if (!query.limit || !query.p) {
             sqlQuery.limit(10);
           }

@@ -944,6 +944,24 @@ describe("/api", () => {
         });
     });
 
+    it("RETURNS GET /api/articles with status of 200 and returns a certain page and number of rows when passed limit", () => {
+      return request(app)
+        .get("/api/articles?limit=3")
+        .expect(200)
+        .then(res => {
+          expect(res.body.articles.length).to.equal(3);
+        });
+    });
+
+    it("RETURNS GET /api/articles with status of 200 and returns a certain page and number of rows when passed just p", () => {
+      return request(app)
+        .get("/api/articles?p=2")
+        .expect(200)
+        .then(res => {
+          expect(res.body.articles.length).to.equal(2);
+        });
+    });
+
     it("RETURNS GET /api/articles with status of 200 and returns a certain page and number of rows when passed page number and limit", () => {
       return request(app)
         .get("/api/articles?limit=5&&p=3")
