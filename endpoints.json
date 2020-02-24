@@ -146,5 +146,13 @@
         "body": "Et ullam nihil repudiandae facere sunt cupiditate cum. Doloremque voluptatem rerum qui error omnis. Dolorum numquam dolorum voluptas ad."
       }
     }
+  },
+
+  "DELETE /api/comments/:comment_id": {
+    "description": "deletes the given comment by comment id",
+    "queries": [],
+    "exampleResponse": {
+      "status": 204
+    }
   }
 }
