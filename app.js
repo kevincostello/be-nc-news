@@ -2,8 +2,11 @@ const express = require("express");
 const app = express();
 const apiRouter = require("./routes/api-router");
 const { send405Error } = require("./errors/index");
+const cors = require("cors");
 
 app.use(express.json());
+app.use(cors());
+
 app.get("/", function(req, res, next) {
   res.send("Welcome to my wonderful API!");
 });
