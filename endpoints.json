@@ -9,17 +9,41 @@
       "topics": [{ "slug": "football", "description": "Footie!" }]
     }
   },
+  "GET /api/users/:username": {
+    "description": "",
+    "queries": [],
+    "exampleResponse": {
+      "user": {
+        "username": "jessjelly",
+        "avatar_url": "https://s-media-cache-ak0.pinimg.com/564x/39/62/ec/3962eca164e60cf46f979c1f57d4078b.jpg",
+        "name": "Jess Jelly"
+      }
+    }
+  },
   "GET /api/articles": {
-    "description": "serves an array of all topics",
+    "description": "serves an array of all articles",
     "queries": ["author", "topic", "sort_by", "order"],
     "exampleResponse": {
       "articles": [
         {
+          "article_id": 33,
+          "author": "weegembump",
           "title": "Seafood substitutions are increasing",
           "topic": "cooking",
-          "author": "weegembump",
-          "body": "Text from the article..",
-          "created_at": 1527695953341
+          "created_at": "2018-05-30T15:59:13.341Z",
+          "votes": 0,
+          "comment_count": 6,
+          "total_count": "36"
+        },
+        {
+          "article_id": 28,
+          "author": "happyamy2016",
+          "title": "High Altitude Cooking",
+          "topic": "cooking",
+          "created_at": "2018-05-27T03:32:28.514Z",
+          "votes": 0,
+          "comment_count": 5,
+          "total_count": "36"
         }
       ]
     }
