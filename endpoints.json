@@ -9,8 +9,9 @@
       "topics": [{ "slug": "football", "description": "Footie!" }]
     }
   },
+
   "GET /api/users/:username": {
-    "description": "",
+    "description": "serves an object containing the given username properties",
     "queries": [],
     "exampleResponse": {
       "user": {
@@ -20,6 +21,86 @@
       }
     }
   },
+
+  "GET /api/articles/:article_id": {
+    "description": "serves an object containing the given article id properties",
+    "queries": [],
+    "exampleResponse": {
+      "article": {
+        "article_id": 1,
+        "title": "Running a Node App",
+        "body": "This is part two of a series on how to get up and running with Systemd and Node.js. This part dives deeper into how to successfully run your app with systemd long-term, and how to set it up in a production environment.",
+        "votes": 0,
+        "topic": "coding",
+        "author": "jessjelly",
+        "created_at": "2016-08-18T12:07:52.389Z",
+        "comment_count": 8
+      }
+    }
+  },
+
+  "PATCH /api/articles/:article_id": {
+    "description": "amends the votes property for the given article id when passed an object containing the votes change",
+    "queries": [{ "inc_votes": 10 }],
+    "exampleResponse": {
+      "article": {
+        "article_id": 1,
+        "title": "Running a Node App",
+        "body": "This is part two of a series on how to get up and running with Systemd and Node.js. This part dives deeper into how to successfully run your app with systemd long-term, and how to set it up in a production environment.",
+        "votes": 0,
+        "topic": "coding",
+        "author": "jessjelly",
+        "created_at": "2016-08-18T12:07:52.389Z",
+        "comment_count": 10
+      }
+    }
+  },
+
+  "POST /api/articles/:article_id/comments": {
+    "description": "posts the given comment when passed an object containing the username and body",
+    "queries": [
+      {
+        "username": "jessjelly",
+        "body": "This is a comment"
+      }
+    ],
+    "exampleResponse": {
+      "comment": {
+        "comment_id": 53,
+        "author": "jessjelly",
+        "article_id": 1,
+        "votes": 10,
+        "created_at": "2017-07-31T08:14:13.076Z",
+        "body": "This is a comment"
+      }
+    }
+  },
+
+  "GET /api/articles/:article_id/comments": {
+    "description": "serves an array of all comments for a given article id",
+    "queries": ["sort_by", "order"],
+    "exampleResponse": {
+      "comments": [
+        {
+          "comment_id": 70,
+          "author": "grumpy19",
+          "article_id": 4,
+          "votes": 2,
+          "created_at": "2018-01-29T06:21:22.610Z",
+          "body": "Et ullam nihil repudiandae facere sunt cupiditate cum. Doloremque voluptatem rerum qui error omnis. Dolorum numquam dolorum voluptas ad."
+        },
+        {
+          "comment_id": 146,
+          "author": "jessjelly",
+          "article_id": 4,
+          "votes": 6,
+          "created_at": "2018-01-03T22:36:49.051Z",
+          "body": "Soluta autem fuga non alias. Odit eligendi voluptas reiciendis repudiandae reiciendis doloribus adipisci qui consequuntur. Et dignissimos unde optio. Recusandae aspernatur eius error. Eos autem et iusto sunt fuga ipsam omnis voluptatem rerum."
+        }
+      ]
+    }
+  },
+
   "GET /api/articles": {
     "description": "serves an array of all articles",
     "queries": ["author", "topic", "sort_by", "order"],
